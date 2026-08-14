@@ -1,0 +1,620 @@
+[
+  {
+    "seed": 3,
+    "target": 0,
+    "program": [
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 3,
+    "target": 1,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 3,
+    "target": 2,
+    "program": [
+      [
+        "P",
+        "add",
+        2
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 3,
+    "target": 3,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 3,
+    "target": 4,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 3,
+    "target": 5,
+    "program": [
+      [
+        "U",
+        "rev",
+        null
+      ],
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 38,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 3,
+    "target": 6,
+    "program": [
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 3,
+    "target": 7,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ],
+      [
+        "U",
+        "diff",
+        null
+      ]
+    ],
+    "support": 41,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 3,
+    "target": 8,
+    "program": [
+      [
+        "U",
+        "sort",
+        null
+      ],
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 37,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 3,
+    "target": 9,
+    "program": [
+      [
+        "U",
+        "sort",
+        null
+      ]
+    ],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 11,
+    "target": 0,
+    "program": [
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 11,
+    "target": 1,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 11,
+    "target": 2,
+    "program": [
+      [
+        "P",
+        "add",
+        2
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 11,
+    "target": 3,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 11,
+    "target": 4,
+    "program": [
+      [
+        "U",
+        "sort",
+        null
+      ]
+    ],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 11,
+    "target": 5,
+    "program": [
+      [
+        "U",
+        "rev",
+        null
+      ],
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 40,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 11,
+    "target": 6,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 11,
+    "target": 7,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ],
+      [
+        "U",
+        "diff",
+        null
+      ]
+    ],
+    "support": 41,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 11,
+    "target": 8,
+    "program": [
+      [
+        "U",
+        "sort",
+        null
+      ],
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 38,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 11,
+    "target": 9,
+    "program": [],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 29,
+    "target": 0,
+    "program": [
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 29,
+    "target": 1,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 29,
+    "target": 2,
+    "program": [
+      [
+        "P",
+        "add",
+        2
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 29,
+    "target": 3,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 29,
+    "target": 4,
+    "program": [
+      [
+        "U",
+        "abs",
+        null
+      ],
+      [
+        "P",
+        "add",
+        1
+      ]
+    ],
+    "support": 11,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 29,
+    "target": 5,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ],
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 27,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 29,
+    "target": 6,
+    "program": [
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 29,
+    "target": 7,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ],
+      [
+        "U",
+        "diff",
+        null
+      ]
+    ],
+    "support": 40,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 29,
+    "target": 8,
+    "program": [
+      [
+        "U",
+        "sort",
+        null
+      ],
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 31,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 29,
+    "target": 9,
+    "program": [
+      [
+        "U",
+        "sort",
+        null
+      ]
+    ],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 47,
+    "target": 0,
+    "program": [
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 47,
+    "target": 1,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 47,
+    "target": 2,
+    "program": [
+      [
+        "P",
+        "add",
+        2
+      ]
+    ],
+    "support": 37,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 47,
+    "target": 3,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 42,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 47,
+    "target": 4,
+    "program": [
+      [
+        "U",
+        "abs",
+        null
+      ],
+      [
+        "P",
+        "add",
+        1
+      ]
+    ],
+    "support": 38,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 47,
+    "target": 5,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ],
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 40,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 47,
+    "target": 6,
+    "program": [],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  },
+  {
+    "seed": 47,
+    "target": 7,
+    "program": [
+      [
+        "U",
+        "diff",
+        null
+      ],
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 40,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 47,
+    "target": 8,
+    "program": [
+      [
+        "U",
+        "sort",
+        null
+      ],
+      [
+        "U",
+        "rev",
+        null
+      ]
+    ],
+    "support": 37,
+    "failures": 0,
+    "hidden": 1.0
+  },
+  {
+    "seed": 47,
+    "target": 9,
+    "program": [
+      [
+        "U",
+        "neg",
+        null
+      ]
+    ],
+    "support": 0,
+    "failures": 0,
+    "hidden": 0.0
+  }
+]

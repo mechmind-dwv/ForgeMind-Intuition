@@ -1,0 +1,1531 @@
+{
+  "version": "0.9.2",
+  "protocol": {
+    "seeds": [
+      3,
+      11,
+      29,
+      47
+    ],
+    "rounds": 32,
+    "population": 64,
+    "candidate_budget": 32
+  },
+  "rows": [
+    {
+      "seed": 3,
+      "target": 0,
+      "target_complexity": 1,
+      "active_survivors": 2,
+      "active_eliminations": 62,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 2,
+      "passive_eliminations": 62,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 1,
+      "target_complexity": 1,
+      "active_survivors": 2,
+      "active_eliminations": 62,
+      "active_queries": 32,
+      "active_complexity": 1.2,
+      "passive_survivors": 2,
+      "passive_eliminations": 62,
+      "passive_queries": 32,
+      "passive_complexity": 1.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 2,
+      "target_complexity": 1.2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 2.4,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 2.4,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          0
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          0
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 3,
+      "target_complexity": 1.2,
+      "active_survivors": 3,
+      "active_eliminations": 61,
+      "active_queries": 32,
+      "active_complexity": 1,
+      "passive_survivors": 3,
+      "passive_eliminations": 61,
+      "passive_queries": 32,
+      "passive_complexity": 1,
+      "active_program": [
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 4,
+      "target_complexity": 2.2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 3.2,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 3.2,
+      "active_program": [
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "P",
+          "add",
+          1
+        ],
+        [
+          "U",
+          "abs",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "P",
+          "add",
+          1
+        ],
+        [
+          "U",
+          "abs",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 5,
+      "target_complexity": 2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 6,
+      "target_complexity": 2.4,
+      "active_survivors": 2,
+      "active_eliminations": 62,
+      "active_queries": 32,
+      "active_complexity": 3.6,
+      "passive_survivors": 2,
+      "passive_eliminations": 62,
+      "passive_queries": 32,
+      "passive_complexity": 3.6,
+      "active_program": [
+        [
+          "P",
+          "add",
+          0
+        ],
+        [
+          "P",
+          "rot",
+          2
+        ],
+        [
+          "P",
+          "add",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "add",
+          0
+        ],
+        [
+          "P",
+          "rot",
+          2
+        ],
+        [
+          "P",
+          "add",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 7,
+      "target_complexity": 2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "U",
+          "diff",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "diff",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 8,
+      "target_complexity": 2,
+      "active_survivors": 7,
+      "active_eliminations": 57,
+      "active_queries": 32,
+      "active_complexity": 3,
+      "passive_survivors": 7,
+      "passive_eliminations": 57,
+      "passive_queries": 32,
+      "passive_complexity": 3,
+      "active_program": [
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 3,
+      "target": 9,
+      "target_complexity": 3.2,
+      "active_survivors": 0,
+      "active_eliminations": 64,
+      "active_queries": 1,
+      "active_complexity": Infinity,
+      "passive_survivors": 0,
+      "passive_eliminations": 64,
+      "passive_queries": 1,
+      "passive_complexity": Infinity,
+      "active_program": [],
+      "passive_program": []
+    },
+    {
+      "seed": 11,
+      "target": 0,
+      "target_complexity": 1,
+      "active_survivors": 2,
+      "active_eliminations": 62,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 2,
+      "passive_eliminations": 62,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          0
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          0
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 11,
+      "target": 1,
+      "target_complexity": 1,
+      "active_survivors": 3,
+      "active_eliminations": 61,
+      "active_queries": 32,
+      "active_complexity": 1.2,
+      "passive_survivors": 3,
+      "passive_eliminations": 61,
+      "passive_queries": 32,
+      "passive_complexity": 1.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 11,
+      "target": 2,
+      "target_complexity": 1.2,
+      "active_survivors": 2,
+      "active_eliminations": 62,
+      "active_queries": 32,
+      "active_complexity": 2.4,
+      "passive_survivors": 2,
+      "passive_eliminations": 62,
+      "passive_queries": 32,
+      "passive_complexity": 2.4,
+      "active_program": [
+        [
+          "P",
+          "add",
+          0
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "add",
+          0
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 11,
+      "target": 3,
+      "target_complexity": 1.2,
+      "active_survivors": 2,
+      "active_eliminations": 62,
+      "active_queries": 32,
+      "active_complexity": 1,
+      "passive_survivors": 2,
+      "passive_eliminations": 62,
+      "passive_queries": 32,
+      "passive_complexity": 1,
+      "active_program": [
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 11,
+      "target": 4,
+      "target_complexity": 2.2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 3.2,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 3.2,
+      "active_program": [
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "P",
+          "add",
+          1
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "P",
+          "add",
+          1
+        ]
+      ]
+    },
+    {
+      "seed": 11,
+      "target": 5,
+      "target_complexity": 2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 11,
+      "target": 6,
+      "target_complexity": 2.4,
+      "active_survivors": 0,
+      "active_eliminations": 64,
+      "active_queries": 1,
+      "active_complexity": Infinity,
+      "passive_survivors": 0,
+      "passive_eliminations": 64,
+      "passive_queries": 2,
+      "passive_complexity": Infinity,
+      "active_program": [],
+      "passive_program": []
+    },
+    {
+      "seed": 11,
+      "target": 7,
+      "target_complexity": 2,
+      "active_survivors": 1,
+      "active_eliminations": 63,
+      "active_queries": 32,
+      "active_complexity": 3.2,
+      "passive_survivors": 1,
+      "passive_eliminations": 63,
+      "passive_queries": 32,
+      "passive_complexity": 3.2,
+      "active_program": [
+        [
+          "U",
+          "diff",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          1
+        ],
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "diff",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          1
+        ],
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 11,
+      "target": 8,
+      "target_complexity": 2,
+      "active_survivors": 5,
+      "active_eliminations": 59,
+      "active_queries": 32,
+      "active_complexity": 3,
+      "passive_survivors": 5,
+      "passive_eliminations": 59,
+      "passive_queries": 32,
+      "passive_complexity": 3,
+      "active_program": [
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 11,
+      "target": 9,
+      "target_complexity": 3.2,
+      "active_survivors": 3,
+      "active_eliminations": 61,
+      "active_queries": 32,
+      "active_complexity": 3.4,
+      "passive_survivors": 3,
+      "passive_eliminations": 61,
+      "passive_queries": 32,
+      "passive_complexity": 3.4,
+      "active_program": [
+        [
+          "U",
+          "rev",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "rev",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 0,
+      "target_complexity": 1,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          0
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          0
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 1,
+      "target_complexity": 1,
+      "active_survivors": 2,
+      "active_eliminations": 62,
+      "active_queries": 32,
+      "active_complexity": 1.2,
+      "passive_survivors": 2,
+      "passive_eliminations": 62,
+      "passive_queries": 32,
+      "passive_complexity": 1.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 2,
+      "target_complexity": 1.2,
+      "active_survivors": 1,
+      "active_eliminations": 63,
+      "active_queries": 32,
+      "active_complexity": 2.4,
+      "passive_survivors": 1,
+      "passive_eliminations": 63,
+      "passive_queries": 32,
+      "passive_complexity": 2.4,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          0
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          0
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 3,
+      "target_complexity": 1.2,
+      "active_survivors": 3,
+      "active_eliminations": 61,
+      "active_queries": 32,
+      "active_complexity": 1,
+      "passive_survivors": 3,
+      "passive_eliminations": 61,
+      "passive_queries": 32,
+      "passive_complexity": 1,
+      "active_program": [
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 4,
+      "target_complexity": 2.2,
+      "active_survivors": 5,
+      "active_eliminations": 59,
+      "active_queries": 32,
+      "active_complexity": 3.2,
+      "passive_survivors": 5,
+      "passive_eliminations": 59,
+      "passive_queries": 32,
+      "passive_complexity": 3.2,
+      "active_program": [
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "P",
+          "add",
+          1
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "P",
+          "add",
+          1
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 5,
+      "target_complexity": 2,
+      "active_survivors": 2,
+      "active_eliminations": 62,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 2,
+      "passive_eliminations": 62,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 6,
+      "target_complexity": 2.4,
+      "active_survivors": 1,
+      "active_eliminations": 63,
+      "active_queries": 32,
+      "active_complexity": 3.6,
+      "passive_survivors": 1,
+      "passive_eliminations": 63,
+      "passive_queries": 32,
+      "passive_complexity": 3.6,
+      "active_program": [
+        [
+          "P",
+          "add",
+          0
+        ],
+        [
+          "P",
+          "rot",
+          2
+        ],
+        [
+          "P",
+          "add",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "add",
+          0
+        ],
+        [
+          "P",
+          "rot",
+          2
+        ],
+        [
+          "P",
+          "add",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 7,
+      "target_complexity": 2,
+      "active_survivors": 1,
+      "active_eliminations": 63,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 1,
+      "passive_eliminations": 63,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "U",
+          "diff",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "diff",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 8,
+      "target_complexity": 2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 3,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 3,
+      "active_program": [
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 29,
+      "target": 9,
+      "target_complexity": 3.2,
+      "active_survivors": 1,
+      "active_eliminations": 63,
+      "active_queries": 32,
+      "active_complexity": 3.4,
+      "passive_survivors": 1,
+      "passive_eliminations": 63,
+      "passive_queries": 32,
+      "passive_complexity": 3.4,
+      "active_program": [
+        [
+          "U",
+          "rev",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "rev",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 0,
+      "target_complexity": 1,
+      "active_survivors": 3,
+      "active_eliminations": 61,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 3,
+      "passive_eliminations": 61,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "U",
+          "rev",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          1
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "rev",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          1
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 1,
+      "target_complexity": 1,
+      "active_survivors": 5,
+      "active_eliminations": 59,
+      "active_queries": 32,
+      "active_complexity": 1.2,
+      "passive_survivors": 5,
+      "passive_eliminations": 59,
+      "passive_queries": 32,
+      "passive_complexity": 1.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 2,
+      "target_complexity": 1.2,
+      "active_survivors": 1,
+      "active_eliminations": 63,
+      "active_queries": 32,
+      "active_complexity": 2.4,
+      "passive_survivors": 1,
+      "passive_eliminations": 63,
+      "passive_queries": 32,
+      "passive_complexity": 2.4,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          1
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          1
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 3,
+      "target_complexity": 1.2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 1,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 1,
+      "active_program": [
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "neg",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 4,
+      "target_complexity": 2.2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 3.2,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 3.2,
+      "active_program": [
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "P",
+          "add",
+          1
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "U",
+          "abs",
+          null
+        ],
+        [
+          "P",
+          "add",
+          1
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 5,
+      "target_complexity": 2,
+      "active_survivors": 5,
+      "active_eliminations": 59,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 5,
+      "passive_eliminations": 59,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 6,
+      "target_complexity": 2.4,
+      "active_survivors": 3,
+      "active_eliminations": 61,
+      "active_queries": 32,
+      "active_complexity": 3.6,
+      "passive_survivors": 3,
+      "passive_eliminations": 61,
+      "passive_queries": 32,
+      "passive_complexity": 3.6,
+      "active_program": [
+        [
+          "P",
+          "mul",
+          1
+        ],
+        [
+          "P",
+          "rot",
+          2
+        ],
+        [
+          "P",
+          "add",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "P",
+          "mul",
+          1
+        ],
+        [
+          "P",
+          "rot",
+          2
+        ],
+        [
+          "P",
+          "add",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 7,
+      "target_complexity": 2,
+      "active_survivors": 4,
+      "active_eliminations": 60,
+      "active_queries": 32,
+      "active_complexity": 2.2,
+      "passive_survivors": 4,
+      "passive_eliminations": 60,
+      "passive_queries": 32,
+      "passive_complexity": 2.2,
+      "active_program": [
+        [
+          "U",
+          "diff",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "diff",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 8,
+      "target_complexity": 2,
+      "active_survivors": 3,
+      "active_eliminations": 61,
+      "active_queries": 32,
+      "active_complexity": 3,
+      "passive_survivors": 3,
+      "passive_eliminations": 61,
+      "passive_queries": 32,
+      "passive_complexity": 3,
+      "active_program": [
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "sort",
+          null
+        ],
+        [
+          "U",
+          "rev",
+          null
+        ]
+      ]
+    },
+    {
+      "seed": 47,
+      "target": 9,
+      "target_complexity": 3.2,
+      "active_survivors": 1,
+      "active_eliminations": 63,
+      "active_queries": 32,
+      "active_complexity": 3.4,
+      "passive_survivors": 1,
+      "passive_eliminations": 63,
+      "passive_queries": 32,
+      "passive_complexity": 3.4,
+      "active_program": [
+        [
+          "U",
+          "rev",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ],
+      "passive_program": [
+        [
+          "U",
+          "rev",
+          null
+        ],
+        [
+          "P",
+          "mul",
+          -1
+        ],
+        [
+          "P",
+          "add",
+          2
+        ]
+      ]
+    }
+  ],
+  "summary": {
+    "active_mean_eliminations": 61.125,
+    "passive_mean_eliminations": 61.125,
+    "active_mean_survivors": 2.875,
+    "passive_mean_survivors": 2.875,
+    "active_elimination_per_query": 5.01015625,
+    "passive_elimination_per_query": 4.21015625,
+    "active_passive_efficiency_ratio": 1.1900167006865838
+  }
+}

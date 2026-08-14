@@ -4,15 +4,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "forgemind"
-version = "0.8.0"
-description = "Experimental compositional hypothesis discovery and falsification engine"
+version = "0.16.0"
+description = "Explainable experimental intuition for program synthesis and coding agents"
 readme = "README.md"
 requires-python = ">=3.11"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "mechmind-dwv"}
 ]
 dependencies = []
+
+[project.scripts]
+forgemind = "forgemind.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["forgemind*"]
 
 [project.optional-dependencies]
 dev = [

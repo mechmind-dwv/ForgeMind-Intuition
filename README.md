@@ -1590,3 +1590,44 @@ For reproducible research, cite the repository together with the relevant versio
 ForgeMind
 
 > Generate hypotheses. Design experiments. Find counterexamples. Kill bad programs. Keep what survives.
+
+---
+
+## ForgeMind Intuition como software para proyectos
+
+ForgeMind Intuition puede utilizarse como una librería Python y como una CLI para que un desarrollador incorpore intuición experimental a sus propios proyectos. El núcleo conserva la filosofía de ForgeMind: la puntuación organiza los experimentos y explica sus razones, pero no sustituye la ejecución del oráculo ni convierte evidencia acotada en verdad global.
+
+### Instalación local
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e ".[dev]"
+python -m pytest -q
+```
+
+### Crear un proyecto reproducible
+
+```bash
+forgemind init forgemind.project.json
+forgemind score forgemind.project.json
+forgemind advise forgemind.project.json
+```
+
+Un archivo de proyecto contiene `name`, `candidates`, `probes` y `knowledge`. Las candidatas se expresan como secuencias de nodos `{kind, name, arg}`; el bloque `knowledge` puede guardar reglas, falsificaciones o hipótesis con su confianza experimental y procedencia.
+
+### Integración Python
+
+```python
+from forgemind import KnowledgeBase, advise
+from forgemind.project import ForgeMindProject
+
+project = ForgeMindProject.load("forgemind.project.json")
+recommendations = advise(
+    project.candidates,
+    knowledge_base=project.knowledge_base(),
+)
+print(recommendations[0].as_dict())
+```
+
+La carpeta `frontend/` contiene la vista de trabajo visual para explorar hipótesis y razones. Es una copia versionable del frontend, mientras que el proyecto web del sandbox mantiene la vista previa activa para iterar el diseño. La siguiente integración de producto será conectar ese frontend con la CLI o con una API local que ejecute proyectos reales.

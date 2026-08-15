@@ -18,15 +18,16 @@ Las fases se pueden solapar cuando sus contratos ya estén definidos, pero no se
 | 1. Intuición explicable | Completada | memoria, scoring, calibración y advisor |
 | 2. Inferencia estable | Completada | Bayes, `log_weight`, `top_k` y eliminación explicable |
 | 3. Escala vectorizada | Completada | arrays NumPy opcionales y benchmark comparativo |
-| 4. Software distribuible | En progreso | CLI, proyectos JSON, frontend y documentación |
-| 5. Persistencia full-stack | En diseño | API, base de datos y almacenamiento de archivos |
-| 6. Integración con agentes | Planeada | contratos de herramientas y ejecución controlada |
+| 4. Software distribuible | Casi completada | CLI, proyectos JSON, frontend y documentación; falta release etiquetada |
+| 5. Persistencia full-stack | Implementada en WebDev; pendiente de consolidación | API, base de datos, autenticación y almacenamiento de archivos |
+| 6. Integración con agentes | Planeada | contratos de herramientas, snapshots y ejecución controlada |
+| 7. Escala y rendimiento | Validada; optimización continua | bloques exactos, 10M, arrays directos y benchmarks versionados |
 
 ## Fase 4 — Software distribuible
 
 El objetivo es que una persona pueda instalar ForgeMind, inicializar un proyecto y obtener una recomendación sin estudiar primero el código interno.
 
-El trabajo base ya incluye un `pyproject.toml` instalable, los comandos `forgemind init`, `forgemind score` y `forgemind advise`, el formato de proyecto reproducible, documentación de tres capas y un frontend versionable. El contrato de entrada para proyectos externos ya está definido en `ProjectInput` y valida `schema_version`, IDs de candidatas, programas, probes, targets y metadata. La parte pendiente es alinear el frontend integrado con la API real y preparar la primera distribución etiquetada.
+El trabajo base incluye un `pyproject.toml` instalable, los comandos `forgemind init`, `forgemind score` y `forgemind advise`, el formato de proyecto reproducible, documentación de tres capas, un frontend versionable y un frontend full-stack conectado a la API real en el proyecto WebDev asociado. El contrato de entrada para proyectos externos está definido en `ProjectInput` y valida `schema_version`, IDs de candidatas, programas, probes, targets y metadata. La parte pendiente es preparar la primera distribución etiquetada y decidir cómo versionar conjuntamente el núcleo Python y la superficie full-stack.
 
 ### Criterios de finalización
 
@@ -40,7 +41,7 @@ El trabajo base ya incluye un `pyproject.toml` instalable, los comandos `forgemi
 
 ## Fase 5 — Persistencia full-stack
 
-Esta fase conecta la interfaz con un backend real. El modelo mínimo contiene `projects`, `hypotheses`, `evidence` y `projectFiles`. El propietario y el proyecto deben controlar el acceso; los bytes de archivos deben almacenarse en almacenamiento de objetos; la base de datos conserva metadatos y referencias.
+Esta fase ya tiene una implementación funcional en el proyecto WebDev asociado. El modelo persistente contiene `projects`, `hypotheses`, `evidence`, ejecuciones del motor y `projectFiles`. La autenticación, la autorización por propietario/proyecto, la base de datos y el almacenamiento de objetos están conectados; la consolidación pendiente consiste en documentar el vínculo con este repositorio, completar E2E multiusuario y decidir la estrategia de publicación coordinada.
 
 El flujo previsto es login, creación de proyecto, carga de configuración o evidencia, persistencia de hipótesis, consulta del ranking, asociación de archivos y visualización de procedencia. La API debe usar procedimientos tipados y separar operaciones públicas de operaciones protegidas.
 
@@ -68,9 +69,9 @@ Un agente podrá ejecutar un ciclo completo en un proyecto de ejemplo, recuperar
 
 ## Fase 7 — Escala y rendimiento
 
-La siguiente frontera de rendimiento es reducir el coste de visitar hipótesis que no pueden cambiar el top-k. El orden recomendado es actualización dispersa por familia, índices invertidos de evidencia, DAG algebraico, poda con cotas superiores y paralelismo por lotes. El modo `exact` debe permanecer disponible para auditoría.
+La escala ya validó actualización dispersa, separación de arrays, estrategia exacta por bloques y un estrés numérico de 10 millones de hipótesis. La siguiente frontera es reducir el coste de visitar hipótesis que no pueden cambiar el top-k. El orden recomendado es constructor array-native, índices invertidos de evidencia, DAG algebraico, poda con cotas superiores integrada y paralelismo por lotes. El modo `exact` debe permanecer disponible para auditoría.
 
-La métrica no será únicamente tiempo por actualización. También se medirán memoria, número de hipótesis visitadas, diferencia respecto al posterior exacto, calidad del top-k, coste de explicación y capacidad de reactivación de hipótesis aparcadas.
+La métrica no será únicamente tiempo por actualización. El protocolo estable ya mide memoria, RSS, diferencia respecto al posterior exacto, calidad del top-k y trazabilidad; quedan por formalizar número de hipótesis visitadas, coste de explicación y capacidad de reactivación en escenarios masivos.
 
 ## Riesgos principales
 

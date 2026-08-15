@@ -224,3 +224,34 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Documentar el contrato de integración y criterios de exactitud del módulo probabilístico.
 - [x] Definir un benchmark reproducible de latencia, memoria, exactitud y trazabilidad.
 - [x] Ejecutar el protocolo estable y guardar resultados versionados.
+
+## Auditoría de arquitectura y roadmap
+
+- [x] Comparar la arquitectura propuesta en tres capas con el estado real del repositorio.
+- [x] Analizar ROADMAP.md y clasificar evolución, logros, pendientes y desviaciones.
+- [x] Consolidar nuevas tareas técnicas y de producto derivadas del análisis.
+- [x] Actualizar todo.md con la evaluación y publicar el estado revisado.
+
+## Nuevas prioridades derivadas de la auditoría
+
+### P0 — Consolidación de producto
+
+- [ ] Decidir y documentar si el full-stack WebDev se incorpora a este repositorio, se mantiene como repositorio hermano o se publica mediante releases coordinadas.
+- [ ] Actualizar el contrato versionado entre el motor Python, `services/engine_api.py` y la aplicación full-stack.
+- [ ] Crear un ciclo E2E reproducible de proyecto → evidencia → ejecución → ranking → archivo → snapshot.
+- [ ] Actualizar los criterios de finalización de las fases 4 y 5 con la implementación real de WebDev.
+
+### P1 — Distribución, agentes y seguridad
+
+- [ ] Preparar la primera distribución etiquetada del paquete Python con build limpio e instalación desde wheel.
+- [ ] Definir herramientas versionadas para agentes: registrar hipótesis, consultar top-k, proponer probes, aportar evidencia, explicar, aparcar, reactivar y restaurar snapshots.
+- [ ] Añadir aislamiento de ejecución para programas y oráculos con timeout, límites de recursos y auditoría.
+- [ ] Completar pruebas E2E multiusuario de autorización, archivos y recuperación de sesión.
+- [ ] Implementar eliminación lógica y metadatos completos de archivos en la superficie full-stack.
+
+### P2 — Escala y observabilidad
+
+- [ ] Implementar el constructor array-native sin diccionarios de IDs cuando el consumidor opere por posiciones.
+- [ ] Añadir una matriz de regresión de rendimiento con umbrales separados para latencia, RSS, exactitud y trazabilidad.
+- [ ] Medir número de hipótesis visitadas, coste de explicación y reactivación en escenarios masivos.
+- [ ] Evaluar índices invertidos de evidencia, poda integrada y paralelismo por lotes sin perder el modo exacto auditable.

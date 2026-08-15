@@ -61,3 +61,4 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Añadir licencia MIT explícita.
 - [x] Crear plantillas de issues y pull requests.
 - [x] Preparar el anuncio inicial de GitHub Discussions.
+- [x] Verificar sintaxis y reconocimiento remoto de las plantillas de issues y pull requests.

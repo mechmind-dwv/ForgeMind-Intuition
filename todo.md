@@ -81,3 +81,9 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Verificar migraciones y tablas persistentes para proyectos, hipótesis, evidencias, ejecuciones y archivos.
 - [x] Verificar endpoints protegidos y flujo de subida/listado/descarga de archivos.
 - [x] Ejecutar pruebas, build y comprobación de extremo a extremo.
+
+## Verificación de entidades persistentes
+
+- [x] Auditar entidades de proyectos, hipótesis, evidencias y archivos frente al esquema real y sus migraciones.
+- [x] Verificar relaciones, claves foráneas, índices y autorización por propietario.
+- [x] Validar procedimientos de creación, consulta, ejecución y almacenamiento asociados a estas entidades.

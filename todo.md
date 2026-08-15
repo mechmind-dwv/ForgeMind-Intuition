@@ -62,3 +62,4 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Crear plantillas de issues y pull requests.
 - [x] Preparar el anuncio inicial de GitHub Discussions.
 - [x] Verificar sintaxis y reconocimiento remoto de las plantillas de issues y pull requests.
+- [x] Ejecutar la suite completa de pruebas unitarias y revisar errores de dependencias.

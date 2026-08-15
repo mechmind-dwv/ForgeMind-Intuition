@@ -14,6 +14,8 @@ from pydantic import BaseModel, Field
 from forgemind.advisor import advise
 from forgemind.project import ForgeMindProject, ProjectValidationError
 
+ENGINE_API_CONTRACT_VERSION = "1.0"
+
 
 class EvaluateRequest(BaseModel):
     project: dict[str, Any]
@@ -24,6 +26,7 @@ class EvaluateResponse(BaseModel):
     candidate_count: int
     results: list[dict[str, Any]]
     engine: str = "forgemind-python"
+    contract_version: str = ENGINE_API_CONTRACT_VERSION
 
 
 app = FastAPI(title="ForgeMind Engine API", version="0.16")
@@ -31,7 +34,12 @@ app = FastAPI(title="ForgeMind Engine API", version="0.16")
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "engine": "forgemind-python", "version": "0.16"}
+    return {
+        "status": "ok",
+        "engine": "forgemind-python",
+        "version": "0.16",
+        "contract_version": ENGINE_API_CONTRACT_VERSION,
+    }
 
 
 @app.post("/v1/evaluate", response_model=EvaluateResponse)
@@ -42,4 +50,9 @@ def evaluate(request: EvaluateRequest) -> EvaluateResponse:
         results = [item.as_dict() for item in advise(project.candidates, knowledge_base=knowledge)]
     except (ProjectValidationError, ValueError, KeyError) as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
-    return EvaluateResponse(project=project.name, candidate_count=len(project.candidates), results=results)
+    return EvaluateResponse(
+        project=project.name,
+        candidate_count=len(project.candidates),
+        results=results,
+        contract_version=ENGINE_API_CONTRACT_VERSION,
+    )

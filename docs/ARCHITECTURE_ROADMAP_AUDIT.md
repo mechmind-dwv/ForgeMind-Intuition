@@ -65,6 +65,8 @@ En rendimiento, sigue pendiente el constructor array-native que evite diccionari
 
 ## Decisión de arquitectura recomendada
 
-La arquitectura de tres capas debe conservarse. No conviene mezclar la persistencia, la autenticación o los componentes React dentro de los módulos del núcleo Python. La decisión inmediata recomendada es tratar la aplicación WebDev como una **Capa 3 desplegable**, conectada a la Capa 2 mediante el servicio de engine y contratos versionados; después debe elegirse si ambos artefactos se publican en un monorepo o mediante repositorios coordinados.
+La arquitectura de tres capas debe conservarse. No conviene mezclar la persistencia, la autenticación o los componentes React dentro de los módulos del núcleo Python. La aplicación WebDev se tratará como una **Capa 3 desplegable**, conectada a la Capa 2 mediante el servicio de engine y contratos versionados.
+
+La decisión arquitectónica adoptada es mantener el full-stack WebDev como **repositorio hermano con releases coordinadas**, no copiarlo dentro de este repositorio Python. El motor Python conserva su ciclo de distribución independiente; el contrato HTTP versionado y la versión del engine son la frontera de integración. Cada release full-stack debe declarar la versión mínima del contrato Python que consume.
 
 La siguiente etapa no debería ser otra optimización aislada. Debe cerrar la trazabilidad de extremo a extremo y la distribución: una persona debe poder instalar el motor, crear un proyecto, ejecutar un ciclo de evidencia, recuperar una explicación y continuar desde un snapshot, mientras el frontend muestra exactamente los mismos estados y decisiones que el backend.

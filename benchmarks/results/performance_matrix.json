@@ -1,0 +1,63 @@
+{
+  "matrix_version": "1.0",
+  "rounds": 3,
+  "repeats": 3,
+  "top_k": 25,
+  "thresholds": {
+    "max_vectorized_observe_ms_median": 5000.0,
+    "max_rss_mb": 1024.0,
+    "max_abs_posterior_error": 1e-12,
+    "min_top_k_overlap": 1.0
+  },
+  "rows": [
+    {
+      "hypotheses": 10000,
+      "vectorized_observe_ms_median": 84.9625,
+      "rss_peak_mb": 77.0859,
+      "max_abs_posterior_error": 3.5236570605778894e-19,
+      "top_k_min_overlap": 1.0,
+      "checks": {
+        "latency": true,
+        "rss": true,
+        "exactness": true,
+        "top_k": true,
+        "eliminations": true,
+        "traceability": true
+      },
+      "passed": true
+    },
+    {
+      "hypotheses": 50000,
+      "vectorized_observe_ms_median": 468.2604,
+      "rss_peak_mb": 279.0703,
+      "max_abs_posterior_error": 7.453889935837843e-20,
+      "top_k_min_overlap": 1.0,
+      "checks": {
+        "latency": true,
+        "rss": true,
+        "exactness": true,
+        "top_k": true,
+        "eliminations": true,
+        "traceability": true
+      },
+      "passed": true
+    },
+    {
+      "hypotheses": 100000,
+      "vectorized_observe_ms_median": 961.3324,
+      "rss_peak_mb": 525.5938,
+      "max_abs_posterior_error": 3.3881317890172014e-20,
+      "top_k_min_overlap": 1.0,
+      "checks": {
+        "latency": true,
+        "rss": true,
+        "exactness": true,
+        "top_k": true,
+        "eliminations": true,
+        "traceability": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

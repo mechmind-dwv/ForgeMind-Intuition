@@ -59,6 +59,10 @@ El resultado local de referencia con 10.000 hipótesis, tres rondas y tres repet
 
 Estas cifras son una referencia de una máquina concreta, no un SLA. Para cambios de rendimiento, deben compararse con el mismo Python, tamaño, número de rondas y número de repeticiones. Los escenarios de 1M y 10M deben ejecutarse fuera de la suite unitaria normal y guardar su JSON en `benchmarks/results/`.
 
+La matriz [`benchmarks/performance_matrix.py`](../benchmarks/performance_matrix.py) ejecuta varios tamaños y aplica umbrales independientes de latencia vectorizada, RSS, error de posterior, solapamiento de `top_k`, coincidencia de eliminaciones y trazabilidad. La ejecución local con 10K, 50K y 100K pasó todas las filas; el RSS acumulado observado fue de `77,09`, `279,07` y `525,59 MiB`, respectivamente. El umbral predeterminado de RSS es `1024 MiB` porque `ru_maxrss` representa el máximo acumulado del proceso.
+
+Para consumidores que ya trabajan con posiciones, `VectorizedHypothesisStore.from_arrays(priors)` evita materializar IDs, descripciones, diccionarios de índices y metadatos de familias. Ese camino debe usar `observe_arrays()` y `top_k_positions()`; la API orientada a IDs continúa disponible para compatibilidad y trazabilidad rica.
+
 ## Criterios para CI y regresiones
 
 La suite unitaria debe ejecutar las pruebas de integración con el extra vectorizado instalado. Un cambio probabilístico se considera compatible si mantiene las invariantes numéricas y de trazabilidad, no introduce errores en la suite completa y no altera el contrato de los campos de `EliminationDecision`. Las mediciones de tiempo y RSS sirven para detectar regresiones, pero no deben convertir una diferencia entre máquinas en un fallo duro de CI sin un umbral calibrado para el runner.

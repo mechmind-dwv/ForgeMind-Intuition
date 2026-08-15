@@ -27,7 +27,7 @@ Las fases se pueden solapar cuando sus contratos ya estén definidos, pero no se
 
 El objetivo es que una persona pueda instalar ForgeMind, inicializar un proyecto y obtener una recomendación sin estudiar primero el código interno.
 
-El trabajo base incluye un `pyproject.toml` instalable, los comandos `forgemind init`, `forgemind score` y `forgemind advise`, el formato de proyecto reproducible, documentación de tres capas, un frontend versionable y un frontend full-stack conectado a la API real en el proyecto WebDev asociado. El contrato de entrada para proyectos externos está definido en `ProjectInput` y valida `schema_version`, IDs de candidatas, programas, probes, targets y metadata. La parte pendiente es preparar la primera distribución etiquetada y decidir cómo versionar conjuntamente el núcleo Python y la superficie full-stack.
+El trabajo base incluye un `pyproject.toml` instalable, los comandos `forgemind init`, `forgemind score` y `forgemind advise`, el formato de proyecto reproducible, documentación de tres capas, un frontend versionable y un frontend full-stack conectado a la API real en el proyecto WebDev asociado. El contrato de entrada para proyectos externos está definido en `ProjectInput` y valida `schema_version`, IDs de candidatas, programas, probes, targets y metadata. La parte pendiente es preparar la primera distribución etiquetada. La decisión de arquitectura es mantener la aplicación full-stack como repositorio hermano con releases coordinadas; el contrato HTTP `1.0` y la versión del engine forman la frontera versionada entre ambos productos.
 
 ### Criterios de finalización
 
@@ -41,7 +41,7 @@ El trabajo base incluye un `pyproject.toml` instalable, los comandos `forgemind 
 
 ## Fase 5 — Persistencia full-stack
 
-Esta fase ya tiene una implementación funcional en el proyecto WebDev asociado. El modelo persistente contiene `projects`, `hypotheses`, `evidence`, ejecuciones del motor y `projectFiles`. La autenticación, la autorización por propietario/proyecto, la base de datos y el almacenamiento de objetos están conectados; la consolidación pendiente consiste en documentar el vínculo con este repositorio, completar E2E multiusuario y decidir la estrategia de publicación coordinada.
+Esta fase ya tiene una implementación funcional en el proyecto WebDev asociado, mantenido como repositorio hermano. El modelo persistente contiene `projects`, `hypotheses`, `evidence`, ejecuciones del motor y `projectFiles`. La autenticación, la autorización por propietario/proyecto, la base de datos y el almacenamiento de objetos están conectados; la consolidación pendiente consiste en completar E2E multiusuario y publicar releases coordinadas que declaren la versión mínima del contrato HTTP del engine.
 
 El flujo previsto es login, creación de proyecto, carga de configuración o evidencia, persistencia de hipótesis, consulta del ranking, asociación de archivos y visualización de procedencia. La API debe usar procedimientos tipados y separar operaciones públicas de operaciones protegidas.
 

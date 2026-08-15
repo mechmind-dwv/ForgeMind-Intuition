@@ -236,10 +236,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ### P0 — Consolidación de producto
 
-- [ ] Decidir y documentar si el full-stack WebDev se incorpora a este repositorio, se mantiene como repositorio hermano o se publica mediante releases coordinadas.
-- [ ] Actualizar el contrato versionado entre el motor Python, `services/engine_api.py` y la aplicación full-stack.
+- [x] Decidir y documentar si el full-stack WebDev se incorpora a este repositorio, se mantiene como repositorio hermano o se publica mediante releases coordinadas.
+- [x] Actualizar el contrato versionado entre el motor Python, `services/engine_api.py` y la aplicación full-stack.
 - [ ] Crear un ciclo E2E reproducible de proyecto → evidencia → ejecución → ranking → archivo → snapshot.
-- [ ] Actualizar los criterios de finalización de las fases 4 y 5 con la implementación real de WebDev.
+- [x] Actualizar los criterios de finalización de las fases 4 y 5 con la implementación real de WebDev.
 
 ### P1 — Distribución, agentes y seguridad
 
@@ -251,7 +251,13 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ### P2 — Escala y observabilidad
 
-- [ ] Implementar el constructor array-native sin diccionarios de IDs cuando el consumidor opere por posiciones.
-- [ ] Añadir una matriz de regresión de rendimiento con umbrales separados para latencia, RSS, exactitud y trazabilidad.
+- [x] Implementar el constructor array-native sin diccionarios de IDs cuando el consumidor opere por posiciones.
+- [x] Añadir una matriz de regresión de rendimiento con umbrales separados para latencia, RSS, exactitud y trazabilidad.
 - [ ] Medir número de hipótesis visitadas, coste de explicación y reactivación en escenarios masivos.
 - [ ] Evaluar índices invertidos de evidencia, poda integrada y paralelismo por lotes sin perder el modo exacto auditable.
+
+## Ejecución priorizada P0–P2
+
+- [x] Auditar y fijar el contrato entre `forgemind`, `services/engine_api.py` y el full-stack WebDev.
+- [x] Documentar la decisión de consolidación de repositorios y los límites de publicación coordinada.
+- [ ] Implementar y validar las tareas P0 antes de tachar las tareas dependientes P1/P2.

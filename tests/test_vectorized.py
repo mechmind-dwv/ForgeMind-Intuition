@@ -86,3 +86,21 @@ def test_direct_array_observation_supports_family_selection_and_rejects_bad_shap
     assert store.evidence_counts.tolist() == [1, 1, 0]
     with pytest.raises(ValueError, match="one-dimensional array"):
         store.observe_arrays(np.asarray([[0.5, 0.2, 0.0]]), "bad-shape")
+
+
+def test_array_native_constructor_avoids_id_metadata_and_matches_array_observation():
+    priors = np.asarray([1.0, 3.0, 2.0], dtype=np.float64)
+    direct = VectorizedHypothesisStore.from_arrays(priors, elimination_threshold=1e-12)
+    mapped = VectorizedHypothesisStore({"H1": "a", "H2": "b", "H3": "c"}, priors={"H1": 1.0, "H2": 3.0, "H3": 2.0}, elimination_threshold=1e-12)
+
+    direct.observe_arrays(np.asarray([0.9, 0.4, 0.7]), "probe", reason="array-native")
+    mapped.observe({"H1": 0.9, "H2": 0.4, "H3": 0.7}, "probe", reason="array-native")
+
+    assert direct.ids is None
+    assert direct.index == {}
+    assert direct.descriptions == {}
+    assert direct.posteriors == pytest.approx(mapped.posteriors)
+    assert direct.top_k_positions(2).tolist() == [2, 1]
+    assert [belief.hypothesis_id for belief in direct.top_k(2)] == ["2", "1"]
+    with pytest.raises(ValueError, match="ID-backed"):
+        direct.observe({"0": 0.5}, "mapping-probe")

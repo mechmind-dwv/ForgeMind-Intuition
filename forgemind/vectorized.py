@@ -35,6 +35,47 @@ class VectorizedBelief:
 class VectorizedHypothesisStore:
     """Dense numeric belief state with sparse explanation metadata."""
 
+    @classmethod
+    def from_arrays(
+        cls,
+        priors: np.ndarray,
+        *,
+        block_size: int = 65_536,
+        elimination_threshold: float = 0.02,
+        min_evidence: int = 1,
+    ) -> "VectorizedHypothesisStore":
+        """Construct a position-addressed store without Python ID mappings.
+
+        This path is intended for array-native callers that already maintain a
+        stable positional vocabulary. Use :meth:`observe_arrays` and
+        :meth:`top_k_positions`; the ID-oriented ``observe`` API is unavailable
+        because no IDs or descriptions are materialized.
+        """
+        values = np.asarray(priors, dtype=np.float64)
+        if values.ndim != 1 or values.size == 0 or np.any(~np.isfinite(values)) or np.any(values < 0) or not np.any(values > 0):
+            raise ValueError("priors must be a non-empty one-dimensional array with positive mass")
+        if block_size < 1 or min_evidence < 1 or not 0.0 < elimination_threshold < 1.0:
+            raise ValueError("invalid block_size, min_evidence, or elimination_threshold")
+        instance = cls.__new__(cls)
+        instance.ids = None
+        instance.index = {}
+        instance.descriptions = {}
+        instance.family_by_id = {}
+        instance.family_positions = {}
+        instance.priors = values.copy()
+        instance.log_weights = np.log(values)
+        instance.posteriors = np.zeros(values.size, dtype=np.float64)
+        instance.states = np.full(values.size, ACTIVE, dtype=np.uint8)
+        instance.evidence_counts = np.zeros(values.size, dtype=np.uint32)
+        instance.elimination_threshold = float(elimination_threshold)
+        instance.min_evidence = int(min_evidence)
+        instance.explanations = {}
+        instance.evidence_ids = set()
+        instance.last_update_count = 0
+        instance.last_update_families = ()
+        instance._normalize()
+        return instance
+
     def __init__(self, hypotheses: Mapping[str, str], priors: Mapping[str, float] | None = None, *, families: Mapping[str, str] | None = None, elimination_threshold: float = 0.02, min_evidence: int = 1) -> None:
         if not hypotheses:
             raise ValueError("at least one hypothesis is required")
@@ -42,7 +83,7 @@ class VectorizedHypothesisStore:
             raise ValueError("elimination_threshold must be between 0 and 1")
         if min_evidence < 1:
             raise ValueError("min_evidence must be positive")
-        self.ids = tuple(hypotheses)
+        self.ids: tuple[str, ...] | None = tuple(hypotheses)
         self.index = {hypothesis_id: index for index, hypothesis_id in enumerate(self.ids)}
         self.descriptions = dict(hypotheses)
         self.family_by_id = {hypothesis_id: (families or {}).get(hypothesis_id, "default") for hypothesis_id in self.ids}
@@ -115,6 +156,8 @@ class VectorizedHypothesisStore:
         evidence bookkeeping and explanation writes touch only the selected family
         positions. This makes repeated updates cheap when evidence is localized.
         """
+        if self.ids is None:
+            raise ValueError("observe() requires ID-backed construction; use observe_arrays()")
         if evidence_id in self.evidence_ids:
             raise ValueError(f"evidence_id already observed: {evidence_id}")
         selected_families = tuple(dict.fromkeys(affected_families)) if affected_families is not None else tuple(self.family_positions)
@@ -156,17 +199,24 @@ class VectorizedHypothesisStore:
         if evidence_id in self.evidence_ids:
             raise ValueError(f"evidence_id already observed: {evidence_id}")
         values = np.asarray(likelihoods, dtype=np.float64)
-        if values.ndim != 1 or values.size != len(self.ids):
+        expected_size = self.priors.size
+        if values.ndim != 1 or values.size != expected_size:
             raise ValueError("likelihoods must be a one-dimensional array aligned with hypotheses")
         if np.any(~np.isfinite(values)) or np.any(values < 0) or np.any(values > 1):
             raise ValueError("likelihoods must be finite values between 0 and 1")
-        selected_families = tuple(dict.fromkeys(affected_families)) if affected_families is not None else tuple(self.family_positions)
-        unknown_families = set(selected_families).difference(self.family_positions)
-        if unknown_families:
-            raise ValueError(f"unknown family names: {sorted(unknown_families)}")
-        positions = np.concatenate([self.family_positions[family] for family in selected_families]) if selected_families else np.asarray([], dtype=np.intp)
+        if self.ids is None:
+            if affected_families is not None and tuple(affected_families) not in ((), ("default",)):
+                raise ValueError("array-native stores only support the default family")
+            selected_families = ("default",)
+            positions = np.arange(expected_size, dtype=np.intp)
+        else:
+            selected_families = tuple(dict.fromkeys(affected_families)) if affected_families is not None else tuple(self.family_positions)
+            unknown_families = set(selected_families).difference(self.family_positions)
+            if unknown_families:
+                raise ValueError(f"unknown family names: {sorted(unknown_families)}")
+            positions = np.concatenate([self.family_positions[family] for family in selected_families]) if selected_families else np.asarray([], dtype=np.intp)
         hard = np.asarray(tuple(hard_positions), dtype=np.intp)
-        if np.any(hard < 0) or np.any(hard >= len(self.ids)):
+        if np.any(hard < 0) or np.any(hard >= expected_size):
             raise ValueError("hard_positions must refer to valid hypothesis positions")
         if hard.size and not np.all(np.isin(hard, positions)):
             raise ValueError("hard_positions must belong to the selected families")
@@ -181,23 +231,29 @@ class VectorizedHypothesisStore:
         """Explicit alias for localized updates used by family-aware callers."""
         self.observe(likelihoods, evidence_id, reason=reason, hard_falsification=hard_falsification, affected_families=families)
 
-    def top_k(self, k: int, *, include_eliminated: bool = False) -> list[VectorizedBelief]:
-        """Return top-k beliefs using argpartition instead of a full sort."""
+    def top_k_positions(self, k: int, *, include_eliminated: bool = False) -> np.ndarray:
+        """Return top-k positions without requiring ID metadata."""
         if k < 1:
             raise ValueError("k must be positive")
-        candidates = np.arange(len(self.ids), dtype=np.intp)
+        candidates = np.arange(self.posteriors.size, dtype=np.intp)
         if not include_eliminated:
             candidates = candidates[self.states != ELIMINATED]
         if candidates.size == 0:
-            return []
+            return np.asarray([], dtype=np.intp)
         count = min(k, candidates.size)
         scores = self.posteriors[candidates]
         selected = candidates[np.argpartition(scores, -count)[-count:]]
-        selected = selected[np.argsort(self.posteriors[selected])[::-1]]
-        return [self._belief_at(int(position)) for position in selected]
+        return selected[np.argsort(self.posteriors[selected])[::-1]]
+
+    def top_k(self, k: int, *, include_eliminated: bool = False) -> list[VectorizedBelief]:
+        """Return top-k beliefs using argpartition instead of a full sort."""
+        return [self._belief_at(int(position)) for position in self.top_k_positions(k, include_eliminated=include_eliminated)]
 
     def _belief_at(self, position: int) -> VectorizedBelief:
-        return VectorizedBelief(self.ids[position], self.descriptions[self.ids[position]], float(self.priors[position]), float(self.posteriors[position]), float(self.log_weights[position]), int(self.states[position]), int(self.evidence_counts[position]))
+        if self.ids is None:
+            return VectorizedBelief(str(position), "", float(self.priors[position]), float(self.posteriors[position]), float(self.log_weights[position]), int(self.states[position]), int(self.evidence_counts[position]))
+        hypothesis_id = self.ids[position]
+        return VectorizedBelief(hypothesis_id, self.descriptions[hypothesis_id], float(self.priors[position]), float(self.posteriors[position]), float(self.log_weights[position]), int(self.states[position]), int(self.evidence_counts[position]))
 
     def posterior_sum(self) -> float:
         return float(self.posteriors.sum())

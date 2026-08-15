@@ -280,3 +280,9 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Probar renovación/expiración de sesión y continuidad de operaciones protegidas.
 - [x] Implementar eliminación lógica de archivos y restauración autorizada.
 - [x] Añadir pruebas E2E de archivo eliminado, restaurado y no visible para otro usuario.
+
+## Interfaz de gestión de archivos
+
+- [x] Añadir vista de archivos activos con metadatos, descarga y eliminación lógica.
+- [x] Añadir papelera con listado de eliminados y restauración autorizada.
+- [x] Cubrir estados de carga, error, vacío, confirmación y responsive en la interfaz.

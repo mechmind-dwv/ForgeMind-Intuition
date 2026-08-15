@@ -170,3 +170,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Ejecutar medición a 100.000 y 1.000.000 de hipótesis.
 - [x] Comparar crecimiento de RSS, buffers temporales y estado numérico.
 - [x] Documentar límites de memoria y validar la suite.
+
+## Profiling de metadatos Python
+
+- [x] Instrumentar snapshot de asignaciones durante la construcción del store de 1.000.000.
+- [x] Separar contribuciones de IDs, diccionarios, índices, creencias y metadatos explicativos.
+- [x] Comparar RSS, tracemalloc y memoria numérica del store.
+- [x] Guardar hotspots y límites observados para priorizar la siguiente optimización.

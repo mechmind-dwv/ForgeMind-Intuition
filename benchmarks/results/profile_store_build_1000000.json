@@ -1,0 +1,306 @@
+{
+  "hypotheses": 1000000,
+  "stages": [
+    {
+      "stage": "baseline",
+      "rss_mb": 33.31640625,
+      "python_current_bytes": 0
+    },
+    {
+      "stage": "ids_list",
+      "rss_mb": 352.96875,
+      "python_bytes_delta": 56338274,
+      "python_blocks_delta": 1000007,
+      "top_allocations": [
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:42",
+          "bytes": 56337618,
+          "blocks": 1000002
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:560",
+          "bytes": 312,
+          "blocks": 2
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:423",
+          "bytes": 312,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:40",
+          "bytes": 32,
+          "blocks": 1
+        }
+      ]
+    },
+    {
+      "stage": "hypotheses_descriptions_dict",
+      "rss_mb": 467.25390625,
+      "python_bytes_delta": 30759154,
+      "python_blocks_delta": 17,
+      "top_allocations": [
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:47",
+          "bytes": 30758256,
+          "blocks": 1
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:173",
+          "bytes": 378,
+          "blocks": 4
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:115",
+          "bytes": 160,
+          "blocks": 2
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:193",
+          "bytes": 144,
+          "blocks": 3
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:502",
+          "bytes": 96,
+          "blocks": 3
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:503",
+          "bytes": 32,
+          "blocks": 1
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:27",
+          "bytes": 32,
+          "blocks": 1
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:25",
+          "bytes": 28,
+          "blocks": 1
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:24",
+          "bytes": 28,
+          "blocks": 1
+        }
+      ]
+    },
+    {
+      "stage": "priors_dict_and_source_array",
+      "rss_mb": 804.0390625,
+      "python_bytes_delta": 62760047,
+      "python_blocks_delta": 1000002,
+      "top_allocations": [
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:53",
+          "bytes": 54757344,
+          "blocks": 999963
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:52",
+          "bytes": 8000096,
+          "blocks": 2
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:115",
+          "bytes": 880,
+          "blocks": 11
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:173",
+          "bytes": 835,
+          "blocks": 9
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:193",
+          "bytes": 480,
+          "blocks": 10
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:27",
+          "bytes": 128,
+          "blocks": 1
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:558",
+          "bytes": 80,
+          "blocks": 1
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:501",
+          "bytes": 48,
+          "blocks": 1
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:495",
+          "bytes": 48,
+          "blocks": 1
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:207",
+          "bytes": 48,
+          "blocks": 1
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:502",
+          "bytes": 32,
+          "blocks": 1
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:24",
+          "bytes": 28,
+          "blocks": 1
+        }
+      ]
+    },
+    {
+      "stage": "store_constructor_complete",
+      "rss_mb": 1365.2109375,
+      "numeric_state_bytes": 29000000,
+      "python_bytes_delta": 165274225,
+      "python_blocks_delta": 999850,
+      "top_allocations": [
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:46",
+          "bytes": 58751124,
+          "blocks": 999745
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:48",
+          "bytes": 30758320,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:47",
+          "bytes": 30758320,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:63",
+          "bytes": 8000128,
+          "blocks": 4
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:56",
+          "bytes": 8000112,
+          "blocks": 3
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:62",
+          "bytes": 8000096,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:55",
+          "bytes": 8000096,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:45",
+          "bytes": 8000040,
+          "blocks": 1
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:65",
+          "bytes": 4000112,
+          "blocks": 3
+        },
+        {
+          "location": "/usr/local/lib/python3.12/dist-packages/numpy/_core/numeric.py:385",
+          "bytes": 1000112,
+          "blocks": 3
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:173",
+          "bytes": 1072,
+          "blocks": 12
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/benchmarks/profile_store_build.py:27",
+          "bytes": 896,
+          "blocks": 13
+        }
+      ]
+    },
+    {
+      "stage": "metadata_inventory",
+      "rss_mb": 1617.890625,
+      "ids_tuple_bytes_estimate": 6888890,
+      "index_entries": 1000000,
+      "description_entries": 1000000,
+      "family_entries": 1000000,
+      "family_position_arrays": 1,
+      "explanation_entries": 0,
+      "python_bytes_delta": 165282649,
+      "python_blocks_delta": 999975,
+      "top_allocations": [
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:46",
+          "bytes": 58751124,
+          "blocks": 999745
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:48",
+          "bytes": 30758320,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:47",
+          "bytes": 30758320,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:63",
+          "bytes": 8000128,
+          "blocks": 4
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:56",
+          "bytes": 8000112,
+          "blocks": 3
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:62",
+          "bytes": 8000096,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:55",
+          "bytes": 8000096,
+          "blocks": 2
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:45",
+          "bytes": 8000040,
+          "blocks": 1
+        },
+        {
+          "location": "/home/ubuntu/ForgeMind-Intuition/forgemind/vectorized.py:65",
+          "bytes": 4000112,
+          "blocks": 3
+        },
+        {
+          "location": "/usr/local/lib/python3.12/dist-packages/numpy/_core/numeric.py:385",
+          "bytes": 1000112,
+          "blocks": 3
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:115",
+          "bytes": 2800,
+          "blocks": 35
+        },
+        {
+          "location": "/usr/lib/python3.12/tracemalloc.py:193",
+          "bytes": 2496,
+          "blocks": 52
+        }
+      ]
+    }
+  ],
+  "numeric_state_bytes": 29000000,
+  "rss_peak_mb": 1617.890625,
+  "tracemalloc_current_bytes": 315140060,
+  "note": "tracemalloc excludes native NumPy buffers; RSS includes Python objects, NumPy buffers, allocator overhead and imported runtime state."
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eliminar no es olvidar: es dejar una traza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+/* keep min-height:720px (do not remove) */
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:58px 76px 16px;position:relative;overflow:hidden}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+/* reduce bottom spacing after title */
+h1{font:400 54px/1.02 'DM Serif Display',serif;letter-spacing:-.035em;margin:14px 0 12px;max-width:760px}
+h1 em{font-style:normal;color:#e4543d}
+.flow{display:grid;grid-template-columns:1fr 78px 1fr 78px 1fr;align-items:center;gap:10px}
+/* shrink state height and inner padding */
+.state{min-height:170px;border:1px solid #20314135;background:#f1ece1;padding:12px 14px;position:relative}
+.state.eliminated{background:#e9e0d1;border-color:#e4543d}
+.state .tag{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#20314170}
+.state.eliminated .tag{color:#e4543d}
+.state h2{font:400 35px/1 'DM Serif Display',serif;margin:18px 0 8px}
+.state p{font:14px/1.55;color:#203141a8;margin:0;max-width:245px}
+.mark{position:absolute;right:14px;bottom:10px;font:42px 'IBM Plex Mono',monospace;color:#203141}
+.eliminated .mark{color:#e4543d}
+.survivor .mark{color:#4f7560}
+.arrow{font:32px 'IBM Plex Mono',monospace;color:#e4543d;text-align:center}
+/* bring evidence closer and reduce its height */
+.evidence{margin-top:12px;border-top:1px solid #20314135;border-bottom:1px solid #20314135;display:grid;grid-template-columns:1.1fr 1fr 1fr 1.25fr;min-height:90px}
+.evidence .cell{padding:10px 12px 8px 0;margin-right:12px;border-right:1px solid #20314122}
+.evidence .cell:last-child{border-right:0;margin-right:0}
+.label{font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#20314170}
+.value{font:17px/1.35 'IBM Plex Sans',sans-serif;margin-top:8px;color:#203141}
+.value code{font:15px 'IBM Plex Mono',monospace}
+.value .red{color:#e4543d}.value .green{color:#4f7560}
+.caption{position:absolute;left:76px;bottom:44px;max-width:720px;border-top:1px solid #20314135;padding-top:8px;font:18px/1.4 'DM Serif Display',serif}
+.caption em{font-style:normal;color:#e4543d}
+.source{position:absolute;right:76px;bottom:40px;text-align:right;font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314170}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">05 / eliminación explicable</div>
+  <h1>Eliminar no es olvidar: es dejar una <em>traza</em></h1>
+  <div class="flow">
+    <div class="state"><div class="tag">01 / hipótesis</div><h2>Active</h2><p>La candidata conserva masa posterior mientras reúne evidencia suficiente.</p><div class="mark">P(H)</div></div>
+    <div class="arrow">→</div>
+    <div class="state eliminated"><div class="tag">02 / decisión</div><h2>Eliminated</h2><p>Su posterior cae bajo el umbral o un oráculo aporta una falsación dura.</p><div class="mark">0.00</div></div>
+    <div class="arrow">→</div>
+    <div class="state survivor"><div class="tag">03 / espacio restante</div><h2>Survivor</h2><p>Las alternativas compatibles se renormalizan y mantienen la búsqueda viva.</p><div class="mark">Σ = 1</div></div>
+  </div>
+  <div class="evidence">
+    <div class="cell"><div class="label">Evidence ID</div><div class="value"><code>counterexample-7</code></div></div>
+    <div class="cell"><div class="label">Threshold</div><div class="value"><span class="red">posterior &lt; 0.02</span></div></div>
+    <div class="cell"><div class="label">Minimum evidence</div><div class="value">2 observaciones</div></div>
+    <div class="cell"><div class="label">Reason retained</div><div class="value"><span class="green">hard falsification supplied by oracle</span></div></div>
+  </div>
+  <div class="caption">La eliminación no borra historia: conserva <em>evidencia, umbral y motivo</em> para que otra persona pueda reconstruir la decisión.</div>
+  <div class="source">eliminated ≠ forgotten<br />traceable decision</div>
+</div>
+</body>
+</html>

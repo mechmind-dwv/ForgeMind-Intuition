@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Referencias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+/* keep top padding for title consistency */
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:58px 76px 20px 76px;position:relative;overflow:hidden}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+h1{font:400 58px/1 'DM Serif Display',serif;letter-spacing:-.035em;margin:14px 0 12px}
+.subtitle{font:16px/1.55 'IBM Plex Sans',sans-serif;color:#203141a8;margin:0 0 12px;max-width:700px}
+.refs{display:grid;grid-template-columns:1fr 1fr;column-gap:58px;row-gap:0;border-top:1px solid #20314135;padding-top:6px}
+.ref{min-height:96px;border-bottom:1px solid #20314135;padding:6px 0 6px;display:grid;grid-template-columns:36px 1fr;gap:10px}
+.ref .num{font:500 18px 'IBM Plex Mono',monospace;color:#e4543d}
+.ref h2{font:400 25px/1.05 'DM Serif Display',serif;margin:0 0 6px}
+.ref p{font:13px/1.45 'IBM Plex Sans',sans-serif;color:#203141a8;margin:0 0 6px;max-width:460px}
+.ref code{font:11px/1.4 'IBM Plex Mono',monospace;color:#20314175;word-break:break-word}
+.ref.local h2{color:#4f7560}.ref.local .num{color:#4f7560}
+.closing{border-top:1px solid #20314135;padding-top:8px;display:flex;justify-content:space-between;align-items:baseline;gap:30px;margin-top:12px}
+.closing strong{font:400 30px/1.1 'DM Serif Display',serif}
+.closing strong em{font-style:normal;color:#e4543d}
+.closing span{font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314170;text-align:right}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">11 / trazabilidad intelectual</div>
+  <h1>Referencias</h1>
+  <p class="subtitle">El sistema se apoya en una separación explícita entre credencia, evidencia y equivalencia algebraica.</p>
+  <div class="refs">
+    <div class="ref"><div class="num">01</div><div><h2>NIST · Bayesian Statistics 101</h2><p>Introducción oficial a prior, likelihood, posterior y actualización.</p><code>nist.gov/document/bayesclassday1-1pdf</code></div></div>
+    <div class="ref"><div class="num">02</div><div><h2>Stanford Encyclopedia · Bayesian Epistemology</h2><p>Probabilismo, condicionalización y grados de creencia frente a evidencia.</p><code>plato.stanford.edu/entries/epistemology-bayesian/</code></div></div>
+    <div class="ref"><div class="num">03</div><div><h2>ACM POPL/OOPSLA · Algebraic Specifications</h2><p>Especificaciones algebraicas como reglas de reescritura para síntesis y reducción.</p><code>doi.org/10.1145/3360558</code></div></div>
+    <div class="ref local"><div class="num">04</div><div><h2>ForgeMind Intuition · implementación local</h2><p>BayesianHypothesisSet, memoria estructurada, scoring explicable y advisor.</p><code>forgemind/bayesian.py · knowledge.py · intuition.py · advisor.py</code></div></div>
+  </div>
+  <div class="closing"><strong>La intuición se vuelve útil cuando puede<br /><em>mostrar de dónde viene.</em></strong><span>sources / evidence / code<br />ForgeMind Intuition 0.16</span></div>
+</div>
+</body>
+</html>

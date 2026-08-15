@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ejemplo: dos hipótesis, una probe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+/* keep min-height:720px per requirement */
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:58px 60px 40px;position:relative;overflow:hidden}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+/* keep upper spacing of title (margin-top) but reduce bottom margin to pull content up */
+h1{font:400 54px/1.02 'DM Serif Display',serif;letter-spacing:-.035em;margin:14px 0 12px;max-width:760px}
+h1 em{font-style:normal;color:#e4543d;display:inline-block;vertical-align:baseline}
+/* tighten main layout spacing */
+.main{display:grid;grid-template-columns:1fr 110px 1fr;align-items:stretch;gap:16px}
+.hyp{border-top:4px solid #203141;padding:12px 14px 12px;background:#f1ece1;min-height:180px;position:relative}
+.hyp.red{border-top-color:#e4543d}.hyp.green{border-top-color:#4f7560}
+.label{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#20314170}
+.hyp h2{font:400 39px/1 'DM Serif Display',serif;margin:14px 0 10px}
+.hyp p{font:15px/1.55;color:#203141a8;margin:0;max-width:280px}
+.code{margin-top:8px;font:15px 'IBM Plex Mono',monospace;color:#203141}.code span{color:#e4543d}
+.stat{position:absolute;right:12px;top:12px;text-align:right}.stat strong{display:block;font:34px 'DM Serif Display',serif;color:#203141}.stat small{font:10px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:#20314170}
+.probe{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6px}
+.probe .mark{font:34px 'IBM Plex Mono',monospace;color:#e4543d;margin-bottom:8px}.probe h3{font:400 25px 'DM Serif Display',serif;margin:0 0 6px}.probe p{font:12px/1.45 'IBM Plex Mono',monospace;color:#20314185;margin:0}.probe .line{width:1px;height:28px;background:#e4543d;margin-top:10px}
+/* reduce calc spacing */
+.calc{margin-top:12px;border-top:1px solid #20314135;border-bottom:1px solid #20314135;padding:8px 0;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.calc .heading{font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.17em;text-transform:uppercase;color:#20314170;margin-bottom:6px}.equation{font:18px 'IBM Plex Mono',monospace}.equation .red{color:#e4543d}.equation .green{color:#4f7560}
+.meter{height:10px;background:#ded8ca;margin-top:10px;position:relative}.meter i{display:block;height:10px;background:#dfb148}.meter i.high{width:81.8%}.meter i.low{width:18.2%;background:#4f7560}
+/* move footer into flow so it sits just after calc and doesn't anchor to container bottom */
+.footer{display:flex;justify-content:space-between;border-top:1px solid #20314135;padding-top:10px;margin-top:12px;font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314170}
+.footer .accent{color:#e4543d}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">07 / ejemplo operativo</div>
+  <h1>Dos hipótesis, <em>una probe</em></h1>
+  <div class="main">
+    <div class="hyp red"><div class="label">H1 / explicación A</div><div class="stat"><strong>0.50</strong><small>prior</small></div><h2>Sort preserva<br>la relación</h2><p>La transformación ordena los elementos y mantiene la propiedad observada.</p><div class="code">sort(x) → <span>preserved</span></div></div>
+    <div class="probe"><div class="mark">→</div><h3>probe-01</h3><p>la salida conserva<br>el orden esperado</p><div class="line"></div></div>
+    <div class="hyp green"><div class="label">H2 / explicación B</div><div class="stat"><strong>0.50</strong><small>prior</small></div><h2>Reverse preserva<br>la relación</h2><p>La inversión de la secuencia también podría explicar el comportamiento.</p><div class="code">reverse(x) → <span>preserved</span></div></div>
+  </div>
+  <div class="calc"><div><div class="heading">Likelihood / compatibilidad con la evidencia</div><div class="equation"><span class="red">P(E|H1) = 0.90</span> &nbsp; × &nbsp; P(H1) = 0.50</div><div class="meter"><i class="high"></i></div></div><div><div class="heading">Posterior / creencia actualizada</div><div class="equation"><span class="green">P(H1|E) = 0.818</span> &nbsp; &gt; &nbsp; P(H2|E) = 0.182</div><div class="meter"><i class="low"></i></div></div></div>
+  <div class="footer"><span>H1 gana credencia</span><span class="accent">pero todavía necesita otra prueba</span><span>posterior normalizado = 1.000</span></div>
+</div>
+</body>
+</html>

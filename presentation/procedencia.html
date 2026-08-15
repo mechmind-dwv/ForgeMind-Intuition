@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La evidencia debe tener procedencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:62px 60px 10px;position:relative;overflow:hidden}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+h1{font:400 56px/1 'DM Serif Display',serif;letter-spacing:-.035em;margin:15px 0 30px;max-width:760px}
+h1 em{font-style:normal;color:#e4543d}
+.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
+.trace{border-top:1px solid #20314135}
+.row{display:grid;grid-template-columns:46px 190px 1fr;gap:12px;align-items:center;min-height:64px;border-bottom:1px solid #20314135}
+.row .num{font:11px 'IBM Plex Mono',monospace;color:#e4543d}
+.row .label{font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314199}
+.row .value{font:15px/1.45 'IBM Plex Sans',sans-serif;color:#203141}
+.row .value code{font:14px 'IBM Plex Mono',monospace;color:#203141}
+.row .value .green{color:#4f7560}
+.row .value .red{color:#e4543d}
+.contract{border:1px solid #20314135;background:#e9e0d1;padding:12px 16px;min-height:200px;position:relative}
+.contract:before{content:'CONTRATO DE TRAZABILIDAD';display:block;font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#e4543d;margin-bottom:12px}
+.contract h2{font:400 32px/1.05 'DM Serif Display',serif;margin:0 0 10px}
+.contract p{font:14px/1.6;color:#203141a8;margin:0 0 12px}
+.example{border-top:1px solid #20314135;padding-top:8px;font:12px/1.7 'IBM Plex Mono',monospace;color:#203141}
+.example strong{font-weight:500;color:#e4543d}
+.bottom{position:absolute;left:60px;right:60px;bottom:60px;border-top:1px solid #20314135;padding-top:10px;display:flex;justify-content:space-between;gap:20px;font:11px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#20314175}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">04 / observabilidad</div>
+  <h1>La evidencia debe tener <em>procedencia</em></h1>
+  <div class="layout">
+    <div class="trace">
+      <div class="row"><div class="num">01</div><div class="label">evidence_id</div><div class="value"><code>probe-01</code><br><span class="green">identidad estable</span></div></div>
+      <div class="row"><div class="num">02</div><div class="label">description</div><div class="value">“la salida conserva el orden”<br><span class="green">qué se observó</span></div></div>
+      <div class="row"><div class="num">03</div><div class="label">source</div><div class="value"><code>property-test</code><br><span class="green">cómo llegó la señal</span></div></div>
+      <div class="row"><div class="num">04</div><div class="label">reasons</div><div class="value">P(E|H1) = 0.90<br><span class="red">por qué cambió el posterior</span></div></div>
+    </div>
+    <div class="contract">
+      <h2>Una actualización que se puede volver a leer.</h2>
+      <p>El agente no recibe solo un número. Recibe una cadena de razones que conecta el comportamiento observado con la decisión probabilística.</p>
+      <div class="example"><strong>POSTERIOR</strong> ← likelihood × prior<br><strong>FUENTE</strong> → property-test<br><strong>RESULTADO</strong> → H1 gana credencia</div>
+    </div>
+  </div>
+  <div class="bottom"><span>cada probe deja una huella</span><span>evidence ≠ assertion</span><span>forge / trace / update</span></div>
+</div>
+</body>
+</html>

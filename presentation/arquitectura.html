@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La arquitectura separa cuatro responsabilidades</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+/* keep min-height:720px as required; reduce inner vertical spacing */
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:58px 48px 36px;position:relative}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+h1{font:400 54px/1.02 'DM Serif Display',serif;letter-spacing:-.035em;margin:14px 0 24px;max-width:760px}
+h1 em{font-style:normal;color:#e4543d}
+.responsibilities{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border-top:1px solid #20314135;border-bottom:1px solid #20314135}
+.unit{min-height:170px;padding:8px 8px 8px 0;position:relative}
+.unit:not(:last-child){border-right:1px solid #20314135;padding-right:8px}
+.unit .num{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.16em;color:#e4543d}
+.unit .mark{height:7px;width:42px;margin:14px 0 12px;background:#203141}
+.unit.green .mark{background:#4f7560}.unit.red .mark{background:#e4543d}.unit.yellow .mark{background:#dfb148}
+.unit h2{font:400 31px/1 'DM Serif Display',serif;margin:0 0 12px}
+.unit p{font:14px/1.55;color:#203141a8;margin:0;max-width:220px}
+.unit code{font:13px 'IBM Plex Mono',monospace;color:#203141}
+.flow-title{margin-top:20px;font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#20314175}
+.flow{display:grid;grid-template-columns:1fr 48px 1fr 48px 1fr 48px 1fr;align-items:center;margin-top:10px;border-top:1px solid #20314135;border-bottom:1px solid #20314135;padding:8px 0}
+.flow-item{font:500 13px 'IBM Plex Mono',monospace;color:#203141}.flow-item span{display:block;margin-top:6px;font:13px 'IBM Plex Sans',sans-serif;color:#20314188}
+.op{text-align:center;font:25px 'IBM Plex Mono',monospace;color:#e4543d}
+.footer{position:absolute;left:48px;right:48px;bottom:36px;display:flex;justify-content:space-between;font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314170}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">06 / separación de responsabilidades</div>
+  <h1>La arquitectura separa cuatro <em>responsabilidades</em></h1>
+  <div class="responsibilities">
+    <div class="unit"><div class="num">01 / ESTRUCTURA</div><div class="mark"></div><h2>Álgebra</h2><p>Nodos, canonización, composición y reglas de reescritura para definir el espacio.</p><code>program → family</code></div>
+    <div class="unit green"><div class="num">02 / EXPERIENCIA</div><div class="mark"></div><h2>Memoria</h2><p>Hipótesis, equivalencias y falsificaciones con evidencia y procedencia.</p><code>memory → prior</code></div>
+    <div class="unit red"><div class="num">03 / CREENCIA</div><div class="mark"></div><h2>Probabilidad</h2><p>Priors, likelihoods, posteriors y renormalización tras cada observación.</p><code>P(H|E) ∝ P(E|H)P(H)</code></div>
+    <div class="unit yellow"><div class="num">04 / DECISIÓN</div><div class="mark"></div><h2>Agencia</h2><p>Ranking y valor experimental: elegir qué prueba reduce más la duda.</p><code>next probe → action</code></div>
+  </div>
+  <div class="flow-title">Flujo auditable / cada etapa deja una representación</div>
+  <div class="flow">
+    <div class="flow-item">CANDIDATO<span>secuencia de nodos</span></div><div class="op">→</div>
+    <div class="flow-item">REPRESENTACIÓN<span>familia canónica</span></div><div class="op">→</div>
+    <div class="flow-item">EVIDENCIA<span>probe + likelihood</span></div><div class="op">→</div>
+    <div class="flow-item">RECOMENDACIÓN<span>falsar después</span></div>
+  </div>
+  <div class="footer"><span>separar para explicar</span><span>integrar para decidir</span><span>forge / remember / update / act</span></div>
+</div>
+</body>
+</html>

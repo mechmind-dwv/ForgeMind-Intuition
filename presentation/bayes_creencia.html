@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bayes convierte evidencia en cambio de creencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:60px 76px 8px 76px;position:relative}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+.title{font:400 52px/1.02 'DM Serif Display',serif;letter-spacing:-.035em;margin:14px 0 12px;max-width:780px}
+.title em{color:#e4543d}
+.formula{border-top:1px solid #20314135;border-bottom:1px solid #20314135;padding:6px 0;font:500 26px 'IBM Plex Mono',monospace;letter-spacing:.01em;color:#203141}
+.formula .accent{color:#e4543d}.formula .soft{color:#4f7560}
+.flow{display:grid;grid-template-columns:1fr 72px 1fr 72px 1fr;align-items:start;margin-top:12px;gap:20px}
+.stage{min-height:150px;border:1px solid #20314135;background:#f1ece1;padding:10px 12px;position:relative}
+.stage-label{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#20314175}
+.stage h2{font:400 33px 'DM Serif Display',serif;margin:12px 0 8px}
+.stage p{font:14px/1.55;color:#203141a8;margin:0;max-width:245px}
+.bars{position:absolute;right:16px;bottom:10px;left:16px;height:36px;display:flex;align-items:end;gap:7px;border-bottom:1px solid #20314135;padding-top:0}
+.bar{width:18px;background:#203141;height:16px}.bar.mid{height:28px}.bar.high{height:36px}.bar.red{background:#e4543d}.bar.green{background:#4f7560}.bar.yellow{background:#dfb148}
+.arrow{font:34px 'IBM Plex Mono',monospace;text-align:center;color:#e4543d;line-height:1}
+.caption{margin-top:10px;max-width:650px;border-top:1px solid #20314135;padding-top:8px;font:16px/1.5 'DM Serif Display',serif;color:#203141}
+.caption span{color:#e4543d}.source{font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314170;text-align:right;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">03 / actualización bayesiana</div>
+  <h1 class="title">Bayes convierte evidencia en <em>cambio de creencia</em></h1>
+  <div class="formula"><span class="soft">P(H)</span> <span class="accent">→</span> P(E|H) <span class="accent">×</span> <span class="soft">P(H)</span> <span class="accent">∝</span> <span class="accent">P(H|E)</span></div>
+  <div class="flow">
+    <div class="stage"><div class="stage-label">01 / punto de partida</div><h2>Prior</h2><p>Memoria, contexto y experiencia previa asignan una credencia inicial.</p><div class="bars"><i class="bar mid"></i><i class="bar high"></i><i class="bar"></i><i class="bar mid"></i><i class="bar"></i></div></div>
+    <div class="arrow">×</div>
+    <div class="stage"><div class="stage-label">02 / compatibilidad</div><h2>Likelihood</h2><p>¿Qué tan esperable es esta observación si la hipótesis fuera útil?</p><div class="bars"><i class="bar red high"></i><i class="bar red mid"></i><i class="bar red"></i><i class="bar red mid"></i><i class="bar red"></i></div></div>
+    <div class="arrow">=</div>
+    <div class="stage"><div class="stage-label">03 / creencia actual</div><h2>Posterior</h2><p>La evidencia redistribuye el peso entre explicaciones rivales.</p><div class="bars"><i class="bar yellow"></i><i class="bar yellow high"></i><i class="bar yellow mid"></i><i class="bar yellow"></i><i class="bar yellow"></i></div></div>
+  </div>
+  <div class="caption">En ForgeMind, el posterior es una <span>credencia condicionada</span> a evidencia registrada: no es una garantía de corrección ni sustituye una prueba algebraica.</div>
+  <div class="source">NIST · Stanford Encyclopedia<br />probabilismo + condicionalización</div>
+</div>
+</body>
+</html>

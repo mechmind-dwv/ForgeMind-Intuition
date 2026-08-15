@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guardrails contra una intuición engañosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+/* keep top padding (title spacing) but reduce bottom padding to save vertical space */
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:58px 76px 24px;position:relative;overflow:hidden}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+h1{font:400 54px/1.02 'DM Serif Display',serif;letter-spacing:-.035em;margin:14px 0 24px;max-width:780px}
+h1 em{font-style:normal;color:#e4543d}
+.intro{max-width:700px;font:16px/1.55 'IBM Plex Sans',sans-serif;color:#203141a8;margin:0 0 18px}
+.rules{border-top:1px solid #20314135}
+/* reduced per-row min-height and gap so the four rules fit more compactly */
+.rule{display:grid;grid-template-columns:58px 270px 1fr 170px;gap:8px;align-items:center;min-height:62px;border-bottom:1px solid #20314135}
+.rule .symbol{font:31px 'IBM Plex Mono',monospace;color:#e4543d}
+.rule h2{font:400 25px/1.05 'DM Serif Display',serif;margin:0}
+.rule p{font:14px/1.45;color:#203141a8;margin:0}
+.rule .status{font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.15em;text-transform:uppercase;text-align:right;color:#4f7560}
+.rule .status.alert{color:#e4543d}
+/* push the closing up slightly and reduce its top padding */
+.closing{position:absolute;left:76px;right:76px;bottom:88px;border-top:1px solid #20314135;padding-top:8px;display:flex;align-items:baseline;justify-content:space-between;gap:30px}
+.closing strong{font:400 29px 'DM Serif Display',serif;font-weight:400}
+.closing strong em{font-style:normal;color:#e4543d}
+.closing span{font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314170;text-align:right}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">09 / control epistemológico</div>
+  <h1>Guardrails contra una intuición <em>engañosa</em></h1>
+  <p class="intro">Una intuición computacional es útil solo si sus atajos pueden ser inspeccionados, repetidos y corregidos.</p>
+  <div class="rules">
+    <div class="rule"><div class="symbol">≠</div><h2>Posterior ≠ verdad</h2><p>Una credencia alta resume evidencia condicionada; no prueba una equivalencia global.</p><div class="status alert">separar creencia / prueba</div></div>
+    <div class="rule"><div class="symbol">≠</div><h2>Una evidencia, una actualización</h2><p>La misma observación no puede contarse dos veces como si fueran probes independientes.</p><div class="status alert">evitar doble conteo</div></div>
+    <div class="rule"><div class="symbol">≥</div><h2>Mínimo antes de eliminar</h2><p>El umbral solo decide después del número de observaciones configurado.</p><div class="status">evidence floor: 2</div></div>
+    <div class="rule"><div class="symbol">→</div><h2>Analogía ≠ equivalencia</h2><p>Una forma algebraica parecida necesita un oráculo o una prueba para reclamar semántica.</p><div class="status alert">exigir falsación</div></div>
+  </div>
+  <div class="closing"><strong>ForgeMind organiza la incertidumbre;<br /><em>no la maquilla.</em></strong><span>guardrails / traceability / correction</span></div>
+</div>
+</body>
+</html>

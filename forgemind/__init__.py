@@ -6,6 +6,7 @@ from .advisor import CandidateAdvice, advise
 from .intuition import IntuitionScore, intuition_score
 from .knowledge import KnowledgeBase, KnowledgeRecord, MemoryType
 from .project import CandidateInput, ForgeMindProject, ProjectInput, ProjectValidationError
+from .exact_block import BlockBelief, BlockExactHypothesisSet
 
 __all__ = [
     "AdaptiveIntuitionModel",
@@ -25,6 +26,8 @@ __all__ = [
     "MemoryType",
     "ProjectInput",
     "ProjectValidationError",
+    "BlockBelief",
+    "BlockExactHypothesisSet",
     "intuition_score",
     "VectorizedBelief",
     "VectorizedHypothesisStore",

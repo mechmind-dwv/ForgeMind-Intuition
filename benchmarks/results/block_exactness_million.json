@@ -1,0 +1,21 @@
+{
+  "hypotheses": 1000000,
+  "rounds": 3,
+  "top_k": 25,
+  "block_size": 65536,
+  "max_abs_posterior_error": 4.235164736271502e-21,
+  "mean_abs_posterior_error": 5.921183729548589e-22,
+  "posterior_sum_block": 0.9999999999999991,
+  "posterior_sum_vectorized": 1.0000000000000009,
+  "top_k_min_overlap": 1.0,
+  "eliminated_sets_all_rounds_match": true,
+  "eliminated_block": 0,
+  "eliminated_vectorized": 0,
+  "block_numeric_state_bytes": 29000000,
+  "vectorized_numeric_state_bytes": 29000000,
+  "rss_after_init_mb": 409.359375,
+  "rss_peak_mb": 409.359375,
+  "block_observe_ms_total": 171.62122801528312,
+  "vectorized_observe_ms_total": 262.41413000389,
+  "block_over_vectorized": 0.6540090962812826
+}

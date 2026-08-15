@@ -180,9 +180,17 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ## Comparación objeto a un millón
 
-- [ ] Diseñar una referencia objeto acotada por bloques sin duplicar entradas innecesarias.
+- [x] Diseñar una referencia exacta acotada por bloques sin duplicar entradas innecesarias.
 - [x] Ejecutar comparación objeto/vectorizada con límite de memoria y timeout explícitos.
-- [ ] Verificar precisión, top-k, eliminaciones y condiciones de terminación.
+- [x] Verificar precisión, top-k, eliminaciones y condiciones de terminación.
 - [x] Documentar si la comparación completa es viable o queda bloqueada por memoria.
 
 **Resultado de viabilidad:** el modo exacto basado en `HypothesisBelief` completa 100.000 hipótesis con `185.64 MiB` de RSS máximo, pero a 1.000.000 falla durante la construcción bajo un límite controlado de `900 MiB`. La comparación completa de precisión a un millón sigue siendo técnicamente bloqueada; la referencia válida a esa escala es la implementación numérica por arrays y bloques.
+
+## Estrategia exacta por bloques para modo objeto
+
+- [x] Definir un presupuesto de memoria y tamaño de bloque reproducible.
+- [x] Implementar estado numérico por bloques con metadatos explicativos diferidos.
+- [x] Mantener normalización global mediante acumulación log-sum-exp por bloques.
+- [x] Mantener top-k global, eliminaciones y trazabilidad sin materializar un millón de objetos.
+- [x] Validar exactitud y RSS frente a la referencia vectorizada y documentar el límite del modo objeto.

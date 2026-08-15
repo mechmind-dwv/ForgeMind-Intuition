@@ -1,6 +1,7 @@
 __version__ = "0.16.0"
 
 from .adaptive import AdaptiveIntuitionModel, CalibrationResult
+from .agent_contract import AGENT_CONTRACT_VERSION, AGENT_OPERATIONS, AgentToolRequest, AgentToolResponse
 from .bayesian import BayesianHypothesisSet, EliminationDecision, EvidenceObservation, HypothesisBelief, HypothesisState
 from .advisor import CandidateAdvice, advise
 from .intuition import IntuitionScore, intuition_score
@@ -10,6 +11,10 @@ from .exact_block import BlockBelief, BlockExactHypothesisSet
 
 __all__ = [
     "AdaptiveIntuitionModel",
+    "AGENT_CONTRACT_VERSION",
+    "AGENT_OPERATIONS",
+    "AgentToolRequest",
+    "AgentToolResponse",
     "BayesianHypothesisSet",
     "EliminationDecision",
     "EvidenceObservation",

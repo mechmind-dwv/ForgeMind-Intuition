@@ -243,8 +243,8 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ### P1 — Distribución, agentes y seguridad
 
-- [ ] Preparar la primera distribución etiquetada del paquete Python con build limpio e instalación desde wheel.
-- [ ] Definir herramientas versionadas para agentes: registrar hipótesis, consultar top-k, proponer probes, aportar evidencia, explicar, aparcar, reactivar y restaurar snapshots.
+- [x] Preparar la primera distribución etiquetada del paquete Python con build limpio e instalación desde wheel.
+- [x] Definir herramientas versionadas para agentes: registrar hipótesis, consultar top-k, proponer probes, aportar evidencia, explicar, aparcar, reactivar y restaurar snapshots.
 - [ ] Añadir aislamiento de ejecución para programas y oráculos con timeout, límites de recursos y auditoría.
 - [ ] Completar pruebas E2E multiusuario de autorización, archivos y recuperación de sesión.
 - [ ] Implementar eliminación lógica y metadatos completos de archivos en la superficie full-stack.

@@ -1,0 +1,19 @@
+{
+  "status": "completed",
+  "hypotheses": 10000000,
+  "rounds": 3,
+  "block_size": 65536,
+  "posterior_sum": 1.0,
+  "top_k_size": 25,
+  "eliminated": 0,
+  "numeric_state_bytes": 290000000,
+  "rss_after_init_mb": 595.328125,
+  "rss_peak_mb": 786.08984375,
+  "round_ms": [
+    695.2842230093665,
+    642.6733850094024,
+    656.6616679774597
+  ],
+  "total_ms": 3882.7066280064173,
+  "note": "Numeric-only block stress test; no Python IDs, descriptions, or dictionaries are materialized."
+}

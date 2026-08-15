@@ -194,3 +194,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Mantener normalización global mediante acumulación log-sum-exp por bloques.
 - [x] Mantener top-k global, eliminaciones y trazabilidad sin materializar un millón de objetos.
 - [x] Validar exactitud y RSS frente a la referencia vectorizada y documentar el límite del modo objeto.
+
+## Stress test a 10 millones
+
+- [x] Ejecutar la estrategia por bloques con 10.000.000 de hipótesis y límite de memoria explícito.
+- [x] Medir RSS máximo, memoria numérica, buffers temporales y latencia por ronda.
+- [x] Verificar normalización, top-k y estados en el escenario que complete.
+- [x] Documentar si el proceso completa o queda limitado por memoria/tiempo y guardar el artefacto reproducible.

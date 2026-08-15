@@ -39,8 +39,8 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [ ] Preparar una estrategia de distribución y publicación del paquete.
 - [ ] Añadir importación y exportación de hipótesis, evidencia y reglas.
-- [ ] Conectar el frontend con datos reales del motor mediante una API local o servicio de ejecución.
-- [ ] Alinear la copia de `frontend/` con el contrato de la API pública.
+- [x] Conectar el frontend con datos reales del motor mediante una API local o servicio de ejecución.
+- [x] Alinear la copia de `frontend/` con el contrato de la API pública.
 
 ## Full-stack pendiente
 
@@ -67,3 +67,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Preparar el anuncio inicial de GitHub Discussions.
 - [x] Verificar sintaxis y reconocimiento remoto de las plantillas de issues y pull requests.
 - [x] Ejecutar la suite completa de pruebas unitarias y revisar errores de dependencias.
+
+## Alineación con API pública
+
+- [x] Inventariar el contrato público de la API y los adaptadores usados por frontend/.
+- [x] Alinear rutas, payloads, respuestas y tipos compartidos.
+- [x] Corregir estados de carga, error, vacío y compatibilidad en frontend/.
+- [x] Ejecutar pruebas, build y verificación responsive de frontend/.

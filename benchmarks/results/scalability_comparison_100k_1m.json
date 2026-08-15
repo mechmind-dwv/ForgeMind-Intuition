@@ -1,0 +1,56 @@
+{
+  "protocol": {
+    "rounds": 3,
+    "top_k": 25,
+    "elimination_threshold": 1e-12,
+    "ingestion": "VectorizedHypothesisStore.observe_arrays",
+    "reference": "dense NumPy log-space recurrence with the same likelihood arrays"
+  },
+  "runs": [
+    {
+      "hypotheses": 100000,
+      "max_abs_posterior_error": 0.0,
+      "mean_abs_posterior_error": 0.0,
+      "posterior_sum_reference": 1.0000000000000009,
+      "posterior_sum_vectorized": 1.0000000000000009,
+      "top_k_min_overlap": 1.0,
+      "eliminated_sets_all_rounds_match": true,
+      "eliminated_reference": 0,
+      "eliminated_vectorized": 0,
+      "numeric_state_bytes": 2900000,
+      "likelihood_input_bytes_per_round": 800000,
+      "reference_ms_total": 1.8366439908277243,
+      "vectorized_ms_total": 16.39698102371767,
+      "reference_over_vectorized": 0.11201110668915709
+    },
+    {
+      "hypotheses": 1000000,
+      "max_abs_posterior_error": 0.0,
+      "mean_abs_posterior_error": 0.0,
+      "posterior_sum_reference": 1.0000000000000009,
+      "posterior_sum_vectorized": 1.0000000000000009,
+      "top_k_min_overlap": 1.0,
+      "eliminated_sets_all_rounds_match": true,
+      "eliminated_reference": 0,
+      "eliminated_vectorized": 0,
+      "numeric_state_bytes": 29000000,
+      "likelihood_input_bytes_per_round": 8000000,
+      "reference_ms_total": 22.000130993546918,
+      "vectorized_ms_total": 193.20865898043849,
+      "reference_over_vectorized": 0.11386721024638101
+    }
+  ],
+  "scaling": {
+    "hypothesis_growth": 10.0,
+    "numeric_state_growth": 10.0,
+    "likelihood_buffer_growth": 10.0,
+    "reference_time_growth": 11.981815630391213,
+    "vectorized_time_growth": 11.78321347470371,
+    "direct_array_vs_previous_mapping_path_at_1m": 16.789
+  },
+  "limits": [
+    "The object-backed exact benchmark did not complete at 1,000,000 hypotheses under the sandbox memory limit.",
+    "The direct array path preserves exact posterior values and top-k/elimination decisions against the dense numeric reference, but the compatibility store remains slower because it owns metadata and index structures.",
+    "No eliminations were triggered under the selected threshold and evidence schedule; elimination equivalence is therefore verified for the empty eliminated set in this run, not for a non-empty pruning regime."
+  ]
+}

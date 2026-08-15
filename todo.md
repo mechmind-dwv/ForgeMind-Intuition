@@ -148,3 +148,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Mantener `observe()` y la trazabilidad por IDs como APIs compatibles.
 - [x] Adaptar el benchmark de un millón a la ruta directa.
 - [x] Verificar precisión, top-k, estados, memoria y speedup.
+
+## Comparación final de escalabilidad
+
+- [x] Reejecutar comparación exacta/vectorizada a 100.000 y 1.000.000 con la API directa por arrays.
+- [x] Verificar posteriores, top-k y conjuntos de eliminados en ambas escalas.
+- [x] Comparar speedup, memoria numérica y crecimiento entre escalas.
+- [x] Consolidar resultados y límites observados en un artefacto reproducible.

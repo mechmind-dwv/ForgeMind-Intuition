@@ -1,0 +1,15 @@
+{
+  "hypotheses": 1000000,
+  "rounds": 3,
+  "top_k": 25,
+  "max_abs_posterior_error": 0.0,
+  "mean_abs_posterior_error": 0.0,
+  "posterior_sum_reference": 1.0000000000000009,
+  "posterior_sum_vectorized": 1.0000000000000009,
+  "top_k_min_overlap": 1.0,
+  "eliminated_vectorized": 0,
+  "reference_ms_total": 20.54337301524356,
+  "vectorized_ms_total": 3476.688921015011,
+  "speedup_reference_over_vectorized": 0.005908890177394982,
+  "note": "The reference is a low-memory dense numeric recurrence; the vectorized store measurement includes million-entry Python ID/likelihood mapping overhead. The prior object-mode exact benchmark could not complete at 1,000,000 hypotheses under sandbox memory limits."
+}

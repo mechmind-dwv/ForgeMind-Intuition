@@ -129,3 +129,15 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Implementar benchmark reproducible en espacios masivos con evidencia compartida.
 - [x] Comparar error máximo, error medio, top-k y decisiones de eliminación.
 - [x] Guardar resultados, ejecutar la suite y publicar la validación.
+
+## Benchmark ampliado a un millón
+
+- [ ] Ejecutar comparación exacta/vectorizada con 1.000.000 de hipótesis.
+- [ ] Verificar precisión de posteriores, top-k y eliminaciones.
+- [ ] Comparar speedup, memoria y escalabilidad frente al benchmark de 100.000.
+- [ ] Guardar resultados y documentar límites observados.
+
+## Escalabilidad de la API vectorizada
+
+- [ ] Añadir una ruta de ingestión por arrays para evitar materializar un millón de IDs y likelihoods como diccionarios Python.
+- [ ] Repetir la comparación contra el modo exacto objeto cuando exista un protocolo de memoria compatible con 1.000.000 de hipótesis.

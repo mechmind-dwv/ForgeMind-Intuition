@@ -5,6 +5,7 @@ from .bayesian import BayesianHypothesisSet, EliminationDecision, EvidenceObserv
 from .advisor import CandidateAdvice, advise
 from .intuition import IntuitionScore, intuition_score
 from .knowledge import KnowledgeBase, KnowledgeRecord, MemoryType
+from .project import CandidateInput, ForgeMindProject, ProjectInput, ProjectValidationError
 
 __all__ = [
     "AdaptiveIntuitionModel",
@@ -17,9 +18,13 @@ __all__ = [
     "advise",
     "CalibrationResult",
     "IntuitionScore",
+    "CandidateInput",
+    "ForgeMindProject",
     "KnowledgeBase",
     "KnowledgeRecord",
     "MemoryType",
+    "ProjectInput",
+    "ProjectValidationError",
     "intuition_score",
     "VectorizedBelief",
     "VectorizedHypothesisStore",

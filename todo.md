@@ -26,8 +26,12 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ## Núcleo experimental pendiente
 
-- [ ] Definir el contrato de entrada para proyectos externos y candidatas de código.
-- [ ] Implementar eliminación de hipótesis con razones, umbrales y estados de incertidumbre.
+- [x] Definir el contrato de entrada para proyectos externos y candidatas de código.
+- [x] Validar esquema de proyecto, candidatas, probes y targets con errores legibles.
+- [x] Añadir carga desde JSON y normalización de candidatas externas.
+- [x] Implementar eliminación de hipótesis con razones, umbrales y estados de incertidumbre.
+- [x] Añadir estados `active`, `uncertain`, `parked`, `survivor` y `eliminated`.
+- [x] Registrar razones, evidencia, umbral y reversibilidad de cada decisión.
 - [ ] Añadir pruebas y documentación adicional de integración del módulo probabilístico.
 - [ ] Definir benchmarks de latencia, memoria, exactitud y trazabilidad como protocolo estable.
 

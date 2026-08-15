@@ -26,7 +26,7 @@ Las fases se pueden solapar cuando sus contratos ya estén definidos, pero no se
 
 El objetivo es que una persona pueda instalar ForgeMind, inicializar un proyecto y obtener una recomendación sin estudiar primero el código interno.
 
-El trabajo base ya incluye un `pyproject.toml` instalable, los comandos `forgemind init`, `forgemind score` y `forgemind advise`, el formato de proyecto reproducible, documentación de tres capas y un frontend versionable. La parte pendiente es cerrar el contrato de entrada para proyectos externos, alinear el frontend integrado con la API real y preparar la primera distribución etiquetada.
+El trabajo base ya incluye un `pyproject.toml` instalable, los comandos `forgemind init`, `forgemind score` y `forgemind advise`, el formato de proyecto reproducible, documentación de tres capas y un frontend versionable. El contrato de entrada para proyectos externos ya está definido en `ProjectInput` y valida `schema_version`, IDs de candidatas, programas, probes, targets y metadata. La parte pendiente es alinear el frontend integrado con la API real y preparar la primera distribución etiquetada.
 
 ### Criterios de finalización
 
@@ -34,7 +34,7 @@ El trabajo base ya incluye un `pyproject.toml` instalable, los comandos `forgemi
 |---|---|
 | instalación limpia | entorno virtual nuevo + `pip install -e .` |
 | CLI funcional | `init`, `score` y `advise` con fixture documentado |
-| API estable | pruebas de contrato para entradas y salidas |
+| API estable | pruebas de contrato para entradas, candidatas y salidas |
 | documentación usable | README ejecutable por una persona nueva |
 | distribución | artefacto de paquete y versión etiquetada |
 
@@ -57,7 +57,8 @@ El flujo previsto es login, creación de proyecto, carga de configuración o evi
 
 ## Fase 6 — Integración con agentes
 
-ForgeMind debe exponer operaciones que un agente pueda invocar con límites claros: registrar hipótesis, consultar top-k, proponer el siguiente probe, aportar evidencia, pedir explicación y exportar un snapshot. Las operaciones que ejecutan código o cambian estado deben ser explícitas y auditablemente registradas.
+ForgeMind debe exponer operaciones que un agente pueda invocar con límites claros: registrar hipótesis, consultar top-k, proponer el siguiente probe, aportar evidencia, pedir explicación, aparcar o reactivar candidatas y exportar un snapshot.
+ Las operaciones que ejecutan código o cambian estado deben ser explícitas y auditablemente registradas.
 
 La integración no debe entregar una caja negra que diga “esta es la respuesta”. Debe devolver una acción recomendada, el motivo, las hipótesis afectadas, la evidencia utilizada y el nivel de incertidumbre.
 

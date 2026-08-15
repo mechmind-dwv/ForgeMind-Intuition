@@ -1,7 +1,8 @@
 """Bayesian belief updates and explainable hypothesis elimination.
 
-The hot path stores weights in log space. Public snapshots still expose normal
-posteriors so existing callers remain compatible.
+The hot path stores weights in log space. Public snapshots expose normal
+posteriors and explicit decision provenance so callers can distinguish belief,
+uncertainty, parking and hard falsification.
 """
 
 from __future__ import annotations
@@ -15,6 +16,8 @@ from typing import Any, Mapping
 
 class HypothesisState(str, Enum):
     ACTIVE = "active"
+    UNCERTAIN = "uncertain"
+    PARKED = "parked"
     SURVIVOR = "survivor"
     ELIMINATED = "eliminated"
 
@@ -32,6 +35,8 @@ class EvidenceObservation:
     def __post_init__(self) -> None:
         if not self.evidence_id.strip():
             raise ValueError("evidence_id must not be empty")
+        if not self.description.strip():
+            raise ValueError("description must not be empty")
         if not self.likelihoods:
             raise ValueError("likelihoods must not be empty")
         if any(not 0.0 <= value <= 1.0 for value in self.likelihoods.values()):
@@ -51,6 +56,14 @@ class HypothesisBelief:
     log_weight: float | None = None
 
     def __post_init__(self) -> None:
+        if not self.hypothesis_id.strip():
+            raise ValueError("hypothesis_id must not be empty")
+        if not self.description.strip():
+            raise ValueError("description must not be empty")
+        if not isfinite(self.prior) or self.prior < 0.0:
+            raise ValueError("prior must be a finite non-negative weight")
+        if not isfinite(self.posterior) or self.posterior < 0.0:
+            raise ValueError("posterior must be a finite non-negative weight")
         if self.log_weight is None:
             self.log_weight = log(self.posterior) if self.posterior > 0.0 else float("-inf")
 
@@ -75,6 +88,9 @@ class EliminationDecision:
     threshold: float
     reason: str
     evidence_ids: tuple[str, ...]
+    state: HypothesisState = HypothesisState.ACTIVE
+    reversible: bool = True
+    reason_code: str = "none"
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -84,11 +100,20 @@ class EliminationDecision:
             "threshold": self.threshold,
             "reason": self.reason,
             "evidence_ids": list(self.evidence_ids),
+            "state": self.state.value,
+            "reversible": self.reversible,
+            "reason_code": self.reason_code,
         }
 
 
 class BayesianHypothesisSet:
-    """Normalized belief distribution with stable log-space updates."""
+    """Normalized belief distribution with stable log-space updates.
+
+    A low posterior without enough evidence becomes ``UNCERTAIN`` rather than
+    being removed. ``PARKED`` is a reversible, caller-controlled state for a
+    hypothesis that should be hidden from the default top-k view. A hard oracle
+    falsification is irreversible within this set and becomes ``ELIMINATED``.
+    """
 
     def __init__(self, beliefs: list[HypothesisBelief], *, elimination_threshold: float = 0.02, min_evidence: int = 1) -> None:
         if not beliefs:
@@ -135,12 +160,13 @@ class BayesianHypothesisSet:
     def beliefs(self) -> tuple[HypothesisBelief, ...]:
         return tuple(self._beliefs.values())
 
-    def top_k(self, k: int, *, include_eliminated: bool = False) -> list[HypothesisBelief]:
+    def top_k(self, k: int, *, include_eliminated: bool = False, include_parked: bool = False) -> list[HypothesisBelief]:
         """Return the k highest posterior beliefs without a full sort."""
         if k < 1:
             raise ValueError("k must be positive")
         candidates = self._beliefs.values() if include_eliminated else (
-            belief for belief in self._beliefs.values() if belief.state != HypothesisState.ELIMINATED
+            belief for belief in self._beliefs.values()
+            if belief.state != HypothesisState.ELIMINATED and (include_parked or belief.state != HypothesisState.PARKED)
         )
         return nlargest(k, candidates, key=lambda belief: belief.posterior)
 
@@ -171,14 +197,81 @@ class BayesianHypothesisSet:
         decisions: list[EliminationDecision] = []
         for belief in self._beliefs.values():
             enough_evidence = len(belief.evidence_ids) >= self.min_evidence
-            should_eliminate = belief.state != HypothesisState.ELIMINATED and enough_evidence and belief.posterior < self.elimination_threshold
-            if should_eliminate:
+            if belief.state == HypothesisState.ELIMINATED:
+                reason = belief.reasons[-1] if belief.reasons else "hard falsification"
+                decisions.append(self._decision(belief, False, reason, "hard_falsification", reversible=False))
+                continue
+            if belief.state == HypothesisState.PARKED:
+                reason = belief.reasons[-1] if belief.reasons else "parked by caller"
+                decisions.append(self._decision(belief, False, reason, "parked", reversible=True))
+                continue
+            if belief.posterior < self.elimination_threshold and enough_evidence:
                 belief.state = HypothesisState.ELIMINATED
-                belief.reasons.append(f"posterior {belief.posterior:.4f} below elimination threshold {self.elimination_threshold:.4f}")
-            elif belief.state != HypothesisState.ELIMINATED:
-                belief.state = HypothesisState.SURVIVOR if belief.posterior >= self.elimination_threshold else HypothesisState.ACTIVE
-            decisions.append(EliminationDecision(belief.hypothesis_id, should_eliminate, belief.posterior, self.elimination_threshold, belief.reasons[-1] if belief.reasons else "no elimination", tuple(belief.evidence_ids)))
+                reason = f"posterior {belief.posterior:.4f} below elimination threshold {self.elimination_threshold:.4f} after {len(belief.evidence_ids)} evidence items"
+                belief.reasons.append(reason)
+                decisions.append(self._decision(belief, True, reason, "posterior_below_threshold", reversible=False))
+            elif belief.posterior < self.elimination_threshold:
+                belief.state = HypothesisState.UNCERTAIN
+                reason = f"posterior {belief.posterior:.4f} below threshold; awaiting {self.min_evidence - len(belief.evidence_ids)} more evidence item(s)"
+                if not belief.reasons or belief.reasons[-1] != reason:
+                    belief.reasons.append(reason)
+                decisions.append(self._decision(belief, False, reason, "insufficient_evidence", reversible=True))
+            else:
+                belief.state = HypothesisState.SURVIVOR
+                reason = f"posterior {belief.posterior:.4f} meets threshold {self.elimination_threshold:.4f}"
+                decisions.append(self._decision(belief, False, reason, "survives_threshold", reversible=True))
         return decisions
+
+    def eliminate_hypothesis(self, hypothesis_id: str, *, reason: str, evidence_ids: tuple[str, ...] = (), threshold: float | None = None, reversible: bool = False) -> EliminationDecision:
+        """Apply an explicit caller decision while preserving provenance."""
+        belief = self._beliefs.get(hypothesis_id)
+        if belief is None:
+            raise KeyError(f"unknown hypothesis_id: {hypothesis_id}")
+        if not reason.strip():
+            raise ValueError("reason must not be empty")
+        belief.state = HypothesisState.ELIMINATED
+        belief.log_weight = float("-inf")
+        belief.reasons.append(reason)
+        belief.evidence_ids.extend(item for item in evidence_ids if item not in belief.evidence_ids)
+        self._normalize()
+        return self._decision(belief, True, reason, "explicit", reversible=reversible, threshold=threshold)
+
+    def park(self, hypothesis_id: str, *, reason: str) -> EliminationDecision:
+        """Park a hypothesis without treating it as falsified."""
+        belief = self._beliefs.get(hypothesis_id)
+        if belief is None:
+            raise KeyError(f"unknown hypothesis_id: {hypothesis_id}")
+        if belief.state == HypothesisState.ELIMINATED:
+            raise ValueError("an eliminated hypothesis cannot be parked")
+        if not reason.strip():
+            raise ValueError("reason must not be empty")
+        belief.state = HypothesisState.PARKED
+        belief.reasons.append(reason)
+        return self._decision(belief, False, reason, "parked", reversible=True)
+
+    def unpark(self, hypothesis_id: str) -> HypothesisBelief:
+        """Reactivate a parked hypothesis as uncertain for further evidence."""
+        belief = self._beliefs.get(hypothesis_id)
+        if belief is None:
+            raise KeyError(f"unknown hypothesis_id: {hypothesis_id}")
+        if belief.state != HypothesisState.PARKED:
+            raise ValueError("only parked hypotheses can be unparked")
+        belief.state = HypothesisState.UNCERTAIN
+        belief.reasons.append("reactivated from parked state")
+        return belief
+
+    def _decision(self, belief: HypothesisBelief, eliminated: bool, reason: str, reason_code: str, *, reversible: bool, threshold: float | None = None) -> EliminationDecision:
+        return EliminationDecision(
+            hypothesis_id=belief.hypothesis_id,
+            eliminated=eliminated,
+            posterior=belief.posterior,
+            threshold=self.elimination_threshold if threshold is None else threshold,
+            reason=reason,
+            evidence_ids=tuple(belief.evidence_ids),
+            state=belief.state,
+            reversible=reversible,
+            reason_code=reason_code,
+        )
 
     def snapshot(self) -> dict[str, Any]:
         return {

@@ -78,6 +78,31 @@ forgemind score forgemind.project.json
 
 El archivo de proyecto está pensado para viajar con el código y los protocolos, no para sustituir un almacén de archivos ni para guardar secretos. Sus campos principales son candidatas, probes, targets, resultados y configuración experimental.
 
+## Contrato de entrada para proyectos externos
+
+Un proyecto externo se transporta como JSON con `schema_version`, `name`, `candidates`, `probes`, `targets` y `metadata`. Cada candidata debe tener un identificador estable, descripción, programa y origen. El lector mantiene compatibilidad con el formato legacy en el que una candidata era directamente una lista de nodos, pero los proyectos nuevos deben usar el formato rico:
+
+```json
+{
+  "schema_version": "1.0",
+  "name": "mi-proyecto",
+  "candidates": [
+    {
+      "id": "candidate-sort-01",
+      "description": "ordena la entrada ascendentemente",
+      "source": "agent",
+      "program": [{"kind": "U", "name": "sort"}],
+      "metadata": {"language": "python"}
+    }
+  ],
+  "probes": [[3, 1, 2]],
+  "targets": [],
+  "metadata": {"repository": "local"}
+}
+```
+
+`ProjectInput.from_dict()` valida versión, nombres, IDs únicos, programas no vacíos, probes enteros y tipos de metadata. Los errores se expresan como `ProjectValidationError` con la ruta del campo inválido. Los targets no se inventan: los proporciona el integrador mediante su oráculo.
+
 ## Uso del motor bayesiano
 
 `BayesianHypothesisSet` mantiene un conjunto normalizado de creencias. Internamente trabaja con `log_weight` para evitar underflow y usa normalización estable; la propiedad `posterior` se conserva para compatibilidad.
@@ -105,6 +130,18 @@ for belief in beliefs.top_k(2):
 ```
 
 La misma `evidence_id` no se puede aplicar dos veces. Una falsación dura se registra separadamente de una eliminación por umbral, y cada decisión conserva razones y procedencia.
+
+El estado de una hipótesis distingue incertidumbre de falsación:
+
+| Estado | Significado | ¿Se muestra en `top_k()`? | ¿Es reversible? |
+|---|---|---:|---:|
+| `active` | todavía no hay señal suficiente | sí | sí |
+| `uncertain` | posterior bajo, pero falta evidencia mínima | sí | sí |
+| `parked` | aparcada por decisión del usuario o agente | no por defecto | sí |
+| `survivor` | supera el umbral actual | sí | sí |
+| `eliminated` | falsada o descartada tras evidencia suficiente | no por defecto | no dentro del ciclo |
+
+Para decisiones explícitas se usan `eliminate_hypothesis(hypothesis_id, reason=..., evidence_ids=...)`, `park(...)` y `unpark(...)`. El resultado incluye `reason_code`, `reversible`, `state`, posterior, umbral y evidencia asociada.
 
 ## Uso vectorizado para espacios grandes
 

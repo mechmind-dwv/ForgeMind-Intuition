@@ -50,7 +50,7 @@ Esta capa representa qué es una candidata y cómo se ejecuta. Sus componentes p
 
 Esta capa transforma observaciones en creencias actualizadas y decisiones explicables. Sus módulos principales son `bayesian.py`, `intuition.py`, `adaptive.py` y `advisor.py`.
 
-`BayesianHypothesisSet` mantiene priors, posterior y estados `active`, `survivor` o `eliminated`. Internamente usa `log_weight` y normalización estable por log-sum-exp; externamente conserva `posterior` para compatibilidad. Una misma `evidence_id` no puede aplicarse dos veces.
+`BayesianHypothesisSet` mantiene priors, posterior y estados `active`, `uncertain`, `parked`, `survivor` o `eliminated`. Internamente usa `log_weight` y normalización estable por log-sum-exp; externamente conserva `posterior` para compatibilidad. Una misma `evidence_id` no puede aplicarse dos veces. Un posterior bajo con evidencia insuficiente produce `uncertain`; una hipótesis aparcada queda fuera del top-k por defecto pero puede reactivarse; una falsación dura produce `eliminated` y conserva procedencia no reversible dentro del ciclo.
 
 La eliminación tiene dos mecanismos. La **falsación dura** viene de un oráculo o prueba que declara incompatible una hipótesis. La **eliminación por umbral** es una decisión probabilística y reversible solo mediante una operación futura explícita; debe registrar umbral, evidencia y razón.
 
@@ -58,7 +58,11 @@ La eliminación tiene dos mecanismos. La **falsación dura** viene de un orácul
 
 `intuition.py` calcula una puntuación explicable combinando novedad, similitud, compresión, falsabilidad y complejidad. `adaptive.py` calibra la confianza con evidencia ponderada y shrinkage. `advisor.py` expone una recomendación para agentes: qué hipótesis probar primero y qué evidencia falta.
 
-### Contratos de la Capa 2
+#### Decisiones de eliminación
+
+Cada decisión devuelve `hypothesis_id`, `posterior`, `threshold`, `state`, `reason_code`, `reason`, `evidence_ids` y `reversible`. Los códigos actuales distinguen `hard_falsification`, `posterior_below_threshold`, `insufficient_evidence`, `parked`, `survives_threshold` y `explicit`. Esta distinción evita tratar una falta temporal de evidencia como una refutación.
+
+## Contratos de la Capa 2
 
 | Contrato | Entrada | Salida | Invariante |
 |---|---|---|---|
@@ -71,7 +75,7 @@ La eliminación tiene dos mecanismos. La **falsación dura** viene de un orácul
 
 Esta capa hace que el motor sea utilizable por proyectos reales. Incluye `project.py`, `cli.py`, los benchmarks, la documentación y el frontend integrado en `frontend/`.
 
-El formato de proyecto conserva hipótesis, priors, probes, targets, resultados y configuración en JSON. La CLI expone `forgemind init`, `forgemind score` y `forgemind advise`. La interfaz debe consumir contratos tipados y mostrar estados de carga, error, vacío y procedencia.
+El formato de proyecto conserva hipótesis, priors, probes, targets, resultados y configuración en JSON. `ProjectInput.from_dict()` valida `schema_version`, nombre, IDs únicos, programas no vacíos, probes enteros y metadata; también normaliza el formato legacy de listas de nodos. La CLI expone `forgemind init`, `forgemind score` y `forgemind advise`. La interfaz debe consumir contratos tipados y mostrar estados de carga, error, vacío y procedencia.
 
 El frontend visual actual es una superficie de exploración: muestra hipótesis, evidencia, puntuaciones y la próxima prueba. La futura integración full-stack debe usar una API explícita para persistir proyectos, hipótesis, evidencias y metadatos de archivos. Los bytes de archivos deben vivir en almacenamiento de objetos; la base de datos solo conserva `storageKey`, URL, tipo MIME, tamaño y relación con el proyecto.
 

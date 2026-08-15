@@ -6,8 +6,12 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+
 jobs:
-  test:
+  test-vectorized:
+    name: Python 3.12 · vectorized extra
     runs-on: ubuntu-latest
 
     steps:
@@ -18,9 +22,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
 
-      - name: Install test dependencies
-        run: python -m pip install --upgrade pip pytest
+      - name: Install package with test and vectorized extras
+        run: python -m pip install --upgrade pip && python -m pip install -e ".[dev,vectorized]"
 
-      - name: Run tests
+      - name: Verify NumPy and package import
+        run: |
+          python -c "import numpy as np; print(f'NumPy {np.__version__}')"
+          python -c "from forgemind import BlockExactHypothesisSet, VectorizedHypothesisStore; print('Vectorized API import: OK')"
+
+      - name: Run full test suite
         run: python -m pytest -q

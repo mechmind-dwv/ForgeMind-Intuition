@@ -207,3 +207,8 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Evitar que la importación raíz de `forgemind` requiera NumPy en instalaciones base.
 - [x] Mantener el módulo exacto por bloques disponible cuando se instala el extra vectorizado.
 - [x] Validar CI sin NumPy y ejecutar la suite completa con NumPy.
+
+## Automatización CI/CD
+
+- [x] Añadir workflow de GitHub Actions para instalar el extra vectorizado y ejecutar la suite completa.
+- [x] Validar localmente los mismos comandos del workflow y documentar el comportamiento ante fallos.

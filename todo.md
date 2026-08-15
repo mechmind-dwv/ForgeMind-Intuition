@@ -19,8 +19,8 @@
 - [x] Crear benchmark reproducible de latencia, memoria y exactitud.
 - [ ] Definir benchmarks de latencia, memoria, exactitud y trazabilidad.
 - [ ] Publicar la optimización de rendimiento en el repositorio GitHub.
-- [ ] Diseñar almacenamiento vectorizado con arrays numéricos y metadatos diferidos.
-- [ ] Comparar memoria y throughput entre objetos Python y almacenamiento vectorizado.
+- [x] Diseñar almacenamiento vectorizado con arrays numéricos y metadatos diferidos.
+- [x] Comparar memoria y throughput entre objetos Python y almacenamiento vectorizado.
 - [ ] Implementar eliminación de hipótesis con razones, umbrales y estados de incertidumbre.
 - [ ] Añadir pruebas y documentación de integración del módulo probabilístico.
 - [ ] Crear una presentación sobre la arquitectura algebraica y probabilística de ForgeMind.

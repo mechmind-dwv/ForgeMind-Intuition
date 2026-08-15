@@ -24,6 +24,9 @@ include = ["forgemind*"]
 dev = [
     "pytest>=8"
 ]
+vectorized = [
+    "numpy>=1.26"
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

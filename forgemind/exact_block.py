@@ -4,10 +4,19 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable
 
-import numpy as np
+try:
+    import numpy as np
+except ModuleNotFoundError:  # NumPy is an optional dependency for the base package.
+    np = None  # type: ignore[assignment]
 
-ACTIVE = np.uint8(0)
-ELIMINATED = np.uint8(2)
+ACTIVE = np.uint8(0) if np is not None else 0
+ELIMINATED = np.uint8(2) if np is not None else 2
+
+
+def _require_numpy():
+    if np is None:
+        raise ImportError("BlockExactHypothesisSet requires `pip install forgemind[vectorized]`")
+    return np
 
 
 @dataclass(frozen=True)
@@ -27,8 +36,9 @@ class BlockExactHypothesisSet:
     """
 
     def __init__(self, priors: np.ndarray, *, ids: Iterable[str] | None = None, block_size: int = 65_536, elimination_threshold: float = 0.02, min_evidence: int = 1) -> None:
-        values = np.asarray(priors, dtype=np.float64)
-        if values.ndim != 1 or values.size == 0 or np.any(~np.isfinite(values)) or np.any(values < 0) or not np.any(values > 0):
+        numpy = _require_numpy()
+        values = numpy.asarray(priors, dtype=numpy.float64)
+        if values.ndim != 1 or values.size == 0 or numpy.any(~numpy.isfinite(values)) or numpy.any(values < 0) or not numpy.any(values > 0):
             raise ValueError("priors must be a non-empty one-dimensional array with positive mass")
         if block_size < 1 or min_evidence < 1 or not 0.0 < elimination_threshold < 1.0:
             raise ValueError("invalid block_size, min_evidence, or elimination_threshold")

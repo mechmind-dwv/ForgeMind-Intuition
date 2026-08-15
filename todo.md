@@ -201,3 +201,9 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Medir RSS máximo, memoria numérica, buffers temporales y latencia por ronda.
 - [x] Verificar normalización, top-k y estados en el escenario que complete.
 - [x] Documentar si el proceso completa o queda limitado por memoria/tiempo y guardar el artefacto reproducible.
+
+## Compatibilidad sin NumPy
+
+- [x] Evitar que la importación raíz de `forgemind` requiera NumPy en instalaciones base.
+- [x] Mantener el módulo exacto por bloques disponible cuando se instala el extra vectorizado.
+- [x] Validar CI sin NumPy y ejecutar la suite completa con NumPy.

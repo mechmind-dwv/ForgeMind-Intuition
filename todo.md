@@ -52,7 +52,7 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 ## Rendimiento pendiente
 
 - [x] Añadir actualización dispersa por familias de hipótesis.
-- [ ] Separar arrays numéricos de metadatos explicativos en el hot path completo.
+- [x] Separar arrays numéricos de metadatos explicativos en el hot path completo.
 - [ ] Diseñar poda con cotas superiores y estados `parked` reactivables.
 - [ ] Medir exactitud frente al modo exacto en espacios masivos.
 
@@ -108,3 +108,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Implementar actualización parcial sin recomputar familias no afectadas.
 - [x] Mantener razones, estados y compatibilidad con la actualización exacta existente.
 - [x] Añadir pruebas de equivalencia y benchmark de trabajo evitado.
+
+## Separación del hot path vectorizado
+
+- [x] Auditar qué campos numéricos y explicativos se tocan durante observe y top_k.
+- [x] Separar estructuras numéricas, índices de familia y metadatos de explicación.
+- [x] Mantener snapshots, razones y compatibilidad sin añadir objetos al hot path.
+- [x] Añadir pruebas y benchmark de memoria, latencia y exactitud.

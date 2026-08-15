@@ -86,6 +86,28 @@ class VectorizedHypothesisStore:
         self.posteriors[active] = np.exp(self.log_weights[active] - normalizer)
         self.log_weights[active] -= normalizer
 
+    def _apply_numeric_update(self, positions: np.ndarray, values: np.ndarray, hard_positions: np.ndarray) -> np.ndarray:
+        """Mutate only contiguous numeric arrays; return active positions touched."""
+        active_mask = self.states[positions] != ELIMINATED
+        active_positions = positions[active_mask]
+        active_values = values[active_mask]
+        self.last_update_count = int(active_positions.size)
+        log_values = np.full(active_values.shape, -np.inf, dtype=np.float64)
+        positive = active_values > 0
+        log_values[positive] = np.log(active_values[positive])
+        self.log_weights[active_positions] += log_values
+        self.evidence_counts[active_positions] += 1
+        if hard_positions.size:
+            self.states[hard_positions] = ELIMINATED
+            self.log_weights[hard_positions] = -np.inf
+        self._normalize()
+        eligible = (self.states != ELIMINATED) & (self.evidence_counts >= self.min_evidence) & (self.posteriors < self.elimination_threshold)
+        self.states[eligible] = ELIMINATED
+        self.log_weights[eligible] = -np.inf
+        if np.any(eligible):
+            self._normalize()
+        return active_positions
+
     def observe(self, likelihoods: Mapping[str, float], evidence_id: str, *, reason: str = "", hard_falsification: Iterable[str] = (), affected_families: Iterable[str] | None = None) -> None:
         """Apply a sparse observation; optionally restrict work to affected families.
 
@@ -95,7 +117,6 @@ class VectorizedHypothesisStore:
         """
         if evidence_id in self.evidence_ids:
             raise ValueError(f"evidence_id already observed: {evidence_id}")
-        self.evidence_ids.add(evidence_id)
         selected_families = tuple(dict.fromkeys(affected_families)) if affected_families is not None else tuple(self.family_positions)
         unknown_families = set(selected_families).difference(self.family_positions)
         if unknown_families:
@@ -107,28 +128,13 @@ class VectorizedHypothesisStore:
         values = np.asarray([float(likelihoods[hypothesis_id]) for hypothesis_id in ids], dtype=np.float64)
         if np.any(values < 0) or np.any(values > 1):
             raise ValueError("likelihoods must be between 0 and 1")
-        active_positions = positions[self.states[positions] != ELIMINATED]
-        active_values = values[self.states[positions] != ELIMINATED]
-        self.last_update_count = int(active_positions.size)
-        self.last_update_families = selected_families
-        log_values = np.full(active_values.shape, -np.inf, dtype=np.float64)
-        positive = active_values > 0
-        log_values[positive] = np.log(active_values[positive])
-        self.log_weights[active_positions] += log_values
-        self.evidence_counts[active_positions] += 1
         hard_positions = np.asarray([self.index[hypothesis_id] for hypothesis_id in hard_falsification if hypothesis_id in allowed_ids], dtype=np.intp)
-        if hard_positions.size:
-            self.states[hard_positions] = ELIMINATED
-            self.log_weights[hard_positions] = -np.inf
+        active_positions = self._apply_numeric_update(positions, values, hard_positions)
+        self.last_update_families = selected_families
+        self.evidence_ids.add(evidence_id)
         if reason:
             for position in active_positions.tolist():
                 self.explanations.setdefault(position, []).append(f"{evidence_id}: {reason}")
-        self._normalize()
-        eligible = (self.states != ELIMINATED) & (self.evidence_counts >= self.min_evidence) & (self.posteriors < self.elimination_threshold)
-        self.states[eligible] = ELIMINATED
-        self.log_weights[eligible] = -np.inf
-        if np.any(eligible):
-            self._normalize()
 
     def update_families(self, likelihoods: Mapping[str, float], evidence_id: str, families: Iterable[str], *, reason: str = "", hard_falsification: Iterable[str] = ()) -> None:
         """Explicit alias for localized updates used by family-aware callers."""

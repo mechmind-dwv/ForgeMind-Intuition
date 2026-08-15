@@ -238,7 +238,7 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [x] Decidir y documentar si el full-stack WebDev se incorpora a este repositorio, se mantiene como repositorio hermano o se publica mediante releases coordinadas.
 - [x] Actualizar el contrato versionado entre el motor Python, `services/engine_api.py` y la aplicación full-stack.
-- [ ] Crear un ciclo E2E reproducible de proyecto → evidencia → ejecución → ranking → archivo → snapshot.
+- [x] Crear un ciclo E2E reproducible de proyecto → evidencia → ejecución → ranking → archivo → snapshot.
 - [x] Actualizar los criterios de finalización de las fases 4 y 5 con la implementación real de WebDev.
 
 ### P1 — Distribución, agentes y seguridad
@@ -260,4 +260,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [x] Auditar y fijar el contrato entre `forgemind`, `services/engine_api.py` y el full-stack WebDev.
 - [x] Documentar la decisión de consolidación de repositorios y los límites de publicación coordinada.
-- [ ] Implementar y validar las tareas P0 antes de tachar las tareas dependientes P1/P2.
+- [x] Implementar y validar las tareas P0 antes de tachar las tareas dependientes P1/P2.
+
+## Ciclo E2E reproducible
+
+- [x] Crear fixture real de proyecto con candidatas, evidencia, archivo y snapshot.
+- [x] Implementar runner E2E proyecto → evidencia → ejecución → ranking → archivo → snapshot.
+- [x] Verificar restauración del snapshot y trazabilidad completa sin depender de servicios externos.

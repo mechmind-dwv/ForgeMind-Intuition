@@ -1,0 +1,273 @@
+{
+  "advice_ranking": [
+    "reverse-sort",
+    "stable-sort",
+    "double-sort"
+  ],
+  "archive": {
+    "filename": "evidence.json",
+    "mime_type": "application/json",
+    "sha256": "d8c20400602a9337c0f12dd8e8bb1719fc37e5368706bfe14e0109cdb8b6419a",
+    "size_bytes": 670,
+    "source": "fixtures/e2e/evidence.json"
+  },
+  "engine_response": {
+    "candidate_count": 3,
+    "contract_version": "1.0",
+    "engine": "forgemind-python",
+    "project": "sorting-pipeline-e2e",
+    "results": [
+      {
+        "calibrated_score": -0.25,
+        "candidate_index": 2,
+        "experimental_value": 1.276667,
+        "intuition": {
+          "complexity_penalty": 0.25,
+          "compositional_value": 0.666667,
+          "compression": 1.0,
+          "falsification_value": 0.35,
+          "historical_failure": 0.0,
+          "novelty": 0.51,
+          "reasons": [
+            "structurally similar to recorded hypotheses",
+            "matches a reusable rewrite-rule family",
+            "high compression potential",
+            "score is experimental evidence, not truth probability"
+          ],
+          "structural_similarity": 0.95,
+          "total": 3.226667
+        },
+        "recommendation": "Prueba esta hip\u00f3tesis primero: maximiza valor experimental esperado."
+      },
+      {
+        "calibrated_score": -0.125,
+        "candidate_index": 0,
+        "experimental_value": 0.988333,
+        "intuition": {
+          "complexity_penalty": 0.125,
+          "compositional_value": 0.333333,
+          "compression": 1.0,
+          "falsification_value": 0.35,
+          "historical_failure": 0.0,
+          "novelty": 0.43,
+          "reasons": [
+            "structurally similar to recorded hypotheses",
+            "matches a reusable rewrite-rule family",
+            "high compression potential",
+            "score is experimental evidence, not truth probability"
+          ],
+          "structural_similarity": 0.95,
+          "total": 2.938333
+        },
+        "recommendation": "Prueba esta hip\u00f3tesis primero: maximiza valor experimental esperado."
+      },
+      {
+        "calibrated_score": -0.25,
+        "candidate_index": 1,
+        "experimental_value": 0.583333,
+        "intuition": {
+          "complexity_penalty": 0.25,
+          "compositional_value": 0.333333,
+          "compression": 1.0,
+          "falsification_value": 0.35,
+          "historical_failure": 0.0,
+          "novelty": 0.15,
+          "reasons": [
+            "structurally similar to recorded hypotheses",
+            "matches a reusable rewrite-rule family",
+            "high compression potential",
+            "score is experimental evidence, not truth probability"
+          ],
+          "structural_similarity": 0.95,
+          "total": 2.533333
+        },
+        "recommendation": "Prueba esta hip\u00f3tesis primero: maximiza valor experimental esperado."
+      }
+    ]
+  },
+  "evidence": {
+    "observations": [
+      {
+        "description": "La salida del programa se compara con el target ascending-order en una entrada desordenada",
+        "evidence_id": "oracle-sort-001",
+        "likelihoods": {
+          "double-sort": 0.91,
+          "reverse-sort": 0.08,
+          "stable-sort": 0.96
+        },
+        "source": "fixture-oracle"
+      },
+      {
+        "description": "La misma comparaci\u00f3n se repite con negativos y valores duplicados",
+        "evidence_id": "oracle-sort-002",
+        "likelihoods": {
+          "double-sort": 0.89,
+          "reverse-sort": 0.06,
+          "stable-sort": 0.94
+        },
+        "source": "fixture-oracle"
+      }
+    ],
+    "schema_version": "1.0"
+  },
+  "posterior_ranking": [
+    "stable-sort",
+    "double-sort"
+  ],
+  "posterior_state": [
+    {
+      "description": "Ordenar la entrada una sola vez con estabilidad preservada",
+      "evidence_ids": [
+        "oracle-sort-001",
+        "oracle-sort-002"
+      ],
+      "hypothesis_id": "stable-sort",
+      "metadata": {},
+      "posterior": 0.52701045,
+      "prior": 1.0,
+      "reasons": [
+        "oracle-sort-001: P(E|H)=0.960 from fixture-oracle",
+        "oracle-sort-002: P(E|H)=0.940 from fixture-oracle"
+      ],
+      "state": "survivor"
+    },
+    {
+      "description": "Aplicar sort dos veces para obtener una salida ordenada",
+      "evidence_ids": [
+        "oracle-sort-001",
+        "oracle-sort-002"
+      ],
+      "hypothesis_id": "double-sort",
+      "metadata": {},
+      "posterior": 0.47298955,
+      "prior": 1.0,
+      "reasons": [
+        "oracle-sort-001: P(E|H)=0.910 from fixture-oracle",
+        "oracle-sort-002: P(E|H)=0.890 from fixture-oracle"
+      ],
+      "state": "survivor"
+    },
+    {
+      "description": "Ordenar y despu\u00e9s invertir para producir orden descendente",
+      "evidence_ids": [
+        "oracle-sort-001"
+      ],
+      "hypothesis_id": "reverse-sort",
+      "metadata": {},
+      "posterior": 0.0,
+      "prior": 1.0,
+      "reasons": [
+        "oracle-sort-001: P(E|H)=0.080 from fixture-oracle",
+        "posterior 0.0410 below elimination threshold 0.0500 after 1 evidence items"
+      ],
+      "state": "eliminated"
+    }
+  ],
+  "project": {
+    "candidates": [
+      {
+        "description": "Ordenar la entrada una sola vez con estabilidad preservada",
+        "id": "stable-sort",
+        "metadata": {
+          "language": "python",
+          "role": "primary"
+        },
+        "program": [
+          {
+            "arg": null,
+            "kind": "U",
+            "name": "sort"
+          }
+        ],
+        "source": "fixture-real-project"
+      },
+      {
+        "description": "Aplicar sort dos veces para obtener una salida ordenada",
+        "id": "double-sort",
+        "metadata": {
+          "language": "python",
+          "role": "redundant"
+        },
+        "program": [
+          {
+            "arg": null,
+            "kind": "U",
+            "name": "sort"
+          },
+          {
+            "arg": null,
+            "kind": "U",
+            "name": "sort"
+          }
+        ],
+        "source": "fixture-real-project"
+      },
+      {
+        "description": "Ordenar y despu\u00e9s invertir para producir orden descendente",
+        "id": "reverse-sort",
+        "metadata": {
+          "language": "python",
+          "role": "alternative"
+        },
+        "program": [
+          {
+            "arg": null,
+            "kind": "U",
+            "name": "sort"
+          },
+          {
+            "arg": null,
+            "kind": "U",
+            "name": "rev"
+          }
+        ],
+        "source": "fixture-real-project"
+      }
+    ],
+    "knowledge": [
+      {
+        "confidence": 0.95,
+        "program": [
+          {
+            "kind": "U",
+            "name": "sort"
+          },
+          {
+            "kind": "U",
+            "name": "sort"
+          }
+        ],
+        "rule": "sort(sort(x)) = sort(x)",
+        "type": "rule"
+      }
+    ],
+    "metadata": {
+      "domain": "sorting",
+      "fixture": "e2e-v1"
+    },
+    "name": "sorting-pipeline-e2e",
+    "probes": [
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        -4,
+        0,
+        7,
+        2
+      ],
+      [
+        9,
+        9,
+        -1
+      ]
+    ],
+    "schema_version": "1.0",
+    "targets": [
+      "ascending-order"
+    ]
+  },
+  "snapshot_version": "1.0"
+}

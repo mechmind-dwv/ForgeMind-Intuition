@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "name": "sorting-pipeline-e2e",
+  "candidates": [
+    {
+      "id": "stable-sort",
+      "description": "Ordenar la entrada una sola vez con estabilidad preservada",
+      "source": "fixture-real-project",
+      "program": [
+        {"kind": "U", "name": "sort"}
+      ],
+      "metadata": {"language": "python", "role": "primary"}
+    },
+    {
+      "id": "double-sort",
+      "description": "Aplicar sort dos veces para obtener una salida ordenada",
+      "source": "fixture-real-project",
+      "program": [
+        {"kind": "U", "name": "sort"},
+        {"kind": "U", "name": "sort"}
+      ],
+      "metadata": {"language": "python", "role": "redundant"}
+    },
+    {
+      "id": "reverse-sort",
+      "description": "Ordenar y después invertir para producir orden descendente",
+      "source": "fixture-real-project",
+      "program": [
+        {"kind": "U", "name": "sort"},
+        {"kind": "U", "name": "rev"}
+      ],
+      "metadata": {"language": "python", "role": "alternative"}
+    }
+  ],
+  "probes": [[3, 1, 2], [-4, 0, 7, 2], [9, 9, -1]],
+  "targets": ["ascending-order"],
+  "metadata": {"fixture": "e2e-v1", "domain": "sorting"},
+  "knowledge": [
+    {
+      "type": "rule",
+      "program": [{"kind": "U", "name": "sort"}, {"kind": "U", "name": "sort"}],
+      "rule": "sort(sort(x)) = sort(x)",
+      "confidence": 0.95
+    }
+  ]
+}

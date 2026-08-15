@@ -1,0 +1,25 @@
+{
+  "advice_ranking": [
+    "reverse-sort",
+    "stable-sort",
+    "double-sort"
+  ],
+  "archive": {
+    "filename": "evidence.json",
+    "mime_type": "application/json",
+    "sha256": "d8c20400602a9337c0f12dd8e8bb1719fc37e5368706bfe14e0109cdb8b6419a",
+    "size_bytes": 670,
+    "source": "fixtures/e2e/evidence.json"
+  },
+  "candidate_count": 3,
+  "cycle_version": "1.0",
+  "engine_contract_version": "1.0",
+  "evidence_count": 2,
+  "posterior_ranking": [
+    "stable-sort",
+    "double-sort"
+  ],
+  "project": "sorting-pipeline-e2e",
+  "restoration_verified": true,
+  "snapshot": "artifacts/e2e/snapshot.json"
+}

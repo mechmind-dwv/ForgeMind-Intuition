@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "observations": [
+    {
+      "evidence_id": "oracle-sort-001",
+      "description": "La salida del programa se compara con el target ascending-order en una entrada desordenada",
+      "source": "fixture-oracle",
+      "likelihoods": {
+        "stable-sort": 0.96,
+        "double-sort": 0.91,
+        "reverse-sort": 0.08
+      }
+    },
+    {
+      "evidence_id": "oracle-sort-002",
+      "description": "La misma comparación se repite con negativos y valores duplicados",
+      "source": "fixture-oracle",
+      "likelihoods": {
+        "stable-sort": 0.94,
+        "double-sort": 0.89,
+        "reverse-sort": 0.06
+      }
+    }
+  ]
+}

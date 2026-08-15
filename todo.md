@@ -273,3 +273,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Probar aislamiento de proyectos, hipótesis y evidencias entre dos usuarios autenticados.
 - [x] Probar carga, listado y descarga autorizada de archivos con metadatos persistidos.
 - [x] Probar recuperación de sesión y continuidad de consultas/mutaciones tras renovar la sesión.
+
+## Siguiente iteración full-stack
+
+- [ ] Validar persistencia de archivos contra un backend de almacenamiento efímero y conservar metadatos verificables.
+- [x] Probar renovación/expiración de sesión y continuidad de operaciones protegidas.
+- [x] Implementar eliminación lógica de archivos y restauración autorizada.
+- [x] Añadir pruebas E2E de archivo eliminado, restaurado y no visible para otro usuario.

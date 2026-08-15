@@ -160,6 +160,13 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [x] Diseñar un protocolo de referencia exacta por bloques que permita comparar 1.000.000 de hipótesis sin materializar objetos Python.
 - [x] Ejecutar un escenario con eliminaciones no vacías para validar decisiones de poda y estados.
-- [ ] Medir memoria total del proceso además de memoria de arrays numéricos.
+- [x] Medir memoria total del proceso además de memoria de arrays numéricos.
 - [ ] Evaluar un constructor array-native que evite diccionarios de IDs cuando el consumidor ya trabaja con posiciones.
 - [x] Documentar criterios de aceptación para precisión, top-k, estados y escalabilidad.
+
+## Medición de memoria total
+
+- [x] Instrumentar RSS máximo del proceso durante benchmark y distinguirlo de memoria de arrays.
+- [x] Ejecutar medición a 100.000 y 1.000.000 de hipótesis.
+- [x] Comparar crecimiento de RSS, buffers temporales y estado numérico.
+- [x] Documentar límites de memoria y validar la suite.

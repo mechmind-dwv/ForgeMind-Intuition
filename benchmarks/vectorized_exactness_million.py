@@ -1,20 +1,21 @@
-"""Low-memory million-hypothesis exactness benchmark.
-
-The reference keeps only dense numeric log-weights and generates one evidence
-vector at a time. This avoids materializing a million Python belief objects while
-preserving the exact log-space recurrence used by the scalar engine.
-"""
+"""Low-memory million-hypothesis exactness benchmark."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import resource
 import time
 from typing import Any
 
 import numpy as np
 
 from forgemind.vectorized import ELIMINATED, VectorizedHypothesisStore
+
+
+def rss_mb() -> float:
+    """Return Linux process high-water RSS in MiB."""
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024.0
 
 
 def blocked_logsumexp(values: np.ndarray, block_size: int) -> float:
@@ -28,6 +29,7 @@ def blocked_logsumexp(values: np.ndarray, block_size: int) -> float:
 
 
 def run(size: int, rounds: int, top_k: int, elimination_threshold: float = 1e-12, block_size: int = 65_536) -> dict[str, Any]:
+    rss_before_mb = rss_mb()
     indices = np.arange(size, dtype=np.int64)
     hypothesis_ids = [f"H{i}" for i in range(size)]
     hypotheses = {hypothesis_id: "" for hypothesis_id in hypothesis_ids}
@@ -37,6 +39,8 @@ def run(size: int, rounds: int, top_k: int, elimination_threshold: float = 1e-12
     reference_eliminated = np.zeros(size, dtype=bool)
     reference_log -= blocked_logsumexp(reference_log, block_size)
     store = VectorizedHypothesisStore(hypotheses, priors=priors, elimination_threshold=elimination_threshold, min_evidence=2)
+    rss_after_init_mb = rss_mb()
+    rss_peak_mb = rss_after_init_mb
     max_errors: list[float] = []
     mean_errors: list[float] = []
     vector_times: list[float] = []
@@ -64,6 +68,7 @@ def run(size: int, rounds: int, top_k: int, elimination_threshold: float = 1e-12
         started = time.perf_counter()
         store.observe_arrays(likelihood_values, f"million-probe-{round_index}")
         vector_times.append((time.perf_counter() - started) * 1000)
+        rss_peak_mb = max(rss_peak_mb, rss_mb())
         errors = np.abs(reference_posteriors - store.posteriors)
         max_errors.append(float(np.max(errors)))
         mean_errors.append(float(np.mean(errors)))
@@ -90,6 +95,9 @@ def run(size: int, rounds: int, top_k: int, elimination_threshold: float = 1e-12
         "eliminated_vectorized": int(np.count_nonzero(store.states == ELIMINATED)),
         "numeric_state_bytes": store.memory_bytes(),
         "likelihood_input_bytes_per_round": int(likelihood_values.nbytes),
+        "rss_before_mb": rss_before_mb,
+        "rss_after_init_mb": rss_after_init_mb,
+        "rss_peak_mb": rss_peak_mb,
         "reference_ms_total": sum(reference_times),
         "vectorized_ms_total": sum(vector_times),
         "speedup_reference_over_vectorized": sum(reference_times) / sum(vector_times),

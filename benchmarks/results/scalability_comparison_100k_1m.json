@@ -4,44 +4,62 @@
     "top_k": 25,
     "reference_block_size": 65536,
     "ingestion": "VectorizedHypothesisStore.observe_arrays",
+    "rss_measurement": "resource.getrusage(RUSAGE_SELF).ru_maxrss",
     "reference": "blocked dense NumPy log-space recurrence with identical elimination renormalization"
   },
-  "baseline_empty_elimination": {
-    "threshold": 1e-12,
-    "hypotheses": 1000000,
-    "max_abs_posterior_error": 4.235164736271502e-21,
-    "mean_abs_posterior_error": 5.921183729548589e-22,
-    "posterior_sum_reference": 0.9999999999999991,
-    "posterior_sum_vectorized": 1.0000000000000009,
-    "top_k_min_overlap": 1.0,
-    "eliminated_sets_all_rounds_match": true,
-    "eliminated_reference": 0,
-    "eliminated_vectorized": 0,
-    "numeric_state_bytes": 29000000,
-    "likelihood_input_bytes_per_round": 8000000,
-    "reference_ms_total": 26.32695299689658,
-    "vectorized_ms_total": 233.21389500051737
-  },
-  "nonempty_elimination": {
-    "threshold": 2e-7,
-    "hypotheses": 1000000,
-    "max_abs_posterior_error": 0.0,
-    "mean_abs_posterior_error": 0.0,
-    "posterior_sum_reference": 0.9999999999999994,
-    "posterior_sum_vectorized": 0.9999999999999994,
-    "top_k_min_overlap": 1.0,
-    "eliminated_sets_all_rounds_match": true,
-    "eliminated_reference": 86958,
-    "eliminated_vectorized": 86958,
-    "numeric_state_bytes": 29000000,
-    "likelihood_input_bytes_per_round": 8000000,
-    "reference_ms_total": 43.074330023955554,
-    "vectorized_ms_total": 304.2597619933076
+  "runs": [
+    {
+      "hypotheses": 100000,
+      "elimination_threshold": 1e-12,
+      "max_abs_posterior_error": 0.0,
+      "mean_abs_posterior_error": 0.0,
+      "posterior_sum_reference": 1.0000000000000009,
+      "posterior_sum_vectorized": 1.0000000000000009,
+      "top_k_min_overlap": 1.0,
+      "eliminated_sets_all_rounds_match": true,
+      "eliminated_reference": 0,
+      "eliminated_vectorized": 0,
+      "numeric_state_bytes": 2900000,
+      "likelihood_input_bytes_per_round": 800000,
+      "rss_before_mb": 32.88671875,
+      "rss_after_init_mb": 77.44921875,
+      "rss_peak_mb": 79.57421875,
+      "reference_ms_total": 3.1625170377083123,
+      "vectorized_ms_total": 18.784595013130456
+    },
+    {
+      "hypotheses": 1000000,
+      "elimination_threshold": 1e-12,
+      "max_abs_posterior_error": 4.235164736271502e-21,
+      "mean_abs_posterior_error": 5.921183729548589e-22,
+      "posterior_sum_reference": 0.9999999999999991,
+      "posterior_sum_vectorized": 1.0000000000000009,
+      "top_k_min_overlap": 1.0,
+      "eliminated_sets_all_rounds_match": true,
+      "eliminated_reference": 0,
+      "eliminated_vectorized": 0,
+      "numeric_state_bytes": 29000000,
+      "likelihood_input_bytes_per_round": 8000000,
+      "rss_before_mb": 32.921875,
+      "rss_after_init_mb": 419.328125,
+      "rss_peak_mb": 462.09765625,
+      "reference_ms_total": 28.175500978250057,
+      "vectorized_ms_total": 252.8347659681458
+    }
+  ],
+  "scaling": {
+    "hypothesis_growth": 10.0,
+    "numeric_state_growth": 10.0,
+    "likelihood_buffer_growth": 10.0,
+    "rss_peak_growth": 5.807040686698449,
+    "reference_time_growth": 8.908780225509676,
+    "vectorized_time_growth": 13.459522734492759,
+    "rss_peak_delta_mb_at_1m": 429.2109375
   },
   "limits": [
-    "The reference is now block-based with bounded temporaries, but still uses the compatibility store's ID metadata for the vectorized side.",
+    "The RSS measurement is a Linux process high-water mark and includes Python metadata, ID indexes, arrays, allocator overhead and temporary buffers.",
+    "Numeric state grows linearly from 2.9 MB to 29 MB, while total peak RSS grows from 79.57 MiB to 462.10 MiB because compatibility metadata scales separately.",
     "The object-backed exact benchmark remains unvalidated at 1,000,000 hypotheses because the sandbox memory limit terminates it.",
-    "The empty-elimination scenario shows only floating-point normalization drift at approximately 4.24e-21; top-k and states remain exact.",
-    "The non-empty scenario validated 86,958 identical eliminations at a 2e-7 threshold; full RSS measurement remains a separate task."
+    "The empty-elimination scenario validates exact top-k and state equivalence; non-empty elimination equivalence was validated separately at 86,958 eliminated hypotheses."
   ]
 }

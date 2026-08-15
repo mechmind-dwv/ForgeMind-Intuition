@@ -21,6 +21,8 @@
 - [x] Añadir `top_k(k)` sin ordenar el conjunto completo.
 - [x] Crear benchmark reproducible de latencia, memoria y exactitud.
 - [ ] Definir benchmarks de latencia, memoria, exactitud y trazabilidad.
+- [x] Corregir la importación de NumPy para que el núcleo base funcione sin el extra vectorizado.
+- [x] Validar CI sin NumPy y pruebas completas con el extra vectorizado.
 - [x] Publicar la optimización de rendimiento en el repositorio GitHub.
 - [x] Reintentar el push desde el sandbox y documentar el procedimiento local si persiste el 403.
 - [x] Confirmar el estado remoto tras el nuevo intento de publicación.

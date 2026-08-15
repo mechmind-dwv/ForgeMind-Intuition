@@ -1,5 +1,6 @@
 import pytest
 
+pytest.importorskip("numpy")
 from forgemind import VectorizedHypothesisStore
 
 

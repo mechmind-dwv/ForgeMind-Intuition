@@ -5,7 +5,6 @@ from .bayesian import BayesianHypothesisSet, EliminationDecision, EvidenceObserv
 from .advisor import CandidateAdvice, advise
 from .intuition import IntuitionScore, intuition_score
 from .knowledge import KnowledgeBase, KnowledgeRecord, MemoryType
-from .vectorized import VectorizedBelief, VectorizedHypothesisStore
 
 __all__ = [
     "AdaptiveIntuitionModel",
@@ -25,3 +24,10 @@ __all__ = [
     "VectorizedBelief",
     "VectorizedHypothesisStore",
 ]
+
+
+def __getattr__(name: str):
+    if name in {"VectorizedBelief", "VectorizedHypothesisStore"}:
+        from .vectorized import VectorizedBelief, VectorizedHypothesisStore
+        return {"VectorizedBelief": VectorizedBelief, "VectorizedHypothesisStore": VectorizedHypothesisStore}[name]
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

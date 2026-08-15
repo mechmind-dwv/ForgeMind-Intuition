@@ -87,3 +87,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Auditar entidades de proyectos, hipótesis, evidencias y archivos frente al esquema real y sus migraciones.
 - [x] Verificar relaciones, claves foráneas, índices y autorización por propietario.
 - [x] Validar procedimientos de creación, consulta, ejecución y almacenamiento asociados a estas entidades.
+
+## Integración de archivos en la interfaz
+
+- [x] Auditar controles de archivo, procedimientos protegidos y helpers S3 existentes.
+- [x] Completar subida y asociación de archivos al proyecto activo.
+- [x] Completar listado persistido y descarga mediante URL servida.
+- [x] Validar estados de carga, error, vacío, autorización y responsive.

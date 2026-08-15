@@ -1590,3 +1590,100 @@ For reproducible research, cite the repository together with the relevant versio
 ForgeMind
 
 > Generate hypotheses. Design experiments. Find counterexamples. Kill bad programs. Keep what survives.
+
+---
+
+## ForgeMind Intuition como software para proyectos
+
+ForgeMind Intuition puede utilizarse como una librería Python y como una CLI para que un desarrollador incorpore intuición experimental a sus propios proyectos. El núcleo conserva la filosofía de ForgeMind: la puntuación organiza los experimentos y explica sus razones, pero no sustituye la ejecución del oráculo ni convierte evidencia acotada en verdad global.
+
+### Instalación local
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e ".[dev]"
+python -m pytest -q
+```
+
+### Crear un proyecto reproducible
+
+```bash
+forgemind init forgemind.project.json
+forgemind score forgemind.project.json
+forgemind advise forgemind.project.json
+```
+
+Un archivo de proyecto contiene `name`, `candidates`, `probes` y `knowledge`. Las candidatas se expresan como secuencias de nodos `{kind, name, arg}`; el bloque `knowledge` puede guardar reglas, falsificaciones o hipótesis con su confianza experimental y procedencia.
+
+### Integración Python
+
+```python
+from forgemind import KnowledgeBase, advise
+from forgemind.project import ForgeMindProject
+
+project = ForgeMindProject.load("forgemind.project.json")
+recommendations = advise(
+    project.candidates,
+    knowledge_base=project.knowledge_base(),
+)
+print(recommendations[0].as_dict())
+```
+
+La carpeta `frontend/` contiene la vista de trabajo visual para explorar hipótesis y razones. Es una copia versionable del frontend, mientras que el proyecto web del sandbox mantiene la vista previa activa para iterar el diseño. La siguiente integración de producto será conectar ese frontend con la CLI o con una API local que ejecute proyectos reales.
+
+## Inferencia bayesiana y eliminación de hipótesis
+
+`forgemind.bayesian` mantiene una distribución de creencias sobre hipótesis identificadas. Cada hipótesis recibe un `prior`; una observación registra una descripción, una fuente y las verosimilitudes `P(E|H)`; el motor aplica una actualización proporcional a `P(E|H) · P(H)` y normaliza la masa posterior.
+
+```python
+from forgemind import BayesianHypothesisSet, EvidenceObservation
+
+beliefs = BayesianHypothesisSet.from_priors(
+    {"H1": "sort preserva la relación", "H2": "reverse preserva la relación"},
+    priors={"H1": 0.5, "H2": 0.5},
+    elimination_threshold=0.02,
+)
+
+beliefs.observe(EvidenceObservation(
+    evidence_id="probe-01",
+    description="la salida conserva el orden",
+    likelihoods={"H1": 0.9, "H2": 0.2},
+    source="property-test",
+))
+
+for belief in beliefs.ranked():
+    print(belief.as_dict())
+```
+
+La eliminación es deliberadamente conservadora. Una hipótesis solo se marca como `eliminated` cuando cruza el umbral después del mínimo de observaciones configurado, o cuando un oráculo entrega una falsación dura. Cada transición conserva `evidence_ids` y `reasons`. `posterior` significa grado de creencia condicionado a la evidencia registrada; no es una probabilidad de verdad metafísica ni reemplaza una prueba algebraica.
+
+El diseño sigue dos invariantes: las creencias activas deben ser no negativas y sumar uno, y una evidencia incompatible puede poner una hipótesis en cero para después renormalizar las alternativas supervivientes. Esta separación permite combinar el álgebra de programas —nodos, reescrituras y equivalencias— con la probabilidad de qué hipótesis conviene probar a continuación.
+
+## Almacenamiento vectorizado para espacios grandes
+
+`VectorizedHypothesisStore` mantiene el estado numérico en arrays NumPy contiguos: `priors`, `log_weights`, `posteriors`, `states` y `evidence_counts`. Las descripciones y explicaciones quedan en estructuras auxiliares, por lo que el cálculo caliente no crea un objeto Python completo por hipótesis.
+
+```python
+from forgemind import VectorizedHypothesisStore
+
+store = VectorizedHypothesisStore(
+    {"H1": "sort preserva la relación", "H2": "reverse preserva la relación"},
+)
+store.observe(
+    {"H1": 0.9, "H2": 0.2},
+    "probe-01",
+    reason="property-test: la salida conserva el orden",
+)
+print(store.top_k(10))
+```
+
+La actualización es dispersa: las hipótesis omitidas conservan likelihood uno y no incrementan su contador de evidencia. `top_k(k)` usa partición NumPy y ordena únicamente los candidatos seleccionados. La clase conserva `posterior_sum()` y `memory_bytes()` para comprobar invariantes y capacidad.
+
+La implementación es opcional para no imponer NumPy al núcleo base:
+
+```bash
+python -m pip install -e '.[vectorized]'
+```
+
+El benchmark comparativo se ejecuta con `python benchmarks/vectorized_vs_object.py --hypotheses 10000 --repeats 3 --top-k 20`. En la medición local de 10.000 hipótesis, la actualización vectorizada tardó 94.814 ms frente a 200.422 ms del almacén orientado a objetos; `top_k(20)` tardó 0.626 ms frente a 1.938 ms. Estos valores son referencias de esta máquina y no un SLA.

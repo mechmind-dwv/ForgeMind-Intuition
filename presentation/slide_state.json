@@ -1,0 +1,144 @@
+{
+  "project_info": {
+    "title": "ForgeMind Intuition",
+    "created": 1786749377.979,
+    "last_updated": 1786750068.626,
+    "total_slides": 12
+  },
+  "slides": [
+    {
+      "id": "cover",
+      "state": "edited",
+      "pageNum": 1
+    },
+    {
+      "id": "intuicion_inferencia",
+      "state": "edited",
+      "pageNum": 2
+    },
+    {
+      "id": "algebra_espacio",
+      "state": "edited",
+      "pageNum": 3
+    },
+    {
+      "id": "bayes_creencia",
+      "state": "edited",
+      "pageNum": 4
+    },
+    {
+      "id": "procedencia",
+      "state": "edited",
+      "pageNum": 5
+    },
+    {
+      "id": "eliminacion",
+      "state": "edited",
+      "pageNum": 6
+    },
+    {
+      "id": "arquitectura",
+      "state": "edited",
+      "pageNum": 7
+    },
+    {
+      "id": "ejemplo_bayes",
+      "state": "edited",
+      "pageNum": 8
+    },
+    {
+      "id": "agente_informacion",
+      "state": "edited",
+      "pageNum": 9
+    },
+    {
+      "id": "guardrails",
+      "state": "edited",
+      "pageNum": 10
+    },
+    {
+      "id": "software",
+      "state": "edited",
+      "pageNum": 11
+    },
+    {
+      "id": "referencias",
+      "state": "edited",
+      "pageNum": 12
+    }
+  ],
+  "outline": [
+    {
+      "id": "cover",
+      "title": "ForgeMind Intuition",
+      "summary": "Del álgebra de programas a una intuición experimental. Arquitectura del núcleo 0.16.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "intuicion_inferencia",
+      "title": "La intuición es inferencia comprimida",
+      "summary": "ForgeMind modela la intuición como selección de hipótesis bajo evidencia, no como magia.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "algebra_espacio",
+      "title": "El álgebra define el espacio de posibilidades",
+      "summary": "Nodos, canonización y reglas de reescritura estabilizan la representación de candidatas.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "bayes_creencia",
+      "title": "Bayes convierte evidencia en cambio de creencia",
+      "summary": "Priors, likelihoods y posteriors actualizan las creencias manteniendo una distribución válida.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "procedencia",
+      "title": "La evidencia debe tener procedencia",
+      "summary": "Cada actualización conserva identificador, descripción, fuente y razones explicables.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "eliminacion",
+      "title": "Eliminar no es olvidar: es dejar una traza",
+      "summary": "La eliminación conserva evidencia, umbral y motivo de la decisión.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "arquitectura",
+      "title": "La arquitectura separa cuatro responsabilidades",
+      "summary": "Álgebra, memoria, probabilidad y agencia forman un flujo auditable.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "ejemplo_bayes",
+      "title": "Ejemplo: dos hipótesis, una probe",
+      "summary": "Una observación actualiza dos hipótesis y desplaza el posterior hacia la explicación más compatible.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "agente_informacion",
+      "title": "El agente elige información, no solo puntuación",
+      "summary": "El ranking prioriza el valor experimental y la reducción de incertidumbre.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "guardrails",
+      "title": "Guardrails contra una intuición engañosa",
+      "summary": "Separar posterior de verdad, evitar doble conteo y exigir evidencia mínima.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "software",
+      "title": "De módulo probabilístico a software para proyectos",
+      "summary": "BayesianHypothesisSet conecta el núcleo, los proyectos JSON, las probes reales y el frontend.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "referencias",
+      "title": "Referencias",
+      "summary": "Fuentes NIST, Stanford Encyclopedia of Philosophy, ACM y código local de ForgeMind.",
+      "image_plan": "Use a suitable image if needed"
+    }
+  ]
+}

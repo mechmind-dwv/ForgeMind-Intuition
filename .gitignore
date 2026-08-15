@@ -1,17 +1,19 @@
-# Secrets
-.env
-.env.*
-!.env.example
-
-# Python
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .venv/
 venv/
-
-# Build artifacts
-build/
+.env
+*.log
+.DS_Store
+results/
+artifacts/
+coverage.xml
+htmlcov/
 dist/
+build/
 *.egg-info/
-*.tar.gz
+frontend/node_modules/
+frontend/dist/

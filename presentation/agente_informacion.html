@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>El agente elige información, no solo puntuación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+/* keep min-height:720px as required */
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:58px 76px 24px;position:relative;overflow:hidden}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+h1{font:400 54px/1.02 'DM Serif Display',serif;letter-spacing:-.035em;margin:14px 0 14px;max-width:820px}
+h1 em{font-style:normal;color:#e4543d}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.instrument{border-top:1px solid #20314135;border-bottom:1px solid #20314135;padding:12px 0 8px;min-height:220px}
+.instrument .label{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#20314170}
+.formula{font:27px/1.5 'IBM Plex Mono',monospace;margin-top:14px;color:#203141}
+.formula .red{color:#e4543d}.formula .yellow{color:#a77a13}.formula .green{color:#4f7560}
+.note{margin-top:12px;max-width:420px;border-top:1px solid #20314135;padding-top:8px;font:18px/1.45 'DM Serif Display',serif}
+.note em{font-style:normal;color:#e4543d}
+.criteria{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid #20314135}
+.criterion{min-height:68px;border-bottom:1px solid #20314135;padding:8px 0;display:grid;grid-template-columns:44px 1fr 86px;gap:12px;align-items:center}
+.criterion .num{font:11px 'IBM Plex Mono',monospace;color:#e4543d}
+.criterion h2{font:400 28px 'DM Serif Display',serif;margin:0 0 4px}
+.criterion p{font:13px/1.35;color:#2031419c;margin:0}
+.criterion .weight{font:500 14px 'IBM Plex Mono',monospace;text-align:right;color:#203141}
+.criterion.yellow .weight{color:#a77a13}.criterion.red .weight{color:#e4543d}.criterion.green .weight{color:#4f7560}
+.footer{position:absolute;left:76px;right:76px;bottom:34px;border-top:1px solid #20314135;padding-top:12px;display:flex;justify-content:space-between;gap:26px;font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314170}
+.footer .accent{color:#e4543d}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">08 / agencia experimental</div>
+  <h1>El agente elige <em>información</em>, no solo puntuación</h1>
+  <div class="layout">
+    <div class="instrument">
+      <div class="label">función de utilidad / siguiente experimento</div>
+      <div class="formula"><span class="red">value</span>(H) = <span class="yellow">falsification</span><br />+ <span class="green">novelty</span> + separation<br />− complexity − <span class="red">cost</span></div>
+      <div class="note">Una hipótesis menos probable puede priorizarse si <em>separa familias rivales</em> con una prueba barata.</div>
+    </div>
+    <div class="criteria">
+      <div class="criterion red"><div class="num">01</div><div><h2>Falsación</h2><p>¿Qué hipótesis puede caer ante una observación decisiva?</p></div><div class="weight">+0.31</div></div>
+      <div class="criterion yellow"><div class="num">02</div><div><h2>Información</h2><p>¿Cuánta duda reduce entre explicaciones compatibles?</p></div><div class="weight">+0.27</div></div>
+      <div class="criterion green"><div class="num">03</div><div><h2>Coste</h2><p>¿Cuántos probes y recursos exige aprender algo?</p></div><div class="weight">−0.08</div></div>
+    </div>
+  </div>
+  <div class="footer"><span>ranking ≠ certeza</span><span class="accent">prueba lo que más divide el espacio</span><span>expected experimental value</span></div>
+</div>
+</body>
+</html>

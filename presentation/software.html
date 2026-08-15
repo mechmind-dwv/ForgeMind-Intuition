@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>De módulo probabilístico a software para proyectos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efe9dc;color:#203141;font-family:'IBM Plex Sans',sans-serif}
+/* keep top padding (58px) for title consistency, reduce bottom padding to save height */
+.slide-container{width:1280px;min-height:720px;background:#f7f3e9;padding:58px 76px 26px 76px;position:relative;overflow:hidden}
+.eyebrow{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#e4543d}
+h1{font:400 54px/1.02 'DM Serif Display',serif;letter-spacing:-.035em;margin:14px 0 20px;max-width:850px}
+/* ensure em doesn't alter h1 box metrics */
+h1 em{font-style:normal;color:#e4543d;line-height:1.02;display:inline-block}
+/* compress vertical space in pipeline */
+.pipeline{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr 34px 1fr;align-items:stretch;border-top:1px solid #20314135;border-bottom:1px solid #20314135}
+/* reduced stage min-height and padding to save vertical space while keeping typography */
+.stage{min-height:100px;padding:12px 10px 10px 0}
+.stage:not(:last-of-type){border-right:1px solid #20314135;padding-right:10px}
+.stage .num{font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.16em;color:#e4543d}
+.stage h2{font:400 27px/1 'DM Serif Display',serif;margin:14px 0 8px}
+.stage p{font:13px/1.45;color:#2031419e;margin:0}
+.stage code{display:block;margin-top:10px;font:12px 'IBM Plex Mono',monospace;color:#203141}
+.stage.green code{color:#4f7560}.stage.red code{color:#e4543d}.stage.yellow code{color:#a77a13}
+.op{display:flex;align-items:center;justify-content:center;font:24px 'IBM Plex Mono',monospace;color:#e4543d}
+/* tightened lower area spacing and reduced panel heights */
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.panel{border-top:1px solid #20314135;padding-top:10px;min-height:120px}
+.panel .label{font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#20314170}
+pre{margin:12px 0 0;white-space:pre-wrap;font:13px/1.65 'IBM Plex Mono',monospace;color:#203141}
+pre .red{color:#e4543d}pre .green{color:#4f7560}pre .yellow{color:#a77a13}
+.result{border:1px solid #20314135;background:#e9e0d1;padding:12px 14px;margin-top:12px;min-height:110px}
+.result .status{font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#4f7560}
+.result h3{font:400 28px/1.05 'DM Serif Display',serif;margin:10px 0 6px}
+.result p{font:13px/1.5;color:#203141a8;margin:0}
+/* move footer slightly closer to bottom while keeping visible space */
+.footer{position:absolute;left:76px;right:76px;bottom:40px;border-top:1px solid #20314135;padding-top:12px;display:flex;justify-content:space-between;gap:24px;font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#20314170}
+.footer .accent{color:#e4543d}
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="eyebrow">10 / del núcleo al producto</div>
+  <h1>De módulo probabilístico a <em>software para proyectos</em></h1>
+  <div class="pipeline">
+    <div class="stage"><div class="num">01 / CORE</div><h2>BayesianHypothesisSet</h2><p>Actualiza creencias y elimina hipótesis con razones.</p><code>observe(E) → posterior</code></div><div class="op">→</div>
+    <div class="stage green"><div class="num">02 / PROJECT</div><h2>forgemind.project.json</h2><p>Guarda candidatas, probes, priors y memoria.</p><code>load(path) → project</code></div><div class="op">→</div>
+    <div class="stage red"><div class="num">03 / PROBES</div><h2>Oráculo real</h2><p>Ejecuta tests y contraejemplos sobre el código.</p><code>evidence → update</code></div><div class="op">→</div>
+    <div class="stage yellow"><div class="num">04 / FRONTEND</div><h2>Workspace</h2><p>Expone ranking, evidencia y siguiente experimento.</p><code>advise() → action</code></div>
+  </div>
+  <div class="lower">
+    <div class="panel"><div class="label">integración Python / agente</div><pre>from forgemind import EvidenceObservation
+from forgemind import BayesianHypothesisSet
+
+beliefs.observe(evidence)
+next_probe = beliefs.ranked()[0]</pre></div>
+    <div class="panel"><div class="label">salida explicable</div><div class="result"><div class="status">ready / traceable</div><h3>H4 merece la siguiente prueba.</h3><p>Posterior 0.818 · 2 observaciones · falsación posible · coste estimado: 18 probes.</p></div></div>
+  </div>
+  <div class="footer"><span>software utilizable por proyectos</span><span class="accent">la intuición termina en una acción verificable</span><span>0.16 / local-first</span></div>
+</div>
+</body>
+</html>

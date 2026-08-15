@@ -1,0 +1,54 @@
+/* Design: Cuaderno de Laboratorio — neo-editorial científico. Mantener marfil, tinta, vermellón y polen en todo el workspace. */
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "DM Serif Display", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: #203141;
+  --color-paper: #f7f3e9;
+  --color-vermilion: #e4543d;
+  --color-pollen: #dfb148;
+  --color-green: #4f7560;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+}
+
+:root {
+  --background: #f7f3e9;
+  --foreground: #203141;
+  --card: #f1ece1;
+  --card-foreground: #203141;
+  --border: rgba(32, 49, 65, 0.14);
+  --input: rgba(32, 49, 65, 0.14);
+  --ring: #e4543d;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { background: #f7f3e9; }
+  body { @apply bg-background text-foreground; margin: 0; min-width: 320px; font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  button:focus-visible, a:focus-visible { outline: 2px solid #e4543d; outline-offset: 3px; }
+}
+
+@layer utilities {
+  .font-serif { font-family: "DM Serif Display", Georgia, serif; }
+  .font-mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+}
+
+::selection { background: rgba(228, 84, 61, 0.18); color: #203141; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}

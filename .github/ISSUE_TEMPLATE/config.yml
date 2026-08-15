@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discusiones de ForgeMind
+    url: https://github.com/mechmind-dwv/ForgeMind-Intuition/discussions
+    about: Preguntas, ideas, diseño experimental y conversaciones de arquitectura.
+  - name: Reporte privado de seguridad
+    url: https://github.com/mechmind-dwv/ForgeMind-Intuition/security/advisories/new
+    about: No publiques vulnerabilidades, credenciales ni datos sensibles en issues.

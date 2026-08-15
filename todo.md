@@ -51,3 +51,13 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [ ] Separar arrays numéricos de metadatos explicativos en el hot path completo.
 - [ ] Diseñar poda con cotas superiores y estados `parked` reactivables.
 - [ ] Medir exactitud frente al modo exacto en espacios masivos.
+
+## Comunidad GitHub pendiente
+
+- [x] Añadir descripción comunitaria del repositorio.
+- [x] Crear `CODE_OF_CONDUCT.md`.
+- [x] Crear `CONTRIBUTING.md`.
+- [x] Crear `SECURITY.md`.
+- [x] Añadir licencia MIT explícita.
+- [x] Crear plantillas de issues y pull requests.
+- [x] Preparar el anuncio inicial de GitHub Discussions.

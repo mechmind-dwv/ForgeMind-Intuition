@@ -34,3 +34,32 @@ def test_vectorized_duplicate_evidence_is_rejected():
     store.observe({"H1": 0.8}, "same")
     with pytest.raises(ValueError, match="already observed"):
         store.observe({"H1": 0.8}, "same")
+
+
+def test_family_update_matches_sparse_exact_update_and_skips_unaffected_family():
+    hypotheses = {"H1": "a1", "H2": "a2", "H3": "b1", "H4": "b2"}
+    families = {"H1": "family-a", "H2": "family-a", "H3": "family-b", "H4": "family-b"}
+    exact = VectorizedHypothesisStore(hypotheses)
+    sparse = VectorizedHypothesisStore(hypotheses, families=families)
+    likelihoods = {"H1": 0.9, "H2": 0.2}
+
+    exact.observe(likelihoods, "probe-a", reason="family evidence")
+    sparse.update_families(likelihoods, "probe-a", ["family-a"], reason="family evidence")
+
+    assert sparse.posteriors == pytest.approx(exact.posteriors)
+    assert sparse.last_update_count == 2
+    assert sparse.last_update_families == ("family-a",)
+    assert sparse.evidence_counts[sparse.index["H3"]] == 0
+    assert sparse.evidence_counts[sparse.index["H4"]] == 0
+    assert sparse.explanations[sparse.index["H1"]] == ["probe-a: family evidence"]
+    assert sparse.index["H3"] not in sparse.explanations
+
+
+def test_family_update_does_not_falsify_hypothesis_outside_selected_family():
+    store = VectorizedHypothesisStore(
+        {"H1": "a", "H2": "b"},
+        families={"H1": "family-a", "H2": "family-b"},
+    )
+    store.update_families({"H1": 0.5, "H2": 0.0}, "probe-a", ["family-a"], hard_falsification={"H2"})
+    assert store.states[store.index["H2"]] != 2
+    assert store.evidence_counts[store.index["H2"]] == 0

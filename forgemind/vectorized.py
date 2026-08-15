@@ -35,7 +35,7 @@ class VectorizedBelief:
 class VectorizedHypothesisStore:
     """Dense numeric belief state with sparse explanation metadata."""
 
-    def __init__(self, hypotheses: Mapping[str, str], priors: Mapping[str, float] | None = None, *, elimination_threshold: float = 0.02, min_evidence: int = 1) -> None:
+    def __init__(self, hypotheses: Mapping[str, str], priors: Mapping[str, float] | None = None, *, families: Mapping[str, str] | None = None, elimination_threshold: float = 0.02, min_evidence: int = 1) -> None:
         if not hypotheses:
             raise ValueError("at least one hypothesis is required")
         if not 0.0 < elimination_threshold < 1.0:
@@ -45,6 +45,14 @@ class VectorizedHypothesisStore:
         self.ids = tuple(hypotheses)
         self.index = {hypothesis_id: index for index, hypothesis_id in enumerate(self.ids)}
         self.descriptions = dict(hypotheses)
+        self.family_by_id = {hypothesis_id: (families or {}).get(hypothesis_id, "default") for hypothesis_id in self.ids}
+        if families is not None and set(families) != set(hypotheses):
+            raise ValueError("families and hypotheses must contain the same ids")
+        if any(not family.strip() for family in self.family_by_id.values()):
+            raise ValueError("family names must not be empty")
+        self.family_positions: dict[str, np.ndarray] = {}
+        for family in dict.fromkeys(self.family_by_id.values()):
+            self.family_positions[family] = np.asarray([self.index[hypothesis_id] for hypothesis_id in self.ids if self.family_by_id[hypothesis_id] == family], dtype=np.intp)
         raw_priors = np.asarray([float((priors or {}).get(hypothesis_id, 1.0)) for hypothesis_id in self.ids], dtype=np.float64)
         if priors is not None and set(priors) != set(hypotheses):
             raise ValueError("hypotheses and priors must contain the same ids")
@@ -59,6 +67,8 @@ class VectorizedHypothesisStore:
         self.min_evidence = int(min_evidence)
         self.explanations: dict[int, list[str]] = {}
         self.evidence_ids: set[str] = set()
+        self.last_update_count = 0
+        self.last_update_families: tuple[str, ...] = ()
         self._normalize()
 
     @staticmethod
@@ -76,24 +86,37 @@ class VectorizedHypothesisStore:
         self.posteriors[active] = np.exp(self.log_weights[active] - normalizer)
         self.log_weights[active] -= normalizer
 
-    def observe(self, likelihoods: Mapping[str, float], evidence_id: str, *, reason: str = "", hard_falsification: Iterable[str] = ()) -> None:
-        """Apply a sparse observation; omitted IDs receive likelihood one."""
+    def observe(self, likelihoods: Mapping[str, float], evidence_id: str, *, reason: str = "", hard_falsification: Iterable[str] = (), affected_families: Iterable[str] | None = None) -> None:
+        """Apply a sparse observation; optionally restrict work to affected families.
+
+        The posterior normalizer remains global, but likelihood multiplication,
+        evidence bookkeeping and explanation writes touch only the selected family
+        positions. This makes repeated updates cheap when evidence is localized.
+        """
         if evidence_id in self.evidence_ids:
             raise ValueError(f"evidence_id already observed: {evidence_id}")
         self.evidence_ids.add(evidence_id)
-        ids = [hypothesis_id for hypothesis_id in likelihoods if hypothesis_id in self.index]
+        selected_families = tuple(dict.fromkeys(affected_families)) if affected_families is not None else tuple(self.family_positions)
+        unknown_families = set(selected_families).difference(self.family_positions)
+        if unknown_families:
+            raise ValueError(f"unknown family names: {sorted(unknown_families)}")
+        allowed_positions = np.concatenate([self.family_positions[family] for family in selected_families]) if selected_families else np.asarray([], dtype=np.intp)
+        allowed_ids = {self.ids[int(position)] for position in allowed_positions.tolist()}
+        ids = [hypothesis_id for hypothesis_id in likelihoods if hypothesis_id in self.index and hypothesis_id in allowed_ids]
         positions = np.asarray([self.index[hypothesis_id] for hypothesis_id in ids], dtype=np.intp)
         values = np.asarray([float(likelihoods[hypothesis_id]) for hypothesis_id in ids], dtype=np.float64)
         if np.any(values < 0) or np.any(values > 1):
             raise ValueError("likelihoods must be between 0 and 1")
         active_positions = positions[self.states[positions] != ELIMINATED]
         active_values = values[self.states[positions] != ELIMINATED]
+        self.last_update_count = int(active_positions.size)
+        self.last_update_families = selected_families
         log_values = np.full(active_values.shape, -np.inf, dtype=np.float64)
         positive = active_values > 0
         log_values[positive] = np.log(active_values[positive])
         self.log_weights[active_positions] += log_values
         self.evidence_counts[active_positions] += 1
-        hard_positions = np.asarray([self.index[hypothesis_id] for hypothesis_id in hard_falsification if hypothesis_id in self.index], dtype=np.intp)
+        hard_positions = np.asarray([self.index[hypothesis_id] for hypothesis_id in hard_falsification if hypothesis_id in allowed_ids], dtype=np.intp)
         if hard_positions.size:
             self.states[hard_positions] = ELIMINATED
             self.log_weights[hard_positions] = -np.inf
@@ -106,6 +129,10 @@ class VectorizedHypothesisStore:
         self.log_weights[eligible] = -np.inf
         if np.any(eligible):
             self._normalize()
+
+    def update_families(self, likelihoods: Mapping[str, float], evidence_id: str, families: Iterable[str], *, reason: str = "", hard_falsification: Iterable[str] = ()) -> None:
+        """Explicit alias for localized updates used by family-aware callers."""
+        self.observe(likelihoods, evidence_id, reason=reason, hard_falsification=hard_falsification, affected_families=families)
 
     def top_k(self, k: int, *, include_eliminated: bool = False) -> list[VectorizedBelief]:
         """Return top-k beliefs using argpartition instead of a full sort."""

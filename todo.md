@@ -51,7 +51,7 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ## Rendimiento pendiente
 
-- [ ] Añadir actualización dispersa por familias de hipótesis.
+- [x] Añadir actualización dispersa por familias de hipótesis.
 - [ ] Separar arrays numéricos de metadatos explicativos en el hot path completo.
 - [ ] Diseñar poda con cotas superiores y estados `parked` reactivables.
 - [ ] Medir exactitud frente al modo exacto en espacios masivos.
@@ -94,3 +94,17 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Completar subida y asociación de archivos al proyecto activo.
 - [x] Completar listado persistido y descarga mediante URL servida.
 - [x] Validar estados de carga, error, vacío, autorización y responsive.
+
+## Seguridad de archivos y proyectos
+
+- [x] Verificar rechazo de usuarios anónimos en consultas y mutaciones protegidas.
+- [x] Verificar aislamiento entre propietarios al listar y descargar archivos.
+- [x] Verificar que la subida solo acepte proyectos propios y metadatos válidos.
+- [x] Ejecutar pruebas de seguridad, build y comprobación del flujo protegido.
+
+## Actualización dispersa por familias
+
+- [x] Definir la representación de familias y el índice de hipótesis afectadas.
+- [x] Implementar actualización parcial sin recomputar familias no afectadas.
+- [x] Mantener razones, estados y compatibilidad con la actualización exacta existente.
+- [x] Añadir pruebas de equivalencia y benchmark de trabajo evitado.

@@ -44,10 +44,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ## Full-stack pendiente
 
-- [ ] Activar backend, base de datos persistente y almacenamiento de archivos para el frontend.
-- [ ] Definir entidades para proyectos, hipótesis, evidencias y archivos.
-- [ ] Integrar carga, listado y asociación de archivos desde la interfaz.
-- [ ] Validar autenticación, autorización por proyecto y procedencia de archivos.
+- [x] Activar backend, base de datos persistente y almacenamiento de archivos para el frontend.
+- [x] Definir entidades para proyectos, hipótesis, evidencias y archivos.
+- [x] Integrar carga, listado y asociación de archivos desde la interfaz.
+- [x] Validar autenticación, autorización por proyecto y procedencia de archivos.
 
 ## Rendimiento pendiente
 
@@ -74,3 +74,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Alinear rutas, payloads, respuestas y tipos compartidos.
 - [x] Corregir estados de carga, error, vacío y compatibilidad en frontend/.
 - [x] Ejecutar pruebas, build y verificación responsive de frontend/.
+
+## Activación full-stack
+
+- [x] Auditar backend, conexión de base de datos y helpers de almacenamiento existentes.
+- [x] Verificar migraciones y tablas persistentes para proyectos, hipótesis, evidencias, ejecuciones y archivos.
+- [x] Verificar endpoints protegidos y flujo de subida/listado/descarga de archivos.
+- [x] Ejecutar pruebas, build y comprobación de extremo a extremo.

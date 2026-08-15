@@ -11,3 +11,16 @@
 - [x] Documentar instalación, primeros pasos, API Python y flujo de integración con agentes de código.
 - [x] Validar una instalación limpia, pruebas de regresión y ejecución desde la raíz.
 - [ ] Preparar una estrategia de distribución y publicación del paquete.
+- [ ] Diseñar el contrato de inferencia bayesiana para hipótesis, priors, evidencia y verosimilitudes.
+- [ ] Perfilar el coste de actualización y ranking en espacios grandes.
+- [ ] Diseñar poda, top-k, representación logarítmica y actualización incremental.
+- [x] Implementar pesos logarítmicos manteniendo compatibilidad con `posterior`.
+- [x] Añadir `top_k(k)` sin ordenar el conjunto completo.
+- [x] Crear benchmark reproducible de latencia, memoria y exactitud.
+- [ ] Definir benchmarks de latencia, memoria, exactitud y trazabilidad.
+- [ ] Publicar la optimización de rendimiento en el repositorio GitHub.
+- [ ] Diseñar almacenamiento vectorizado con arrays numéricos y metadatos diferidos.
+- [ ] Comparar memoria y throughput entre objetos Python y almacenamiento vectorizado.
+- [ ] Implementar eliminación de hipótesis con razones, umbrales y estados de incertidumbre.
+- [ ] Añadir pruebas y documentación de integración del módulo probabilístico.
+- [ ] Crear una presentación sobre la arquitectura algebraica y probabilística de ForgeMind.

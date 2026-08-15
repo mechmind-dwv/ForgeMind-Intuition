@@ -136,6 +136,47 @@ class VectorizedHypothesisStore:
             for position in active_positions.tolist():
                 self.explanations.setdefault(position, []).append(f"{evidence_id}: {reason}")
 
+    def observe_arrays(
+        self,
+        likelihoods: np.ndarray,
+        evidence_id: str,
+        *,
+        reason: str = "",
+        hard_positions: Iterable[int] = (),
+        affected_families: Iterable[str] | None = None,
+    ) -> None:
+        """Apply likelihoods already aligned with ``self.ids`` without Python mappings.
+
+        ``likelihoods`` must be a one-dimensional float array with one value per
+        hypothesis. Metadata is touched only after the numeric update, and only
+        for positions that were active and selected. This is the preferred path
+        for large array-native callers; :meth:`observe` remains the compatible
+        ID-oriented adapter.
+        """
+        if evidence_id in self.evidence_ids:
+            raise ValueError(f"evidence_id already observed: {evidence_id}")
+        values = np.asarray(likelihoods, dtype=np.float64)
+        if values.ndim != 1 or values.size != len(self.ids):
+            raise ValueError("likelihoods must be a one-dimensional array aligned with hypotheses")
+        if np.any(~np.isfinite(values)) or np.any(values < 0) or np.any(values > 1):
+            raise ValueError("likelihoods must be finite values between 0 and 1")
+        selected_families = tuple(dict.fromkeys(affected_families)) if affected_families is not None else tuple(self.family_positions)
+        unknown_families = set(selected_families).difference(self.family_positions)
+        if unknown_families:
+            raise ValueError(f"unknown family names: {sorted(unknown_families)}")
+        positions = np.concatenate([self.family_positions[family] for family in selected_families]) if selected_families else np.asarray([], dtype=np.intp)
+        hard = np.asarray(tuple(hard_positions), dtype=np.intp)
+        if np.any(hard < 0) or np.any(hard >= len(self.ids)):
+            raise ValueError("hard_positions must refer to valid hypothesis positions")
+        if hard.size and not np.all(np.isin(hard, positions)):
+            raise ValueError("hard_positions must belong to the selected families")
+        active_positions = self._apply_numeric_update(positions, values[positions], hard)
+        self.last_update_families = selected_families
+        self.evidence_ids.add(evidence_id)
+        if reason:
+            for position in active_positions.tolist():
+                self.explanations.setdefault(int(position), []).append(f"{evidence_id}: {reason}")
+
     def update_families(self, likelihoods: Mapping[str, float], evidence_id: str, families: Iterable[str], *, reason: str = "", hard_falsification: Iterable[str] = ()) -> None:
         """Explicit alias for localized updates used by family-aware callers."""
         self.observe(likelihoods, evidence_id, reason=reason, hard_falsification=hard_falsification, affected_families=families)

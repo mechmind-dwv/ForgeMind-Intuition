@@ -8,8 +8,9 @@
   "posterior_sum_vectorized": 1.0000000000000009,
   "top_k_min_overlap": 1.0,
   "eliminated_vectorized": 0,
-  "reference_ms_total": 20.54337301524356,
-  "vectorized_ms_total": 3476.688921015011,
-  "speedup_reference_over_vectorized": 0.005908890177394982,
-  "note": "The reference is a low-memory dense numeric recurrence; the vectorized store measurement includes million-entry Python ID/likelihood mapping overhead. The prior object-mode exact benchmark could not complete at 1,000,000 hypotheses under sandbox memory limits."
+  "reference_ms_total": 23.50781802670099,
+  "vectorized_ms_total": 207.0675120339729,
+  "speedup_reference_over_vectorized": 0.11352731191769058,
+  "direct_array_speedup_vs_previous_mapping_path": 16.789,
+  "note": "The direct observe_arrays route avoids materializing a million-entry likelihood mapping. Precision and top-k overlap remain exact. The remaining gap versus the dense numeric reference is the cost of the store's compatibility metadata and array ownership; the prior object-mode exact benchmark could not complete at 1,000,000 hypotheses under sandbox memory limits."
 }

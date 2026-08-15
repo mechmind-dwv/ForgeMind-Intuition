@@ -141,3 +141,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [ ] Añadir una ruta de ingestión por arrays para evitar materializar un millón de IDs y likelihoods como diccionarios Python.
 - [ ] Repetir la comparación contra el modo exacto objeto cuando exista un protocolo de memoria compatible con 1.000.000 de hipótesis.
+
+## Ingestión directa por arrays
+
+- [x] Añadir una ruta de observación que acepte likelihoods NumPy sin diccionarios Python.
+- [x] Mantener `observe()` y la trazabilidad por IDs como APIs compatibles.
+- [x] Adaptar el benchmark de un millón a la ruta directa.
+- [x] Verificar precisión, top-k, estados, memoria y speedup.

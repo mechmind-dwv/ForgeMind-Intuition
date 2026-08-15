@@ -34,7 +34,6 @@ def run(size: int, rounds: int, top_k: int) -> dict[str, Any]:
 
     for round_index in range(rounds):
         likelihood_values = 0.8 + ((indices * 37 + round_index * 13) % 100_000) * 0.000001
-        likelihoods = {hypothesis_id: float(likelihood_values[index]) for index, hypothesis_id in enumerate(hypothesis_ids)}
         log_likelihoods = np.log(likelihood_values)
         started = time.perf_counter()
         reference_log += log_likelihoods
@@ -43,7 +42,7 @@ def run(size: int, rounds: int, top_k: int) -> dict[str, Any]:
         reference_posteriors = np.exp(reference_log)
         reference_times.append((time.perf_counter() - started) * 1000)
         started = time.perf_counter()
-        store.observe(likelihoods, f"million-probe-{round_index}")
+        store.observe_arrays(likelihood_values, f"million-probe-{round_index}")
         vector_times.append((time.perf_counter() - started) * 1000)
         errors = np.abs(reference_posteriors - store.posteriors)
         max_errors.append(float(np.max(errors)))

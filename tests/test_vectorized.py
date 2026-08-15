@@ -1,6 +1,6 @@
 import pytest
 
-pytest.importorskip("numpy")
+np = pytest.importorskip("numpy")
 from forgemind import VectorizedHypothesisStore
 
 
@@ -63,3 +63,26 @@ def test_family_update_does_not_falsify_hypothesis_outside_selected_family():
     store.update_families({"H1": 0.5, "H2": 0.0}, "probe-a", ["family-a"], hard_falsification={"H2"})
     assert store.states[store.index["H2"]] != 2
     assert store.evidence_counts[store.index["H2"]] == 0
+
+
+def test_direct_array_observation_matches_id_adapter_and_records_reason():
+    hypotheses = {"H1": "a", "H2": "b", "H3": "c"}
+    mapped = VectorizedHypothesisStore(hypotheses)
+    direct = VectorizedHypothesisStore(hypotheses)
+    mapped.observe({"H1": 0.9, "H2": 0.4, "H3": 0.7}, "probe", reason="array path")
+    direct.observe_arrays(np.asarray([0.9, 0.4, 0.7]), "probe", reason="array path")
+    assert direct.posteriors == pytest.approx(mapped.posteriors)
+    assert direct.evidence_counts.tolist() == mapped.evidence_counts.tolist()
+    assert direct.explanations == mapped.explanations
+
+
+def test_direct_array_observation_supports_family_selection_and_rejects_bad_shape():
+    store = VectorizedHypothesisStore(
+        {"H1": "a", "H2": "b", "H3": "c"},
+        families={"H1": "a", "H2": "a", "H3": "b"},
+    )
+    store.observe_arrays(np.asarray([0.5, 0.2, 0.0]), "family-probe", affected_families=["a"])
+    assert store.last_update_count == 2
+    assert store.evidence_counts.tolist() == [1, 1, 0]
+    with pytest.raises(ValueError, match="one-dimensional array"):
+        store.observe_arrays(np.asarray([[0.5, 0.2, 0.0]]), "bad-shape")

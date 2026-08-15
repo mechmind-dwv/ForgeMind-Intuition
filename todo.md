@@ -217,3 +217,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [x] Añadir pruebas parametrizadas para priors vacíos, formas inválidas y valores no finitos.
 - [x] Ejecutar la suite vectorizada completa y publicar la ampliación de cobertura.
+
+## Integración probabilística y protocolo estable
+
+- [x] Añadir pruebas de integración del módulo probabilístico con evidencias, eliminación, trazabilidad y selección top-k.
+- [x] Documentar el contrato de integración y criterios de exactitud del módulo probabilístico.
+- [x] Definir un benchmark reproducible de latencia, memoria, exactitud y trazabilidad.
+- [x] Ejecutar el protocolo estable y guardar resultados versionados.

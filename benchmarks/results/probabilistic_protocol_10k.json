@@ -1,0 +1,22 @@
+{
+  "protocol_version": "1.0",
+  "hypotheses": 10000,
+  "rounds": 3,
+  "repeats": 3,
+  "top_k": 25,
+  "elimination_threshold": 1e-12,
+  "exact_observe_ms_median": 376.3044,
+  "vectorized_observe_ms_median": 90.3585,
+  "exact_memory_peak_bytes_max": 4267104,
+  "vectorized_memory_peak_bytes_max": 3357257,
+  "rss_peak_bytes": 81051648,
+  "max_abs_posterior_error": 3.5236570605778894e-19,
+  "mean_abs_posterior_error": 7.1136650353573665e-22,
+  "posterior_sum_exact": 0.9999999999999997,
+  "posterior_sum_vectorized": 0.9999999999999996,
+  "top_k_min_overlap": 1.0,
+  "eliminated_sets_all_match": true,
+  "traceability_all_match": true,
+  "traceable_hypotheses_exact": 10000,
+  "traceable_hypotheses_vectorized": 10000
+}

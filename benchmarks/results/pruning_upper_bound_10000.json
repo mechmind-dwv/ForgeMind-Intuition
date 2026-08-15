@@ -1,0 +1,10 @@
+{
+  "hypotheses": 10000,
+  "repeats": 5,
+  "threshold": 0.0001,
+  "remaining_evidence": 3,
+  "minimum_likelihood": 0.9,
+  "upper_bound_prune_ms_median": 20.4627,
+  "parked_hypotheses": 3532,
+  "reversible_decisions": 3532
+}

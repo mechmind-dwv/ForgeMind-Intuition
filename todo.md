@@ -53,7 +53,7 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [x] Añadir actualización dispersa por familias de hipótesis.
 - [x] Separar arrays numéricos de metadatos explicativos en el hot path completo.
-- [ ] Diseñar poda con cotas superiores y estados `parked` reactivables.
+- [x] Diseñar poda con cotas superiores y estados `parked` reactivables.
 - [ ] Medir exactitud frente al modo exacto en espacios masivos.
 
 ## Comunidad GitHub pendiente
@@ -115,3 +115,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Separar estructuras numéricas, índices de familia y metadatos de explicación.
 - [x] Mantener snapshots, razones y compatibilidad sin añadir objetos al hot path.
 - [x] Añadir pruebas y benchmark de memoria, latencia y exactitud.
+
+## Poda reversible con cotas superiores
+
+- [x] Definir una cota superior segura para hipótesis con evidencia futura.
+- [x] Implementar poda a `parked` sin confundirla con falsación o eliminación.
+- [x] Permitir reactivar hipótesis parked y conservar su trazabilidad.
+- [x] Añadir pruebas de seguridad, exactitud y benchmark de trabajo evitado.

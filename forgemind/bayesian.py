@@ -222,6 +222,66 @@ class BayesianHypothesisSet:
                 decisions.append(self._decision(belief, False, reason, "survives_threshold", reversible=True))
         return decisions
 
+    def upper_bound(self, hypothesis_id: str, *, remaining_evidence: int, minimum_likelihood: float = 0.0) -> float:
+        """Return a safe posterior upper bound under pessimistic competitor updates.
+
+        The selected hypothesis receives its best possible future likelihood (1.0),
+        while every active competitor receives ``minimum_likelihood`` for each
+        remaining evidence item. A zero lower likelihood therefore gives the
+        loosest safe bound; no hypothesis is eliminated by this calculation.
+        """
+        belief = self._beliefs.get(hypothesis_id)
+        if belief is None:
+            raise KeyError(f"unknown hypothesis_id: {hypothesis_id}")
+        if remaining_evidence < 0:
+            raise ValueError("remaining_evidence must be non-negative")
+        if not 0.0 <= minimum_likelihood <= 1.0:
+            raise ValueError("minimum_likelihood must be between 0 and 1")
+        if belief.state == HypothesisState.ELIMINATED:
+            return 0.0
+        if remaining_evidence == 0:
+            return belief.posterior
+        candidate_posterior = belief.posterior
+        if candidate_posterior <= 0.0:
+            return 0.0
+        if minimum_likelihood == 0.0:
+            return 1.0
+        competitor_factor = exp(log(minimum_likelihood) * remaining_evidence)
+        denominator = candidate_posterior + competitor_factor * (1.0 - candidate_posterior)
+        return candidate_posterior / denominator if denominator > 0.0 else 1.0
+
+    def upper_bounds(self, *, remaining_evidence: int, minimum_likelihood: float = 0.0) -> dict[str, float]:
+        """Return safe posterior upper bounds for all non-eliminated beliefs."""
+        return {
+            hypothesis_id: self.upper_bound(hypothesis_id, remaining_evidence=remaining_evidence, minimum_likelihood=minimum_likelihood)
+            for hypothesis_id, belief in self._beliefs.items()
+            if belief.state != HypothesisState.ELIMINATED
+        }
+
+    def prune_by_upper_bound(self, *, threshold: float, remaining_evidence: int, minimum_likelihood: float = 0.0, reason: str = "") -> list[EliminationDecision]:
+        """Park beliefs whose best-case posterior cannot reach ``threshold``.
+
+        Parking is reversible and does not mark a hypothesis as falsified. The
+        caller can use ``unpark`` when new evidence or a changed threshold makes
+        the hypothesis worth reconsidering.
+        """
+        if not 0.0 < threshold < 1.0:
+            raise ValueError("threshold must be between 0 and 1")
+        bounds = self.upper_bounds(remaining_evidence=remaining_evidence, minimum_likelihood=minimum_likelihood)
+        decisions: list[EliminationDecision] = []
+        for hypothesis_id, bound in bounds.items():
+            belief = self._beliefs[hypothesis_id]
+            if belief.state == HypothesisState.PARKED or bound >= threshold:
+                continue
+            decision_reason = reason.strip() or (
+                f"upper bound {bound:.4f} below pruning threshold {threshold:.4f} "
+                f"with {remaining_evidence} remaining evidence item(s)"
+            )
+            belief.state = HypothesisState.PARKED
+            belief.reasons.append(decision_reason)
+            decisions.append(self._decision(belief, False, decision_reason, "upper_bound_pruned", reversible=True, threshold=threshold))
+        return decisions
+
     def eliminate_hypothesis(self, hypothesis_id: str, *, reason: str, evidence_ids: tuple[str, ...] = (), threshold: float | None = None, reversible: bool = False) -> EliminationDecision:
         """Apply an explicit caller decision while preserving provenance."""
         belief = self._beliefs.get(hypothesis_id)

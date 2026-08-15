@@ -132,14 +132,14 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ## Benchmark ampliado a un millón
 
-- [ ] Ejecutar comparación exacta/vectorizada con 1.000.000 de hipótesis.
-- [ ] Verificar precisión de posteriores, top-k y eliminaciones.
-- [ ] Comparar speedup, memoria y escalabilidad frente al benchmark de 100.000.
-- [ ] Guardar resultados y documentar límites observados.
+- [x] Ejecutar comparación exacta/vectorizada con 1.000.000 de hipótesis.
+- [x] Verificar precisión de posteriores, top-k y eliminaciones.
+- [x] Comparar speedup, memoria y escalabilidad frente al benchmark de 100.000.
+- [x] Guardar resultados y documentar límites observados.
 
 ## Escalabilidad de la API vectorizada
 
-- [ ] Añadir una ruta de ingestión por arrays para evitar materializar un millón de IDs y likelihoods como diccionarios Python.
+- [x] Añadir una ruta de ingestión por arrays para evitar materializar un millón de IDs y likelihoods como diccionarios Python.
 - [ ] Repetir la comparación contra el modo exacto objeto cuando exista un protocolo de memoria compatible con 1.000.000 de hipótesis.
 
 ## Ingestión directa por arrays
@@ -155,3 +155,11 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Verificar posteriores, top-k y conjuntos de eliminados en ambas escalas.
 - [x] Comparar speedup, memoria numérica y crecimiento entre escalas.
 - [x] Consolidar resultados y límites observados en un artefacto reproducible.
+
+## Siguiente lista técnica de escalabilidad
+
+- [x] Diseñar un protocolo de referencia exacta por bloques que permita comparar 1.000.000 de hipótesis sin materializar objetos Python.
+- [x] Ejecutar un escenario con eliminaciones no vacías para validar decisiones de poda y estados.
+- [ ] Medir memoria total del proceso además de memoria de arrays numéricos.
+- [ ] Evaluar un constructor array-native que evite diccionarios de IDs cuando el consumidor ya trabaja con posiciones.
+- [x] Documentar criterios de aceptación para precisión, top-k, estados y escalabilidad.

@@ -1,6 +1,28 @@
 import numpy as np
+import pytest
 
 from forgemind import BlockExactHypothesisSet, VectorizedHypothesisStore
+
+
+@pytest.mark.parametrize(
+    ("priors", "case"),
+    [
+        (np.asarray([], dtype=np.float64), "empty"),
+        (np.asarray([[1.0, 2.0]], dtype=np.float64), "two-dimensional"),
+        (np.asarray([np.nan, 1.0], dtype=np.float64), "nan"),
+        (np.asarray([np.inf, 1.0], dtype=np.float64), "positive-infinity"),
+        (np.asarray([-np.inf, 1.0], dtype=np.float64), "negative-infinity"),
+    ],
+)
+def test_block_exact_rejects_invalid_prior_arrays(priors, case):
+    with pytest.raises(ValueError, match="priors must be"):
+        BlockExactHypothesisSet(priors)
+
+
+@pytest.mark.parametrize("priors", [np.asarray([0.0, 0.0]), np.asarray([-1.0, 1.0])])
+def test_block_exact_rejects_priors_without_valid_positive_mass(priors):
+    with pytest.raises(ValueError, match="priors must be"):
+        BlockExactHypothesisSet(priors)
 
 
 def test_block_exact_matches_vectorized_for_posterior_and_top_k():

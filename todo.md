@@ -212,3 +212,8 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [x] Añadir workflow de GitHub Actions para instalar el extra vectorizado y ejecutar la suite completa.
 - [x] Validar localmente los mismos comandos del workflow y documentar el comportamiento ante fallos.
+
+## Cobertura de validación de exact_block
+
+- [x] Añadir pruebas parametrizadas para priors vacíos, formas inválidas y valores no finitos.
+- [x] Ejecutar la suite vectorizada completa y publicar la ampliación de cobertura.

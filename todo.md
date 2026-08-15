@@ -267,3 +267,9 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Crear fixture real de proyecto con candidatas, evidencia, archivo y snapshot.
 - [x] Implementar runner E2E proyecto → evidencia → ejecución → ranking → archivo → snapshot.
 - [x] Verificar restauración del snapshot y trazabilidad completa sin depender de servicios externos.
+
+## E2E multiusuario full-stack
+
+- [x] Probar aislamiento de proyectos, hipótesis y evidencias entre dos usuarios autenticados.
+- [x] Probar carga, listado y descarga autorizada de archivos con metadatos persistidos.
+- [x] Probar recuperación de sesión y continuidad de consultas/mutaciones tras renovar la sesión.

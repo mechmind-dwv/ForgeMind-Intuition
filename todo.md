@@ -245,7 +245,7 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [x] Preparar la primera distribución etiquetada del paquete Python con build limpio e instalación desde wheel.
 - [x] Definir herramientas versionadas para agentes: registrar hipótesis, consultar top-k, proponer probes, aportar evidencia, explicar, aparcar, reactivar y restaurar snapshots.
-- [ ] Añadir aislamiento de ejecución para programas y oráculos con timeout, límites de recursos y auditoría.
+- [x] Añadir ejecución controlada para programas y oráculos con timeout, límites de recursos y auditoría; queda pendiente un sandbox fuerte multi-tenant.
 - [ ] Completar pruebas E2E multiusuario de autorización, archivos y recuperación de sesión.
 - [ ] Implementar eliminación lógica y metadatos completos de archivos en la superficie full-stack.
 

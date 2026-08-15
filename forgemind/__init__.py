@@ -8,6 +8,7 @@ from .intuition import IntuitionScore, intuition_score
 from .knowledge import KnowledgeBase, KnowledgeRecord, MemoryType
 from .project import CandidateInput, ForgeMindProject, ProjectInput, ProjectValidationError
 from .exact_block import BlockBelief, BlockExactHypothesisSet
+from .execution import ExecutionAudit, ExecutionPolicy, ExecutionResult, run_controlled
 
 __all__ = [
     "AdaptiveIntuitionModel",
@@ -33,6 +34,10 @@ __all__ = [
     "ProjectValidationError",
     "BlockBelief",
     "BlockExactHypothesisSet",
+    "ExecutionAudit",
+    "ExecutionPolicy",
+    "ExecutionResult",
+    "run_controlled",
     "intuition_score",
     "VectorizedBelief",
     "VectorizedHypothesisStore",

@@ -21,11 +21,11 @@
 - [x] Añadir `top_k(k)` sin ordenar el conjunto completo.
 - [x] Crear benchmark reproducible de latencia, memoria y exactitud.
 - [ ] Definir benchmarks de latencia, memoria, exactitud y trazabilidad.
-- [ ] Publicar la optimización de rendimiento en el repositorio GitHub.
-- [ ] Reintentar el push desde el sandbox y documentar el procedimiento local si persiste el 403.
-- [ ] Confirmar el estado remoto tras el nuevo intento de publicación.
-- [ ] Probar el push después de reactivar y guardar Manus Connector.
-- [ ] Ejecutar el último intento de push desde el sandbox.
+- [x] Publicar la optimización de rendimiento en el repositorio GitHub.
+- [x] Reintentar el push desde el sandbox y documentar el procedimiento local si persiste el 403.
+- [x] Confirmar el estado remoto tras el nuevo intento de publicación.
+- [x] Probar el push después de reactivar y guardar Manus Connector.
+- [x] Ejecutar el último intento de push desde el sandbox.
 - [x] Diseñar almacenamiento vectorizado con arrays numéricos y metadatos diferidos.
 - [x] Comparar memoria y throughput entre objetos Python y almacenamiento vectorizado.
 - [ ] Implementar eliminación de hipótesis con razones, umbrales y estados de incertidumbre.

@@ -1,0 +1,16 @@
+{
+  "hypotheses": 100000,
+  "rounds": 3,
+  "top_k": 25,
+  "elimination_threshold": 1e-12,
+  "max_abs_posterior_error": 3.3881317890172014e-20,
+  "mean_abs_posterior_error": 7.533475739840278e-23,
+  "posterior_sum_exact": 1.0,
+  "posterior_sum_vectorized": 1.0,
+  "top_k_sets_all_rounds_match": true,
+  "top_k_min_overlap": 1.0,
+  "eliminated_sets_all_rounds_match": true,
+  "exact_observe_ms_total": 1826.2264,
+  "vectorized_observe_ms_total": 347.8559,
+  "speedup": 5.25
+}

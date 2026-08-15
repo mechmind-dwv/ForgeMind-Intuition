@@ -54,7 +54,7 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Añadir actualización dispersa por familias de hipótesis.
 - [x] Separar arrays numéricos de metadatos explicativos en el hot path completo.
 - [x] Diseñar poda con cotas superiores y estados `parked` reactivables.
-- [ ] Medir exactitud frente al modo exacto en espacios masivos.
+- [x] Medir exactitud frente al modo exacto en espacios masivos.
 
 ## Comunidad GitHub pendiente
 
@@ -122,3 +122,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Implementar poda a `parked` sin confundirla con falsación o eliminación.
 - [x] Permitir reactivar hipótesis parked y conservar su trazabilidad.
 - [x] Añadir pruebas de seguridad, exactitud y benchmark de trabajo evitado.
+
+## Exactitud vectorizada frente a modo exacto
+
+- [x] Definir tolerancias para posteriores, ranking y estados entre implementaciones.
+- [x] Implementar benchmark reproducible en espacios masivos con evidencia compartida.
+- [x] Comparar error máximo, error medio, top-k y decisiones de eliminación.
+- [x] Guardar resultados, ejecutar la suite y publicar la validación.

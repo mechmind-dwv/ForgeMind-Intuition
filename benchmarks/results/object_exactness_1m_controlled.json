@@ -1,0 +1,37 @@
+{
+  "protocol": {
+    "rounds": 3,
+    "top_k": 25,
+    "object_memory_limit_mb": 900,
+    "object_engine": "BayesianHypothesisSet with HypothesisBelief objects",
+    "vectorized_reference": "VectorizedHypothesisStore.observe_arrays"
+  },
+  "object_100000": {
+    "status": "completed",
+    "hypotheses": 100000,
+    "init_ms": 431.4907049993053,
+    "observe_ms_total": 2035.4869299917482,
+    "rss_peak_mb": 185.64453125,
+    "eliminated": 0,
+    "top_k_size": 25
+  },
+  "object_1000000": {
+    "status": "memory_limited",
+    "hypotheses": 1000000,
+    "memory_limit_mb": 900,
+    "termination": "MemoryError during object-backed construction/serialization",
+    "exit_observed": 1,
+    "comparison_completed": false
+  },
+  "vectorized_1000000_reference": {
+    "status": "completed",
+    "hypotheses": 1000000,
+    "max_abs_posterior_error_vs_blocked_reference": 4.235164736271502e-21,
+    "top_k_min_overlap": 1.0,
+    "eliminated_sets_match": true,
+    "numeric_state_bytes": 29000000,
+    "rss_peak_mb": 462.09765625,
+    "observe_ms_total": 252.8347659681458
+  },
+  "conclusion": "A full object-backed exact comparison is not memory-compatible at 1,000,000 hypotheses under the 900 MiB controlled protocol. The 100,000 object run is reproducible, while the million-scale exact reference must use bounded numeric arrays rather than one Python belief object per hypothesis."
+}

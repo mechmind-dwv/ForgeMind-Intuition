@@ -140,7 +140,7 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 ## Escalabilidad de la API vectorizada
 
 - [x] Añadir una ruta de ingestión por arrays para evitar materializar un millón de IDs y likelihoods como diccionarios Python.
-- [ ] Repetir la comparación contra el modo exacto objeto cuando exista un protocolo de memoria compatible con 1.000.000 de hipótesis.
+- [x] Evaluar la comparación contra el modo exacto objeto bajo un protocolo de memoria controlada; a 1.000.000 no es viable con la representación actual.
 
 ## Ingestión directa por arrays
 
@@ -177,3 +177,12 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Separar contribuciones de IDs, diccionarios, índices, creencias y metadatos explicativos.
 - [x] Comparar RSS, tracemalloc y memoria numérica del store.
 - [x] Guardar hotspots y límites observados para priorizar la siguiente optimización.
+
+## Comparación objeto a un millón
+
+- [ ] Diseñar una referencia objeto acotada por bloques sin duplicar entradas innecesarias.
+- [x] Ejecutar comparación objeto/vectorizada con límite de memoria y timeout explícitos.
+- [ ] Verificar precisión, top-k, eliminaciones y condiciones de terminación.
+- [x] Documentar si la comparación completa es viable o queda bloqueada por memoria.
+
+**Resultado de viabilidad:** el modo exacto basado en `HypothesisBelief` completa 100.000 hipótesis con `185.64 MiB` de RSS máximo, pero a 1.000.000 falla durante la construcción bajo un límite controlado de `900 MiB`. La comparación completa de precisión a un millón sigue siendo técnicamente bloqueada; la referencia válida a esa escala es la implementación numérica por arrays y bloques.

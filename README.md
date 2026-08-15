@@ -1,1689 +1,222 @@
-# ForgeMind
+# ForgeMind Intuition
 
-## Active Program Synthesis through Experimental Falsification
+> **Un motor explicable para explorar hipótesis sobre código, diseñar experimentos y convertir evidencia en decisiones verificables.**
 
-> **A computational engine for discovering compact programs by generating hypotheses, designing discriminative experiments, and actively searching for counterexamples.**
+ForgeMind Intuition es un software local-first para síntesis de programas, falsación activa e inferencia experimental. En lugar de tratar la generación de código como una búsqueda ciega, mantiene una población de candidatas, estima qué hipótesis merece la siguiente prueba, conserva la evidencia y elimina alternativas de manera explicable.
 
-ForgeMind is an experimental research system for **computational discovery, program synthesis, and hypothesis falsification**.
+La intuición de ForgeMind no pretende ser una corazonada. Es una combinación auditable de representación algebraica, memoria de experimentos, actualización probabilística, compresión y selección de acciones.
 
-Its central question is:
+## Qué problema resuelve
 
-> **Can a system discover compact programs more efficiently by actively searching for informative counterexamples rather than relying only on passive examples?**
+Un sistema puede encontrar un programa que encaje con ejemplos conocidos y aun así estar equivocado. ForgeMind cambia el objetivo operativo:
 
-Instead of treating program synthesis as a pure search problem, ForgeMind treats it as an **experimental cycle**:
+> **No basta con encontrar una candidata compatible; hay que buscar el experimento que pueda demostrar que las candidatas actuales están equivocadas.**
+
+El ciclo principal es:
 
 ```text
-┌──────────────────────┐
-│ Hypothesis Generator │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Candidate Programs   │
-│ H₁ H₂ H₃ ... Hₙ     │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────────┐
-│ Discriminative Experiment│
-│          x*              │
-└──────────┬───────────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Oracle / Target      │
-│ evaluation           │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Falsification        │
-│ eliminate Hᵢ         │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Survivor Population  │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Mutation / Composition│
-└──────────────────────┘
-           │
-           └──────────────► next experiment
-
-The goal is not merely to find a program that fits the available examples.
-
-The goal is to find a compact hypothesis that survives attempts to falsify it.
-
-
----
-
-1. Research hypothesis
-
-Let the current hypothesis population be:
-
-\[
-\mathcal{H} =
-\{H_1,H_2,\ldots,H_n\}
-\]
-
-Each hypothesis represents a candidate program.
-
-For an input (x):
-
-\[
-H_i(x) \rightarrow y_i
-\]
-
-ForgeMind searches for an input (x^*) that maximizes disagreement between surviving hypotheses:
-
-\[
-x^* =
-\arg\max_x
-\operatorname{Disagreement}
-\left(
-H_1(x),\ldots,H_n(x)
-\right)
-\]
-
-The oracle then provides the actual result:
-
-\[
-y^* = H_{\text{target}}(x^*)
-\]
-
-Any hypothesis satisfying:
-
-\[
-H_i(x^*) \neq y^*
-\]
-
-is falsified and removed from the population.
-
-This creates an active loop:
-
-\[
-\boxed{
-\text{Generate}
-\rightarrow
-\text{Predict}
-\rightarrow
-\text{Discriminate}
-\rightarrow
-\text{Test}
-\rightarrow
-\text{Falsify}
-\rightarrow
-\text{Select}
-\rightarrow
-\text{Compose}
-}
-\]
-
-
----
-
-2. Why falsification?
-
-A conventional synthesis system often asks:
-
-> Which program explains the examples?
-
-
-
-ForgeMind asks an additional question:
-
-> Which experiment would most effectively prove the current hypotheses wrong?
-
-
-
-This distinction matters.
-
-A program that fits 100 observed examples may still be completely wrong.
-
-A carefully selected counterexample can eliminate an entire class of competing programs in a single evaluation.
-
-Therefore ForgeMind treats information gained by falsification as a first-class experimental quantity.
-
-
----
-
-3. Active vs passive search
-
-ForgeMind contains an explicit passive baseline.
-
-Passive strategy
-
-Inputs are selected without considering the current hypothesis population:
-
-\[
-x \sim \text{RandomGenerator}
-\]
-
-Active strategy
-
-Inputs are selected according to the disagreement structure of the current population:
-
-\[
-x^* =
-\arg\max_x H(Predictions(H,x))
-\]
-
-where (H(\cdot)) denotes the Shannon entropy of the prediction partition.
-
-The experimental comparison is therefore:
-
-PASSIVE
-
-hypotheses
-    │
-    ▼
-random input
-    │
-    ▼
-oracle
-    │
-    ▼
-elimination
-
-
-ACTIVE
-
-hypotheses
-    │
-    ▼
-prediction partition
-    │
-    ▼
-information gain
-    │
-    ▼
-discriminative input
-    │
-    ▼
-oracle
-    │
-    ▼
-elimination
-
-The principal research metric is:
-
-\[
-Efficiency =
-\frac{\text{hypotheses eliminated}}
-{\text{oracle queries}}
-\]
-
-
----
-
-4. Current experimental results
-
-The current benchmark infrastructure compares active falsification against passive random testing.
-
-A recent baseline produced:
-
-active mean eliminations     = 61.125
-passive mean eliminations    = 61.125
-
-active mean survivors        = 2.875
-passive mean survivors       = 2.875
-
-active elimination/query     = 5.0102
-passive elimination/query    = 4.2102
-
-active/passive efficiency    = 1.190x
-
-This corresponds to an observed:
-
-\[
-\boxed{1.19\times}
-\]
-
-active/passive efficiency ratio under the current benchmark configuration.
-
-Additional information-selection experiments produced approximately:
-
-target 0   ratio = 1.03x
-target 1   ratio = 1.03x
-target 2   ratio = 1.04x
-target 3   ratio = 1.02x
-target 4   ratio = 1.04x
-target 5   ratio = 1.02x
-target 6   ratio = 1.03x
-target 7   ratio = 1.03x
-target 8   ratio = 1.03x
-target 9   ratio = 1.03x
-
-These results are experimental observations, not a final scientific conclusion.
-
-ForgeMind is explicitly designed so that the central hypothesis can fail.
-
-
----
-
-5. Adversarial evaluation
-
-ForgeMind also includes an adversarial benchmark designed to test whether apparently successful programs survive stronger evaluation.
-
-Current baseline:
-
-FORGEMIND 0.9.1 ADVERSARIAL
-
-cases                = 40
-
-random mean          = 1.0
-adversarial mean     = 1.0
-equivalence gap      = 0.0
-
-perfect random       = 40 / 40
-perfect adversarial  = 40 / 40
-
-discovery found      = 0 / 160000
-discovery rate       = 0.0
-
-The discovery found = 0 result is particularly important.
-
-ForgeMind does not assume that a benchmark will demonstrate an advantage.
-
-A failed discovery experiment is useful because it identifies a limitation in the current hypothesis-generation/search regime.
-
-
----
-
-6. Core representation
-
-Programs are represented compositionally.
-
-A program is a sequence of nodes:
-
-[
-    Node("U", "rev"),
-    Node("U", "sort"),
-]
-
-A node represents an operation in the program language.
-
-The system maintains canonical representations of programs:
-
-Program
-   │
-   ▼
-Canonical representation
-   │
-   ├── equivalence detection
-   ├── duplicate removal
-   ├── population management
-   └── complexity comparison
-
-This makes the representation suitable for:
-
-mutation
-
-composition
-
-deduplication
-
-equivalence testing
-
-parsimony
-
-evolutionary search
-
-hypothesis tracking
-
-
-
----
-
-7. Parsimony
-
-ForgeMind does not optimize correctness alone.
-
-A candidate should also remain compact.
-
-Conceptually:
-
-\[
-Score(H)
-=
--\lambda_E E(H,D)
--\lambda_C Complexity(H)
-+\lambda_R Robustness(H)
-\]
-
-where:
-
-(E(H,D)) is empirical error
-
-(Complexity(H)) measures program complexity
-
-(Robustness(H)) measures survival under adversarial testing
-
-
-This introduces a minimum-description-length-style pressure:
-
-> Prefer the simplest hypothesis that continues to survive falsification.
-
-
-
-This is essential because unrestricted program synthesis can easily produce hypotheses that memorize observations rather than discover structure.
-
-
----
-
-8. Architecture
-
-The repository is intentionally divided into experimental and core components.
-
-ForgeMind/
-│
-├── forgemind/
-│   ├── core.py
-│   └── active.py
-│
-├── tests/
-│   ├── test_core.py
-│   └── test_active.py
-│
-├── benchmarks/
-│   ├── active_vs_passive.py
-│   ├── active_vs_passive/
-│   │   └── results.json
-│   │
-│   ├── discovery/
-│   │   ├── active_vs_passive_v2.py
-│   │   └── results.json
-│   │
-│   └── adversarial/
-│       ├── arena.py
-│       └── results.json
-│
-└── backups/
-    └── 0.9.1-active-baseline/
-
-forgemind/core.py
-
-Core program representation and execution machinery.
-
-Responsible for concepts such as:
-
-Node
-
-Hyp
-
-canonicalization
-
-execution
-
-mutation
-
-generation
-
-complexity
-
-target programs
-
-
-forgemind/active.py
-
-Experimental active-falsification layer.
-
-Provides:
-
-hypothesis partitioning
-
-prediction signatures
-
-information gain
-
-informative experiment selection
-
-active falsification
-
-passive baseline
-
-distractor generation
-
-
-benchmarks/
-
-Reproducible experimental protocols.
-
-The benchmark layer is intentionally separated from the core synthesis engine so that experimental methodology can evolve without contaminating the basic program representation.
-
-
----
-
-9. Active falsification engine
-
-The central API includes:
-
-partition_hypotheses(...)
-
-Partitions hypotheses according to their predictions.
-
-information_gain(...)
-
-Computes Shannon entropy over prediction partitions.
-
-select_experiment(...)
-
-Searches candidate inputs for the most informative experiment.
-
-falsify_once(...)
-
-Evaluates the oracle and eliminates inconsistent hypotheses.
-
-build_distractors(...)
-
-Constructs competing hypotheses without inserting the target itself.
-
-run_active_protocol(...)
-
-Runs the active experimental protocol.
-
-run_passive_protocol(...)
-
-Provides the passive baseline.
-
-The compatibility API also exposes:
-
-select_informative_probe(...)
-
-for explicit candidate-set experiments.
-
-
----
-
-10. Experimental protocol
-
-A typical active experiment follows:
-
-pool = build_distractors(
-    target,
-    seed=123,
-    count=64,
-)
-
-x, gain = select_experiment(
-    pool,
-    rng,
-    budget=32,
-)
-
-y, eliminated = falsify_once(
-    pool,
-    target,
-    x,
-)
-
-The process repeats until:
-
-the hypothesis population converges,
-
-the query budget is exhausted,
-
-or the experimental protocol terminates.
-
-
-
----
-
-11. Reproducibility
-
-Experiments use explicit random seeds.
-
-For example:
-
-SEEDS = (3, 11, 29, 47)
-
-Benchmark parameters are recorded alongside results.
-
-This allows experiments to be rerun and compared without changing the underlying methodology.
-
-
----
-
-12. Testing
-
-ForgeMind currently includes a unit/integration test suite covering:
-
-program representation
-
-canonicalization
-
-execution
-
-mutation
-
-active hypothesis partitioning
-
-information gain
-
-deterministic probe selection
-
-distractor generation
-
-active protocol reproducibility
-
-passive protocol execution
-
-
-Current validation:
-
-28 passed
-
-Run the complete suite:
-
-cd ~/ForgeMind
-python -m pytest -q
-
-Expected:
-
-28 passed
-
-
----
-
-13. Running the benchmarks
-
-Active vs passive
-
-cd ~/ForgeMind
-
-PYTHONPATH=. python -m benchmarks.active_vs_passive
-
-Results are written to:
-
-benchmarks/active_vs_passive/results.json
-
-Validate the JSON:
-
-python -m json.tool \
-    benchmarks/active_vs_passive/results.json \
-    >/dev/null \
-    && echo "OK: JSON válido"
-
-
----
-
-Adversarial benchmark
-
-cd ~/ForgeMind
-
-PYTHONPATH=. python benchmarks/adversarial/arena.py
-
-Results:
-
-benchmarks/adversarial/results.json
-
-Validate:
-
-python -m json.tool \
-    benchmarks/adversarial/results.json \
-    >/dev/null \
-    && echo "OK: adversarial JSON válido"
-
-
----
-
-Discovery benchmark
-
-The discovery benchmark is an experimental research layer and is being developed separately from the stable active/passive protocol.
-
-cd ~/ForgeMind
-
-PYTHONPATH=. python \
-    -m benchmarks.discovery.active_vs_passive_v2
-
-Results:
-
-benchmarks/discovery/results.json
-
-
----
-
-14. Research questions
-
-ForgeMind is organized around several increasingly difficult questions.
-
-RQ1 — Active falsification
-
-Can informative counterexample selection eliminate competing hypotheses more efficiently than passive random testing?
-
-\[
-Efficiency_{active}
->
-Efficiency_{passive}
-\;?
-\]
-
-RQ2 — Generalization
-
-Does active falsification reduce overfitting?
-
-RQ3 — Compression
-
-Does the pressure of falsification produce smaller programs?
-
-RQ4 — Discovery
-
-Can the system discover the target program rather than merely identify it among a supplied population?
-
-RQ5 — Composition
-
-Can surviving partial programs be recombined into progressively better abstractions?
-
-RQ6 — Scaling
-
-Does the advantage of active experimentation increase with the size of the hypothesis space?
-
-
----
-
-15. The important distinction
-
-ForgeMind is not intended to be described simply as:
-
-> "an evolutionary program generator."
-
-
-
-That would miss the central idea.
-
-The intended abstraction is:
-
-DISCOVERY
-                     │
-                     ▼
-              hypothesis space
-                     │
-                     ▼
-             competing models
-                     │
-                     ▼
-        ┌────────────────────────┐
-        │ ACTIVE EXPERIMENT DESIGN│
-        └────────────┬───────────┘
-                     │
-                     ▼
-                counterexample
-                     │
-                     ▼
-                falsification
-                     │
-                     ▼
-              surviving models
-                     │
-                     ▼
-             abstraction/composition
-                     │
-                     └──────────────►
-
-The system therefore sits at the intersection of:
-
-program synthesis
-
-inductive programming
-
-evolutionary computation
-
-active learning
-
-experimental design
-
-automated reasoning
-
-falsification
-
-minimum-description-length principles
-
-
-
----
-
-16. Scientific philosophy
-
-ForgeMind follows a simple principle:
-
-> Do not ask only whether a hypothesis works. Ask where it can fail.
-
-
-
-A successful prediction increases confidence.
-
-A decisive counterexample can eliminate a hypothesis.
-
-Therefore the most valuable experiment is often not the one that confirms the current model, but the one that best separates the surviving alternatives.
-
-This gives the system an explicitly experimental character.
-
-
----
-
-17. What ForgeMind is trying to discover
-
-The long-term objective is not merely to reproduce known programs.
-
-It is to investigate whether a machine can discover compact computational structure through an autonomous loop of:
-
-Generate
-   ↓
-Predict
-   ↓
-Experiment
-   ↓
-Observe
-   ↓
-Falsify
-   ↓
-Compress
-   ↓
-Compose
-   ↓
-Repeat
-
-In the strongest formulation:
-
-\[
-\boxed{
-\text{Discovery}
-=
-\text{Hypothesis generation}
-+
-\text{active falsification}
-+
-\text{compression}
-+
-\text{composition}
-}
-\]
-
-
----
-
-18. Status
-
-Development status: Experimental / Research Prototype
-
-Current capabilities:
-
-[x] Compositional program representation
-
-[x] Program execution
-
-[x] Canonicalization
-
-[x] Mutation
-
-[x] Hypothesis populations
-
-[x] Distractor generation
-
-[x] Active hypothesis partitioning
-
-[x] Information-gain scoring
-
-[x] Active experiment selection
-
-[x] Counterexample-based falsification
-
-[x] Passive baseline
-
-[x] Active vs passive benchmark
-
-[x] Adversarial benchmark
-
-[x] Automated tests
-
-[x] Reproducible seeds
-
-[ ] Robust discovery benchmark
-
-[ ] Large-scale search
-
-[ ] Formal equivalence engine
-
-[ ] Learned experiment proposal
-
-[ ] Multi-stage program composition
-
-[ ] Statistical evaluation across larger task suites
-
-
-The project should therefore be regarded as an experimental research platform, not as a finished automated discovery system.
-
-
----
-
-19. Roadmap
-
-Phase I — Experimental foundation
-
-stabilize program representation
-
-stabilize active falsification
-
-establish reproducible benchmarks
-
-measure oracle efficiency
-
-
-Phase II — Discovery
-
-improve hypothesis generation
-
-introduce structured search
-
-separate candidate programs from hypothesis metadata
-
-implement robust discovery protocols
-
-measure discovery rate
-
-
-Phase III — Composition
-
-combine surviving programs
-
-discover reusable primitives
-
-construct hierarchical programs
-
-introduce abstraction
-
-
-Phase IV — Adaptive experimentation
-
-learned probe generation
-
-uncertainty-aware experiment selection
-
-adversarial search against hypotheses
-
-adaptive query budgets
-
-
-Phase V — Scientific evaluation
-
-Compare against:
-
-random search
-
-passive program synthesis
-
-genetic programming
-
-enumeration
-
-active learning baselines
-
-synthesis systems using fixed example sets
-
-
-Primary metrics:
-
-\[
-\text{Discovery Rate}
-\]
-
-\[
-\text{Queries to Discovery}
-\]
-
-\[
-\text{Eliminations / Query}
-\]
-
-\[
-\text{Program Complexity}
-\]
-
-\[
-\text{Generalization Accuracy}
-\]
-
-\[
-\text{Robustness}
-\]
-
-\[
-\text{Compute Cost}
-\]
-
-
----
-
-20. Repository
-
-GitHub
-
-https://github.com/mechmind-dwv/ForgeMind
-
-Current experimental branch:
-
-feat/adversarial-arena
-
-Latest published milestone:
-
-0750be2
-feat: add active falsification and discovery benchmarks
-
-
----
-
-21. License
-
-See the repository license for the current licensing terms.
-
-
----
-
-22. Citation
-
-ForgeMind is an experimental research project.
-
-If you use the system, benchmark methodology, or experimental results in research, please cite the repository and the corresponding version/commit so that experiments remain reproducible.
-
-
----
-
-ForgeMind
-
-> Generate hypotheses. Design experiments. Find counterexamples. Kill bad programs. Keep what survives.
-
-
-
-### Lo que cambiaría respecto al README anterior
-
-Este README posiciona ForgeMind correctamente como **infraestructura experimental de investigación**, y no como un simple framework de generación de código.
-
-Además, deja explícita una distinción científica importante: el resultado de `1.19x` es un **resultado preliminar del protocolo actual**, no una afirmación de que el método activo ya haya demostrado superioridad general.
-
-Y mantendría separado `discovery` del benchmark `active_vs_passive`: ahora mismo es la parte que todavía está evolucionando y no conviene presentar como si estuviera completamente validada.
-
-Si quieres aplicarlo directamente desde Termux:
+candidatas → predicciones → probe discriminativo → oráculo
+     ↑                                      ↓
+composición ← supervivientes ← falsación ← evidencia
+```
+
+Cada decisión debe conservar su procedencia. Un posterior es una creencia condicionada a evidencia; una equivalencia algebraica o una falsación dura requiere un contrato semántico distinto.
+
+## Estado actual
+
+La versión actual contiene representación y ejecución de programas, búsqueda activa frente a una línea base pasiva, memoria de conocimiento, puntuación de intuición, calibración adaptativa, inferencia bayesiana explicable, ranking top-k, almacenamiento vectorizado opcional y una CLI instalable.
+
+| Área | Estado | Punto de entrada |
+|---|---|---|
+| Núcleo algebraico | Disponible | `forgemind/core.py` |
+| Falsación activa | Disponible | `forgemind/active.py` |
+| Inferencia bayesiana | Disponible | `forgemind/bayesian.py` |
+| Almacenamiento vectorizado | Disponible como extra | `forgemind/vectorized.py` |
+| Proyectos reproducibles | Disponible | `forgemind/project.py` |
+| CLI | Disponible | `forgemind/cli.py` |
+| Frontend visual | Incluido | `frontend/` |
+| Presentación arquitectónica | Incluida | `presentation/` |
+| Backend full-stack | En integración | ver `ROADMAP.md` |
+
+## Instalación
+
+ForgeMind requiere Python 3.11 o posterior. Para instalar el núcleo y sus comandos:
 
 ```bash
-cd ~/ForgeMind
-
-cat > README.md <<'EOF'
-# ForgeMind
-
-## Active Program Synthesis through Experimental Falsification
-
-> **A computational engine for discovering compact programs by generating hypotheses, designing discriminative experiments, and actively searching for counterexamples.**
-
-ForgeMind is an experimental research system for **computational discovery, program synthesis, and hypothesis falsification**.
-
-Its central question is:
-
-> **Can a system discover compact programs more efficiently by actively searching for informative counterexamples rather than relying only on passive examples?**
-
-Instead of treating program synthesis as a pure search problem, ForgeMind treats it as an **experimental cycle**:
-
-```text
-Generate → Predict → Discriminate → Test → Falsify → Select → Compose
-
-The objective is not merely to find a program that fits known examples.
-
-It is to find a compact hypothesis that survives attempts to falsify it.
-
-
----
-
-Research hypothesis
-
-Let the current hypothesis population be:
-
-\[
-\mathcal{H} = \{H_1,H_2,\ldots,H_n\}
-\]
-
-Each hypothesis represents a candidate program.
-
-For an input (x):
-
-\[
-H_i(x) \rightarrow y_i
-\]
-
-ForgeMind searches for an input (x^*) that maximizes disagreement between surviving hypotheses:
-
-\[
-x^* =
-\arg\max_x
-\operatorname{Disagreement}
-(H_1(x),\ldots,H_n(x))
-\]
-
-The oracle provides the actual result (y^*).
-
-Any hypothesis satisfying:
-
-\[
-H_i(x^*) \neq y^*
-\]
-
-is falsified and removed.
-
-The central loop is:
-
-\[
-\boxed{
-\text{Generate}
-\rightarrow
-\text{Predict}
-\rightarrow
-\text{Experiment}
-\rightarrow
-\text{Falsify}
-\rightarrow
-\text{Select}
-\rightarrow
-\text{Compose}
-}
-\]
-
-
----
-
-Active vs passive search
-
-ForgeMind explicitly compares two strategies.
-
-Passive
-
-Inputs are selected randomly.
-
-\[
-x \sim \text{RandomGenerator}
-\]
-
-Active
-
-Inputs are selected according to disagreement between current hypotheses.
-
-\[
-x^* =
-\arg\max_x H(Predictions(H,x))
-\]
-
-where (H) is the Shannon entropy of the prediction partition.
-
-The principal metric is:
-
-\[
-Efficiency =
-\frac{\text{hypotheses eliminated}}
-{\text{oracle queries}}
-\]
-
-
----
-
-Current experimental results
-
-A current active/passive baseline produced:
-
-active mean eliminations     = 61.125
-passive mean eliminations    = 61.125
-
-active mean survivors        = 2.875
-passive mean survivors       = 2.875
-
-active elimination/query     = 5.0102
-passive elimination/query    = 4.2102
-
-active/passive efficiency    = 1.190x
-
-This corresponds to an observed:
-
-\[
-\boxed{1.19\times}
-\]
-
-active/passive efficiency ratio under the current benchmark configuration.
-
-Information-selection experiments produced approximately:
-
-target 0   ratio = 1.03x
-target 1   ratio = 1.03x
-target 2   ratio = 1.04x
-target 3   ratio = 1.02x
-target 4   ratio = 1.04x
-target 5   ratio = 1.02x
-target 6   ratio = 1.03x
-target 7   ratio = 1.03x
-target 8   ratio = 1.03x
-target 9   ratio = 1.03x
-
-These are experimental observations, not a final scientific conclusion.
-
-
----
-
-Adversarial evaluation
-
-Current adversarial baseline:
-
-cases                = 40
-random mean          = 1.0
-adversarial mean     = 1.0
-equivalence gap      = 0.0
-
-perfect random       = 40 / 40
-perfect adversarial  = 40 / 40
-
-discovery found      = 0 / 160000
-discovery rate       = 0.0
-
-The system is intentionally designed so that experiments can falsify its own claims.
-
-
----
-
-Architecture
-
-ForgeMind/
-├── forgemind/
-│   ├── core.py
-│   └── active.py
-│
-├── tests/
-│   ├── test_core.py
-│   └── test_active.py
-│
-├── benchmarks/
-│   ├── active_vs_passive.py
-│   ├── active_vs_passive/
-│   │   └── results.json
-│   ├── discovery/
-│   │   ├── active_vs_passive_v2.py
-│   │   └── results.json
-│   └── adversarial/
-│       ├── arena.py
-│       └── results.json
-│
-└── backups/
-    └── 0.9.1-active-baseline/
-
-Core
-
-forgemind/core.py contains:
-
-program representation
-
-Node
-
-Hyp
-
-execution
-
-canonicalization
-
-mutation
-
-generation
-
-complexity
-
-target programs
-
-
-Active engine
-
-forgemind/active.py contains:
-
-hypothesis partitioning
-
-prediction signatures
-
-information gain
-
-informative experiment selection
-
-falsification
-
-passive baseline
-
-distractor generation
-
-
-
----
-
-Active falsification API
-
-partition_hypotheses(...)
-information_gain(...)
-select_experiment(...)
-select_informative_probe(...)
-falsify_once(...)
-build_distractors(...)
-run_active_protocol(...)
-run_passive_protocol(...)
-
-
----
-
-Parsimony
-
-ForgeMind optimizes more than empirical correctness.
-
-Conceptually:
-
-\[
-Score(H)
-=
--\lambda_E E(H,D)
--\lambda_C Complexity(H)
-+\lambda_R Robustness(H)
-\]
-
-This creates pressure toward compact hypotheses that continue to survive adversarial evaluation.
-
-
----
-
-Testing
-
-Current test suite:
-
-28 passed
-
-Run:
-
-cd ~/ForgeMind
-python -m pytest -q
-
-
----
-
-Benchmarks
-
-Active vs passive
-
-PYTHONPATH=. python -m benchmarks.active_vs_passive
-
-Results:
-
-benchmarks/active_vs_passive/results.json
-
-Adversarial
-
-PYTHONPATH=. python benchmarks/adversarial/arena.py
-
-Results:
-
-benchmarks/adversarial/results.json
-
-Discovery
-
-PYTHONPATH=. python -m benchmarks.discovery.active_vs_passive_v2
-
-Results:
-
-benchmarks/discovery/results.json
-
-The discovery benchmark remains an experimental development area.
-
-
----
-
-Research questions
-
-RQ1 — Active falsification
-
-Can informative counterexample selection eliminate competing hypotheses more efficiently than passive random testing?
-
-RQ2 — Generalization
-
-Does active falsification reduce overfitting?
-
-RQ3 — Compression
-
-Does falsification pressure produce smaller programs?
-
-RQ4 — Discovery
-
-Can the system discover a target program rather than identify it among supplied candidates?
-
-RQ5 — Composition
-
-Can surviving programs be recombined into progressively better abstractions?
-
-RQ6 — Scaling
-
-Does active experimentation become more valuable as the hypothesis space grows?
-
-
----
-
-Scientific position
-
-ForgeMind should not be described simply as an evolutionary program generator.
-
-Its central abstraction is:
-
-hypothesis space
-       ↓
-competing models
-       ↓
-active experiment design
-       ↓
-counterexample
-       ↓
-falsification
-       ↓
-surviving models
-       ↓
-compression / composition
-       ↓
-next experiment
-
-The project sits at the intersection of:
-
-program synthesis
-
-inductive programming
-
-evolutionary computation
-
-active learning
-
-experimental design
-
-automated reasoning
-
-falsification
-
-minimum-description-length principles
-
-
-
----
-
-Status
-
-Experimental / Research Prototype
-
-Implemented:
-
-[x] Compositional program representation
-
-[x] Program execution
-
-[x] Canonicalization
-
-[x] Mutation
-
-[x] Hypothesis populations
-
-[x] Distractor generation
-
-[x] Active hypothesis partitioning
-
-[x] Information-gain scoring
-
-[x] Active experiment selection
-
-[x] Counterexample-based falsification
-
-[x] Passive baseline
-
-[x] Active vs passive benchmark
-
-[x] Adversarial benchmark
-
-[x] Automated tests
-
-[x] Reproducible seeds
-
-[ ] Robust discovery benchmark
-
-[ ] Large-scale search
-
-[ ] Formal equivalence engine
-
-[ ] Learned experiment proposal
-
-[ ] Multi-stage program composition
-
-
-
----
-
-Roadmap
-
-Phase I — Experimental foundation
-
-stabilize program representation
-
-stabilize active falsification
-
-establish reproducible benchmarks
-
-measure oracle efficiency
-
-
-Phase II — Discovery
-
-improve hypothesis generation
-
-introduce structured search
-
-separate candidate programs from hypothesis metadata
-
-implement robust discovery protocols
-
-measure discovery rate
-
-
-Phase III — Composition
-
-combine surviving programs
-
-discover reusable primitives
-
-construct hierarchical programs
-
-introduce abstraction
-
-
-Phase IV — Adaptive experimentation
-
-learned probe generation
-
-uncertainty-aware experiment selection
-
-adversarial search against hypotheses
-
-adaptive query budgets
-
-
-Phase V — Scientific evaluation
-
-Compare against:
-
-random search
-
-passive program synthesis
-
-genetic programming
-
-enumeration
-
-active-learning baselines
-
-
-Primary metrics:
-
-\[
-Discovery\ Rate
-\]
-
-\[
-Queries\ to\ Discovery
-\]
-
-\[
-Eliminations / Query
-\]
-
-\[
-Program\ Complexity
-\]
-
-\[
-Generalization
-\]
-
-\[
-Robustness
-\]
-
-\[
-Compute\ Cost
-\]
-
-
----
-
-Repository
-
-GitHub:
-
-https://github.com/mechmind-dwv/ForgeMind
-
-Current experimental branch:
-
-feat/adversarial-arena
-
-Latest published milestone:
-
-0750be2
-feat: add active falsification and discovery benchmarks
-
-
----
-
-License
-
-See the repository license for current licensing terms.
-
-
----
-
-Citation
-
-ForgeMind is an experimental research project.
-
-For reproducible research, cite the repository together with the relevant version or commit.
-
-
----
-
-ForgeMind
-
-> Generate hypotheses. Design experiments. Find counterexamples. Kill bad programs. Keep what survives.
-
----
-
-## ForgeMind Intuition como software para proyectos
-
-ForgeMind Intuition puede utilizarse como una librería Python y como una CLI para que un desarrollador incorpore intuición experimental a sus propios proyectos. El núcleo conserva la filosofía de ForgeMind: la puntuación organiza los experimentos y explica sus razones, pero no sustituye la ejecución del oráculo ni convierte evidencia acotada en verdad global.
-
-### Instalación local
-
-```bash
-python3 -m venv .venv
+git clone https://github.com/mechmind-dwv/ForgeMind-Intuition.git
+cd ForgeMind-Intuition
+python -m venv .venv
 . .venv/bin/activate
-python -m pip install -e ".[dev]"
+python -m pip install --upgrade pip
+python -m pip install -e .
+```
+
+Para desarrollo y pruebas:
+
+```bash
+python -m pip install -e '.[dev]'
 python -m pytest -q
 ```
 
-### Crear un proyecto reproducible
-
-```bash
-forgemind init forgemind.project.json
-forgemind score forgemind.project.json
-forgemind advise forgemind.project.json
-```
-
-Un archivo de proyecto contiene `name`, `candidates`, `probes` y `knowledge`. Las candidatas se expresan como secuencias de nodos `{kind, name, arg}`; el bloque `knowledge` puede guardar reglas, falsificaciones o hipótesis con su confianza experimental y procedencia.
-
-### Integración Python
-
-```python
-from forgemind import KnowledgeBase, advise
-from forgemind.project import ForgeMindProject
-
-project = ForgeMindProject.load("forgemind.project.json")
-recommendations = advise(
-    project.candidates,
-    knowledge_base=project.knowledge_base(),
-)
-print(recommendations[0].as_dict())
-```
-
-La carpeta `frontend/` contiene la vista de trabajo visual para explorar hipótesis y razones. Es una copia versionable del frontend, mientras que el proyecto web del sandbox mantiene la vista previa activa para iterar el diseño. La siguiente integración de producto será conectar ese frontend con la CLI o con una API local que ejecute proyectos reales.
-
-## Inferencia bayesiana y eliminación de hipótesis
-
-`forgemind.bayesian` mantiene una distribución de creencias sobre hipótesis identificadas. Cada hipótesis recibe un `prior`; una observación registra una descripción, una fuente y las verosimilitudes `P(E|H)`; el motor aplica una actualización proporcional a `P(E|H) · P(H)` y normaliza la masa posterior.
-
-```python
-from forgemind import BayesianHypothesisSet, EvidenceObservation
-
-beliefs = BayesianHypothesisSet.from_priors(
-    {"H1": "sort preserva la relación", "H2": "reverse preserva la relación"},
-    priors={"H1": 0.5, "H2": 0.5},
-    elimination_threshold=0.02,
-)
-
-beliefs.observe(EvidenceObservation(
-    evidence_id="probe-01",
-    description="la salida conserva el orden",
-    likelihoods={"H1": 0.9, "H2": 0.2},
-    source="property-test",
-))
-
-for belief in beliefs.ranked():
-    print(belief.as_dict())
-```
-
-La eliminación es deliberadamente conservadora. Una hipótesis solo se marca como `eliminated` cuando cruza el umbral después del mínimo de observaciones configurado, o cuando un oráculo entrega una falsación dura. Cada transición conserva `evidence_ids` y `reasons`. `posterior` significa grado de creencia condicionado a la evidencia registrada; no es una probabilidad de verdad metafísica ni reemplaza una prueba algebraica.
-
-El diseño sigue dos invariantes: las creencias activas deben ser no negativas y sumar uno, y una evidencia incompatible puede poner una hipótesis en cero para después renormalizar las alternativas supervivientes. Esta separación permite combinar el álgebra de programas —nodos, reescrituras y equivalencias— con la probabilidad de qué hipótesis conviene probar a continuación.
-
-## Almacenamiento vectorizado para espacios grandes
-
-`VectorizedHypothesisStore` mantiene el estado numérico en arrays NumPy contiguos: `priors`, `log_weights`, `posteriors`, `states` y `evidence_counts`. Las descripciones y explicaciones quedan en estructuras auxiliares, por lo que el cálculo caliente no crea un objeto Python completo por hipótesis.
-
-```python
-from forgemind import VectorizedHypothesisStore
-
-store = VectorizedHypothesisStore(
-    {"H1": "sort preserva la relación", "H2": "reverse preserva la relación"},
-)
-store.observe(
-    {"H1": 0.9, "H2": 0.2},
-    "probe-01",
-    reason="property-test: la salida conserva el orden",
-)
-print(store.top_k(10))
-```
-
-La actualización es dispersa: las hipótesis omitidas conservan likelihood uno y no incrementan su contador de evidencia. `top_k(k)` usa partición NumPy y ordena únicamente los candidatos seleccionados. La clase conserva `posterior_sum()` y `memory_bytes()` para comprobar invariantes y capacidad.
-
-La implementación es opcional para no imponer NumPy al núcleo base:
+El almacenamiento vectorizado es opcional porque el núcleo base no debe obligar a instalar NumPy:
 
 ```bash
 python -m pip install -e '.[vectorized]'
 ```
 
-El benchmark comparativo se ejecuta con `python benchmarks/vectorized_vs_object.py --hypotheses 10000 --repeats 3 --top-k 20`. En la medición local de 10.000 hipótesis, la actualización vectorizada tardó 94.814 ms frente a 200.422 ms del almacén orientado a objetos; `top_k(20)` tardó 0.626 ms frente a 1.938 ms. Estos valores son referencias de esta máquina y no un SLA.
+Sin ese extra, `import forgemind` continúa funcionando y las pruebas vectorizadas se omiten correctamente.
+
+## Inicio rápido con la CLI
+
+Inicializa un proyecto reproducible, inspecciona su recomendación y puntúa candidatas:
+
+```bash
+forgemind init forgemind.project.json
+forgemind advise forgemind.project.json
+forgemind score forgemind.project.json
+```
+
+El archivo de proyecto está pensado para viajar con el código y los protocolos, no para sustituir un almacén de archivos ni para guardar secretos. Sus campos principales son candidatas, probes, targets, resultados y configuración experimental.
+
+## Uso del motor bayesiano
+
+`BayesianHypothesisSet` mantiene un conjunto normalizado de creencias. Internamente trabaja con `log_weight` para evitar underflow y usa normalización estable; la propiedad `posterior` se conserva para compatibilidad.
+
+```python
+from forgemind.bayesian import BayesianHypothesisSet, EvidenceObservation
+
+beliefs = BayesianHypothesisSet.from_priors(
+    {
+        "H1": "sort preserva el orden",
+        "H2": "reverse preserva el orden",
+    },
+    priors={"H1": 0.5, "H2": 0.5},
+)
+
+beliefs.observe(EvidenceObservation(
+    evidence_id="probe-01",
+    description="la salida conserva el orden ascendente",
+    likelihoods={"H1": 0.9, "H2": 0.2},
+    source="property-test",
+))
+
+for belief in beliefs.top_k(2):
+    print(belief.hypothesis_id, belief.posterior, belief.state)
+```
+
+La misma `evidence_id` no se puede aplicar dos veces. Una falsación dura se registra separadamente de una eliminación por umbral, y cada decisión conserva razones y procedencia.
+
+## Uso vectorizado para espacios grandes
+
+`VectorizedHypothesisStore` separa el estado numérico de los metadatos. Los arrays `priors`, `log_weights`, `posteriors`, `states` y `evidence_counts` evitan crear un objeto Python completo por hipótesis. `observe()` acepta actualizaciones dispersas y `top_k(k)` usa partición NumPy en lugar de ordenar todo el conjunto.
+
+```python
+from forgemind import VectorizedHypothesisStore
+
+store = VectorizedHypothesisStore({
+    "H1": "candidata A",
+    "H2": "candidata B",
+})
+store.observe(
+    {"H1": 0.9, "H2": 0.2},
+    "probe-01",
+    reason="property-test",
+)
+print(store.top_k(1)[0])
+```
+
+El benchmark comparativo se ejecuta con:
+
+```bash
+python benchmarks/vectorized_vs_object.py --hypotheses 10000 --repeats 3 --top-k 20
+```
+
+Los resultados locales se guardan en `benchmarks/results/`. Son mediciones de referencia de una máquina concreta, no un SLA.
+
+## Arquitectura
+
+ForgeMind se organiza en tres capas. La **Capa 1** contiene el núcleo algebraico, la representación de programas, la canonicalización, la ejecución y los oráculos. La **Capa 2** contiene la inferencia, el ranking, la eliminación explicable, la calibración y el asesoramiento. La **Capa 3** contiene la CLI, los proyectos reproducibles, los benchmarks, el frontend y las futuras integraciones de agentes.
+
+La documentación detallada, los contratos y las reglas de evolución están en [`ARCHITECTURE.md`](ARCHITECTURE.md).
+
+## Estructura del repositorio
+
+```text
+forgemind-intuition/
+├── forgemind/                 # paquete Python público
+│   ├── core.py                # representación algebraica y ejecución
+│   ├── active.py              # selección de probes y falsación activa
+│   ├── bayesian.py            # posterior, log_weight y eliminación
+│   ├── vectorized.py          # arrays NumPy opcionales
+│   ├── knowledge.py           # memoria experimental
+│   ├── intuition.py           # puntuación explicable
+│   ├── adaptive.py            # calibración adaptativa
+│   ├── advisor.py             # recomendaciones para agentes
+│   ├── project.py             # formato de proyecto JSON
+│   └── cli.py                 # comandos instalables
+├── tests/                     # regresión y contratos
+├── benchmarks/                # protocolos y resultados reproducibles
+├── frontend/                  # copia versionable de la interfaz visual
+├── presentation/              # presentación arquitectónica
+├── ARCHITECTURE.md            # diseño de tres capas
+├── ROADMAP.md                 # fases y prioridades
+├── todo.md                    # tablero operativo
+├── pyproject.toml             # instalación y entry point
+└── .gitignore                 # secretos y artefactos locales
+```
+
+## Contrato para agentes de código
+
+Un agente puede utilizar ForgeMind para mantener alternativas sin convertir su propia confianza en verdad. El flujo recomendado es registrar candidatas, pedir una recomendación, diseñar un probe, ejecutar el oráculo, registrar la evidencia y volver a actualizar el conjunto.
+
+```python
+from forgemind import advise
+
+recommendation = advise(
+    candidates=[candidate_a, candidate_b],
+    evidence=observations,
+)
+print(recommendation.next_hypothesis)
+print(recommendation.reason)
+```
+
+La interfaz de asesoramiento recomienda qué probar primero. No ejecuta cambios destructivos por sí sola, no inventa resultados y no sustituye una prueba del proyecto anfitrión.
+
+## Benchmarks y pruebas
+
+Ejecuta toda la suite con:
+
+```bash
+python -m pytest -q
+```
+
+Los benchmarks importantes son:
+
+```bash
+python benchmarks/bayesian_latency.py --hypotheses 10000 --repeats 5 --top-k 20
+python benchmarks/vectorized_vs_object.py --hypotheses 10000 --repeats 3 --top-k 20
+```
+
+Los invariantes mínimos son masa posterior aproximadamente igual a uno, rechazo de evidencia duplicada, falsación dura irreversible salvo restauración explícita, ranking determinista bajo entradas iguales y explicación recuperable para cada eliminación.
+
+## Frontend
+
+La carpeta `frontend/` contiene una copia versionable de la interfaz neo-editorial de laboratorio: hipótesis, evidencia, puntuaciones y siguiente experimento. La versión gestionada por Manus se desarrolla en el proyecto web full-stack separado y usa React, Vite, tRPC, Drizzle y almacenamiento de objetos. La sincronización entre ambos árboles se documentará antes de convertir el backend en parte del repositorio distribuible.
+
+No se deben guardar imágenes grandes, credenciales ni bytes de archivos en Git. Para almacenamiento de archivos, la futura capa full-stack debe guardar los bytes en almacenamiento de objetos y únicamente conservar en base de datos la clave, URL, tipo MIME, tamaño, propietario y proyecto asociado.
+
+## Seguridad y límites
+
+No guardes tokens en `.env` versionados, README, issues, URLs ni mensajes. El `.gitignore` ya excluye `.env` y sus variantes. Si una credencial se expone, debe revocarse y sustituirse.
+
+ForgeMind es un sistema experimental. Sus scores y posteriors son señales de decisión, no demostraciones matemáticas de corrección. La evidencia de un oráculo, las reglas de equivalencia y los límites de cada benchmark deben permanecer visibles.
+
+## Contribuir
+
+Antes de abrir un cambio, ejecuta la suite de pruebas y el benchmark relevante. Conserva compatibilidad con la API pública, añade pruebas para nuevos contratos y actualiza `ARCHITECTURE.md`, `ROADMAP.md` o `todo.md` cuando cambie la responsabilidad de una capa.
+
+Los cambios que introducen aproximaciones deben documentar el modo de exactitud y cómo se estima el error. Los cambios que afectan la representación algebraica deben incluir casos de equivalencia y contraejemplos.
+
+## Licencia
+
+El proyecto declara licencia MIT en `pyproject.toml`. Revisa la licencia antes de redistribuir componentes externos o datos de benchmarks.

@@ -1,35 +1,53 @@
-# ForgeMind Intuition — Plan de producto
+# ForgeMind Intuition — TODO operativo
 
-## Pendiente
+Este archivo registra el estado del producto y conserva las tareas históricas. Las tareas completadas se mantienen como referencia; las pendientes representan trabajo que todavía necesita implementación o validación.
 
-- [ ] Definir el contrato de entrada para proyectos externos y candidatas de código.
+## Completado
+
 - [x] Reorganizar el código fuente para que el núcleo Python y el frontend vivan bajo una raíz de proyecto clara.
 - [x] Añadir una CLI instalable para puntuar hipótesis y recomendar el siguiente experimento.
 - [x] Añadir un formato de proyecto reproducible con configuración, probes, targets y resultados.
-- [ ] Conectar el frontend con datos reales del motor mediante una API local o servicio de ejecución.
-- [ ] Activar backend, base de datos persistente y almacenamiento de archivos para el frontend.
-- [ ] Definir entidades para proyectos, hipótesis, evidencias y archivos.
-- [ ] Integrar carga, listado y asociación de archivos desde la interfaz.
-- [ ] Añadir importación y exportación de hipótesis, evidencia y reglas.
 - [x] Documentar instalación, primeros pasos, API Python y flujo de integración con agentes de código.
 - [x] Validar una instalación limpia, pruebas de regresión y ejecución desde la raíz.
-- [ ] Preparar una estrategia de distribución y publicación del paquete.
-- [ ] Diseñar el contrato de inferencia bayesiana para hipótesis, priors, evidencia y verosimilitudes.
-- [ ] Perfilar el coste de actualización y ranking en espacios grandes.
-- [ ] Diseñar poda, top-k, representación logarítmica y actualización incremental.
 - [x] Implementar pesos logarítmicos manteniendo compatibilidad con `posterior`.
 - [x] Añadir `top_k(k)` sin ordenar el conjunto completo.
 - [x] Crear benchmark reproducible de latencia, memoria y exactitud.
-- [ ] Definir benchmarks de latencia, memoria, exactitud y trazabilidad.
 - [x] Corregir la importación de NumPy para que el núcleo base funcione sin el extra vectorizado.
 - [x] Validar CI sin NumPy y pruebas completas con el extra vectorizado.
-- [x] Publicar la optimización de rendimiento en el repositorio GitHub.
-- [x] Reintentar el push desde el sandbox y documentar el procedimiento local si persiste el 403.
-- [x] Confirmar el estado remoto tras el nuevo intento de publicación.
-- [x] Probar el push después de reactivar y guardar Manus Connector.
-- [x] Ejecutar el último intento de push desde el sandbox.
 - [x] Diseñar almacenamiento vectorizado con arrays numéricos y metadatos diferidos.
 - [x] Comparar memoria y throughput entre objetos Python y almacenamiento vectorizado.
+- [x] Publicar la optimización de rendimiento en el repositorio GitHub.
+- [x] Reintentar el push desde el sandbox y documentar el procedimiento local cuando apareció el 403.
+- [x] Confirmar el estado remoto tras reactivar y guardar Manus Connector.
+- [x] Crear la presentación sobre la arquitectura algebraica y probabilística de ForgeMind.
+- [x] Crear `ARCHITECTURE.md` con la arquitectura en tres capas.
+- [x] Reescribir `README.md` como guía de usuarios, integradores y colaboradores.
+- [x] Crear `ROADMAP.md` con fases, riesgos y criterios verificables.
+
+## Núcleo experimental pendiente
+
+- [ ] Definir el contrato de entrada para proyectos externos y candidatas de código.
 - [ ] Implementar eliminación de hipótesis con razones, umbrales y estados de incertidumbre.
-- [ ] Añadir pruebas y documentación de integración del módulo probabilístico.
-- [ ] Crear una presentación sobre la arquitectura algebraica y probabilística de ForgeMind.
+- [ ] Añadir pruebas y documentación adicional de integración del módulo probabilístico.
+- [ ] Definir benchmarks de latencia, memoria, exactitud y trazabilidad como protocolo estable.
+
+## Producto distribuible pendiente
+
+- [ ] Preparar una estrategia de distribución y publicación del paquete.
+- [ ] Añadir importación y exportación de hipótesis, evidencia y reglas.
+- [ ] Conectar el frontend con datos reales del motor mediante una API local o servicio de ejecución.
+- [ ] Alinear la copia de `frontend/` con el contrato de la API pública.
+
+## Full-stack pendiente
+
+- [ ] Activar backend, base de datos persistente y almacenamiento de archivos para el frontend.
+- [ ] Definir entidades para proyectos, hipótesis, evidencias y archivos.
+- [ ] Integrar carga, listado y asociación de archivos desde la interfaz.
+- [ ] Validar autenticación, autorización por proyecto y procedencia de archivos.
+
+## Rendimiento pendiente
+
+- [ ] Añadir actualización dispersa por familias de hipótesis.
+- [ ] Separar arrays numéricos de metadatos explicativos en el hot path completo.
+- [ ] Diseñar poda con cotas superiores y estados `parked` reactivables.
+- [ ] Medir exactitud frente al modo exacto en espacios masivos.

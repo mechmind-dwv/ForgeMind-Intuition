@@ -395,5 +395,5 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 ## Modernización de GitHub Actions
 
 - [x] Actualizar acciones que emiten advertencias de Node.js 20 a versiones compatibles con Node.js 24.
-- [x] Validar localmente CI/seguridad, YAML y ausencia de referencias antiguas; falta confirmar el run remoto tras publicar.
+- [x] Validar localmente y en GitHub CI/seguridad, YAML y ausencia de advertencias de runtime; runs `31919963384` y `31919963388` correctos.
 - [x] Documentar la política de versiones de Actions y sincronizar el repositorio.

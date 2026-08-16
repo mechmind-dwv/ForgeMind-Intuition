@@ -397,3 +397,16 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Actualizar acciones que emiten advertencias de Node.js 20 a versiones compatibles con Node.js 24.
 - [x] Validar localmente y en GitHub CI/seguridad, YAML y ausencia de advertencias de runtime; runs `31919963384` y `31919963388` correctos.
 - [x] Documentar la política de versiones de Actions y sincronizar el repositorio.
+
+## Auditoría Dependabot frontend PR #2–#5
+
+- [x] Auditar alcance, versiones y cambios transitivos de los cuatro PR del frontend.
+- [x] Comparar checks, severidades y riesgos de compatibilidad entre runtime, desarrollo y grupos.
+- [x] Ejecutar pruebas/build en el orden seguro y decidir qué PR integrar o mantener abierto.
+- [x] Documentar resultados y sincronizar la decisión con GitHub.
+
+## Integración autorizada Dependabot #5 y #4
+
+- [x] Fusionar PR #5 tras confirmar checks verdes y validar main; merge commit `55f69ca`.
+- [x] Fusionar PR #4 tras confirmar checks verdes y validar main; merge commit `f903b2a`.
+- [x] Documentar el estado posterior de PR #2 y #3 sin fusionarlas todavía; #2 requiere revisión de 42 actualizaciones y #3 fue refrescada con `main` para revalidación.

@@ -515,3 +515,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Crear `forge-start.sh`, `forge-status.sh`, `forge-test.sh` y `forge-stop.sh`.
 - [x] Documentar el flujo para Termux y escritorio en `docs/RUNBOOK.md`, incluyendo logs y diagnóstico.
 - [x] Validar sintaxis y ejecutar la batería: 94 pruebas Python, smoke HTTP, typecheck, frontend test y build correctos.
+
+## Corrección de compatibilidad Termux
+
+- [x] Añadir FastAPI/Uvicorn al extra `dev` y detectar explícitamente su ausencia antes de arrancar.
+- [x] Evitar colisiones de puertos con preflight y `--strictPort` para Vite.
+- [x] Corregir `forge-status.sh` para escribir dentro de `.forgemind-run` y mostrar frontend/web correctamente.
+- [x] Ajustar `run_controlled()` para omitir `RLIMIT_AS` en Termux, conservar timeout/CPU y documentar la limitación de sandbox.

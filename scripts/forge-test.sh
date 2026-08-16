@@ -21,6 +21,15 @@ cleanup() {
 trap cleanup EXIT
 
 cd "$ROOT"
+python - <<'PY'
+try:
+    import fastapi  # noqa: F401
+    import uvicorn  # noqa: F401
+except ImportError as error:
+    raise SystemExit(
+        "Faltan FastAPI/Uvicorn. Ejecuta: python -m pip install -e '.[dev,vectorized]'"
+    ) from error
+PY
 printf '%s\n' '== Python: suite completa =='
 python -m pytest -q
 

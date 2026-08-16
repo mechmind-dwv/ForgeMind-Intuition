@@ -457,3 +457,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Implementar `forgemind.obsidian.export_snapshot` para exportar proyectos, hipótesis, evidencia enlazada y snapshots sin credenciales.
 - [x] Documentar la preparación de almacenamiento compartido y el uso desde Termux en `docs/OBSIDIAN_TERMUX.md`.
 - [x] Validar el exportador con 2 pruebas específicas y la suite Python completa: 94 pruebas correctas, sin credenciales ni datos privados.
+
+## Transferencia a Termux Android
+
+- [ ] Preparar un paquete limpio del repositorio actualizado, excluyendo `.env`, caches y `node_modules`.
+- [ ] Documentar la copia a la carpeta raíz de Termux y la activación correcta de `~/storage` sin responder comandos en el prompt de confirmación.
+- [ ] Corregir la instalación Python de Termux con NumPy y pytest para ejecutar el exportador Obsidian.
+- [ ] Validar desde la raíz del repositorio el exportador y la suite relevante.

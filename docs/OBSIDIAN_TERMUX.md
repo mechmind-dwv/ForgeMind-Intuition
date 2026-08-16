@@ -68,3 +68,37 @@ python -m pytest tests/test_obsidian.py -q
 ```
 
 La integración actual es de **exportación local unidireccional**. Una futura iteración puede añadir importación de notas editadas, sincronización Git o un plugin de Obsidian, pero esas funciones no se activan automáticamente para evitar sobrescribir contenido del usuario.
+
+## Copiar el repositorio completo a Termux
+
+El paquete limpio entregado por ForgeMind se puede colocar en la carpeta raíz de Termux. En Termux, primero instala el acceso al almacenamiento compartido de forma interactiva:
+
+```sh
+termux-setup-storage
+```
+
+Cuando aparezca `Do you want to continue? (y/n)`, escribe únicamente `y` y pulsa Enter. No pegues `mkdir` en ese mismo prompt; por eso el intento anterior se canceló.
+
+Después copia `ForgeMind-Intuition-termux.tar.gz` a la carpeta `~` de Termux y ejecuta:
+
+```sh
+cd ~
+rm -rf ForgeMind-Intuition
+mkdir ForgeMind-Intuition
+tar -xzf ForgeMind-Intuition-termux.tar.gz -C ForgeMind-Intuition
+cd ~/ForgeMind-Intuition
+bash scripts/termux-install.sh
+```
+
+Si el archivo llega a `~/storage/downloads`, usa esta variante:
+
+```sh
+cd ~
+rm -rf ForgeMind-Intuition
+mkdir ForgeMind-Intuition
+tar -xzf ~/storage/downloads/ForgeMind-Intuition-termux.tar.gz -C ForgeMind-Intuition
+cd ~/ForgeMind-Intuition
+bash scripts/termux-install.sh
+```
+
+El instalador ejecuta `pip install -e '.[vectorized,dev]'`, por lo que corrige los dos errores mostrados: instala NumPy para el almacenamiento vectorizado y pytest para las pruebas.

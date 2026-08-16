@@ -38,6 +38,14 @@ Los logs se guardan en `.forgemind-run/`. Para detener solo los procesos lanzado
 bash scripts/forge-stop.sh
 ```
 
+Si existen procesos Vite antiguos que no tienen PID registrado, limpia únicamente los procesos Vite cuyo comando contiene este repositorio:
+
+```sh
+bash scripts/forge-clean-vite.sh
+```
+
+El limpiador no busca ni termina procesos Vite de otros proyectos.
+
 ## Ejecutar el modo de producción local
 
 El modo producción compila Vite y Express antes de arrancar:

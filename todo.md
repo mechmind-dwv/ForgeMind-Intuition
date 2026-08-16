@@ -535,3 +535,9 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Mejorar `scripts/termux-install.sh` para detectar un `.venv` activo roto y recrearlo de forma segura.
 - [x] Añadir comprobación de `python`, `pip`, FastAPI, Uvicorn y NumPy antes de ejecutar pruebas.
 - [x] Validar scripts y suite completa en el sandbox sin dejar procesos persistentes: 94 pruebas Python, smoke API, typecheck, frontend test y build correctos.
+
+## Corrección de Vite y procesos antiguos en Termux
+
+- [x] Confirmar en el sandbox que `feat/forge-runbook` contiene `--strictPort` y el preflight de puertos; Termux debe actualizarse a esa rama.
+- [x] Añadir `scripts/forge-clean-vite.sh`, que solo termina Vite asociado a este repositorio.
+- [x] Validar la sintaxis y el limpiador; el script corregido usa preflight y `--strictPort`, evitando saltos silenciosos.

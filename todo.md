@@ -391,3 +391,9 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Diagnosticar el fallo del paso 4 y corregirlo sin degradar los controles de seguridad.
 - [ ] Ejecutar pruebas locales y revalidar el workflow en GitHub Actions.
 - [x] Documentar la causa y la remediación aplicada.
+
+## Modernización de GitHub Actions
+
+- [x] Actualizar acciones que emiten advertencias de Node.js 20 a versiones compatibles con Node.js 24.
+- [x] Validar localmente CI/seguridad, YAML y ausencia de referencias antiguas; falta confirmar el run remoto tras publicar.
+- [x] Documentar la política de versiones de Actions y sincronizar el repositorio.

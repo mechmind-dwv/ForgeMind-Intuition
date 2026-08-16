@@ -522,3 +522,22 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Evitar colisiones de puertos con preflight y `--strictPort` para Vite.
 - [x] Corregir `forge-status.sh` para escribir dentro de `.forgemind-run` y mostrar frontend/web correctamente.
 - [x] Ajustar `run_controlled()` para omitir `RLIMIT_AS` en Termux, conservar timeout/CPU y documentar la limitación de sandbox.
+
+## Validación pendiente en Termux tras PR #10
+
+- [ ] Actualizar Termux a `feat/forge-runbook` o a `main` después de fusionar PR #10; los logs muestran scripts antiguos (`/tmp`, sin Uvicorn y con `RLIMIT_AS`).
+- [ ] Instalar `fastapi` y `uvicorn` dentro del `.venv` actualizado.
+- [ ] Repetir `forge-test.sh`, `forge-start.sh dev` y `forge-status.sh` después de actualizar la rama.
+
+## Preparación del sandbox para Termux
+
+- [x] Revisar permisos de `scripts/*.sh` y conservarlos como ejecutables en Git (`100755`).
+- [x] Mejorar `scripts/termux-install.sh` para detectar un `.venv` activo roto y recrearlo de forma segura.
+- [x] Añadir comprobación de `python`, `pip`, FastAPI, Uvicorn y NumPy antes de ejecutar pruebas.
+- [x] Validar scripts y suite completa en el sandbox sin dejar procesos persistentes: 94 pruebas Python, smoke API, typecheck, frontend test y build correctos.
+
+## Corrección de Vite y procesos antiguos en Termux
+
+- [x] Confirmar en el sandbox que `feat/forge-runbook` contiene `--strictPort` y el preflight de puertos; Termux debe actualizarse a esa rama.
+- [x] Añadir `scripts/forge-clean-vite.sh`, que solo termina Vite asociado a este repositorio.
+- [x] Validar la sintaxis y el limpiador; el script corregido usa preflight y `--strictPort`, evitando saltos silenciosos.

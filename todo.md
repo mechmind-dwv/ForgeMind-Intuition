@@ -385,3 +385,9 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 - [x] Resolver el check fallido de Dependency Review habilitando Dependabot security updates y actualizando la rama del pull request.
 - [x] Reejecutar los checks del pull request y confirmar que CI, Dependency Review, CodeQL, pip-audit, Secret scan y GitGuardian pasan; Scorecard queda omitido en pull requests.
+
+## Incidencia GitHub Actions job 95096961657
+
+- [x] Diagnosticar el fallo del paso 4 y corregirlo sin degradar los controles de seguridad.
+- [ ] Ejecutar pruebas locales y revalidar el workflow en GitHub Actions.
+- [x] Documentar la causa y la remediación aplicada.

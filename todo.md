@@ -410,3 +410,10 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Fusionar PR #5 tras confirmar checks verdes y validar main; merge commit `55f69ca`.
 - [x] Fusionar PR #4 tras confirmar checks verdes y validar main; merge commit `f903b2a`.
 - [x] Documentar el estado posterior de PR #2 y #3 sin fusionarlas todavía; #2 requiere revisión de 42 actualizaciones y #3 fue refrescada con `main` para revalidación.
+
+## Auditoría de alertas Dependabot
+
+- [x] Obtener inventario actual de alertas, severidades, paquetes y manifiestos afectados mediante la página proporcionada y `pnpm audit` local.
+- [x] Priorizar críticas y altas según exposición y disponibilidad de actualización.
+- [x] Diseñar el orden de remediación con pruebas y evitar fusiones masivas sin validación.
+- [x] Documentar el triage y los siguientes pull requests recomendados en `docs/DEPENDABOT_TRIAGE.md`.

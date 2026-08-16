@@ -464,3 +464,54 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [ ] Documentar la copia a la carpeta raíz de Termux y la activación correcta de `~/storage` sin responder comandos en el prompt de confirmación.
 - [ ] Corregir la instalación Python de Termux con NumPy y pytest para ejecutar el exportador Obsidian.
 - [ ] Validar desde la raíz del repositorio el exportador y la suite relevante.
+
+## Actualización directa desde GitHub en Termux
+
+- [ ] Actualizar `~/ForgeMind-Intuition` mediante `git fetch` y `git reset` desde GitHub, sin copiar archivos del sandbox.
+- [ ] Corregir el uso de `termux-setup-storage` y distinguir `$HOME/storage` de `/sdcard`.
+- [ ] Instalar el proyecto desde la raíz con los extras `vectorized` y `dev`.
+- [ ] Validar el exportador Obsidian y las rutas de la bóveda desde Termux.
+
+## Reparación del entorno virtual de Termux
+
+- [x] Salir del entorno `.venv` roto y recrearlo correctamente dentro de `~/ForgeMind-Intuition`.
+- [x] Recrear `.venv` dentro de `~/ForgeMind-Intuition`; NumPy 2.4.4 y las herramientas de prueba funcionan.
+- [x] Validar importación, pytest y exportación hacia `~/storage/shared/Obsidian/ForgeMind`; 2 pruebas correctas y cuatro archivos exportados.
+
+## Depuración de ramas y bóveda Obsidian
+
+- [ ] Confirmar que `feat/obsidian-termux-export` está sincronizada y que `main` no tiene cambios locales pendientes.
+- [ ] Crear una copia de seguridad de `~/storage/shared/Obsidian/ForgeMind` antes de limpiar o convertirla en repositorio.
+- [ ] Decidir si la bóveda se sincronizará con un repositorio Git privado separado o mediante Syncthing.
+- [ ] Eliminar ramas únicamente después de confirmar que no contienen trabajo pendiente.
+
+## Estado final tras depuración
+
+- [x] Confirmar que `main` incorpora la PR #9 mediante `15bfa5f`.
+- [x] Confirmar que la rama remota `feat/obsidian-termux-export` ya no existe; el error de borrado remoto es inocuo.
+- [x] Revisar el contenido de la bóveda y crear el repositorio privado separado `ForgeMind-Obsidian`.
+
+## Reparación Git de la bóveda Obsidian
+
+- [x] Confirmar y corregir la metadata `.git` de la bóveda Obsidian sin perder las notas.
+- [x] Añadir las rutas correctas a `safe.directory` para el almacenamiento compartido.
+- [x] Reubicar o recrear la metadata Git en la raíz `Obsidian/ForgeMind`.
+- [x] Revisar staging, crear el commit `02f1d07` y publicar en `mechmind-dwv/ForgeMind-Obsidian`.
+
+## Ejecución guiada de reparación Git en Android
+
+- [x] Ejecutar en Termux el respaldo y diagnóstico de `.git`.
+- [x] Confirmar la raíz Git, corregir la propiedad segura y publicar la bóveda privada.
+
+## Limpieza de Markdown en Obsidian
+
+- [ ] Respaldar la bóveda antes de modificar las notas.
+- [ ] Eliminar espacios finales solo en los Markdown de hipótesis.
+- [ ] Revisar el diff, ejecutar `git diff --cached --check` y publicar el commit de limpieza.
+
+## Batería de arranque y pruebas del sistema completo
+
+- [x] Inventariar servicios Python, API, frontend, backend y puertos configurados.
+- [x] Crear `forge-start.sh`, `forge-status.sh`, `forge-test.sh` y `forge-stop.sh`.
+- [x] Documentar el flujo para Termux y escritorio en `docs/RUNBOOK.md`, incluyendo logs y diagnóstico.
+- [x] Validar sintaxis y ejecutar la batería: 94 pruebas Python, smoke HTTP, typecheck, frontend test y build correctos.

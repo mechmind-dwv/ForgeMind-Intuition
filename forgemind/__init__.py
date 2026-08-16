@@ -9,6 +9,7 @@ from .knowledge import KnowledgeBase, KnowledgeRecord, MemoryType
 from .project import CandidateInput, ForgeMindProject, ProjectInput, ProjectValidationError
 from .exact_block import BlockBelief, BlockExactHypothesisSet
 from .execution import ExecutionAudit, ExecutionPolicy, ExecutionResult, run_controlled
+from .obsidian import export_snapshot
 
 __all__ = [
     "AdaptiveIntuitionModel",
@@ -38,6 +39,7 @@ __all__ = [
     "ExecutionPolicy",
     "ExecutionResult",
     "run_controlled",
+    "export_snapshot",
     "intuition_score",
     "VectorizedBelief",
     "VectorizedHypothesisStore",

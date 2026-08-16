@@ -417,3 +417,50 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Priorizar críticas y altas según exposición y disponibilidad de actualización.
 - [x] Diseñar el orden de remediación con pruebas y evitar fusiones masivas sin validación.
 - [x] Documentar el triage y los siguientes pull requests recomendados en `docs/DEPENDABOT_TRIAGE.md`.
+
+## Remediación Dependabot autorizada
+
+- [ ] Marcar las alertas abiertas como `fix_started` sin desactivar Dependabot.
+- [x] Verificar que Dependabot security updates y alerts siguen activos; GitHub continúa creando y evaluando PR automáticamente.
+- [x] Preparar y probar las actualizaciones locales de `vitest`, `tar`, `vite`, `axios` y `pnpm`; PR #3 contiene toolchain actualizado y corrección TypeScript 7.
+
+## Corrección controlada de vulnerabilidades
+
+- [x] Actualizar y validar el grupo crítico de `vitest`/`tar`; la auditoría local quedó en 0 críticas.
+- [x] Actualizar y validar el grupo de build mediante la PR #3: Vite 8, pnpm 11, TypeScript 7, Rollup y transitivas.
+- [x] Actualizar Axios a 1.18.0, nanoid a 5.1.16 y transitivas de form-data/follow-redirects; lodash/path-to-regexp quedan para un grupo posterior.
+- [x] Ejecutar auditoría local, typecheck, build, tests y Dependency Review remoto; PR #3 verde en run `31922028832`.
+- [x] Publicar únicamente el grupo validado en PR #3; quedan 3 alertas altas locales para un siguiente grupo controlado.
+
+## Segundo grupo controlado de Dependabot
+
+- [x] Actualizar y validar el toolchain corregido de Vite 8.2.1, Vitest 4.1.10, Rollup y tar mediante la rama de Dependabot.
+- [x] Resolver lodash/lodash-es y path-to-regexp mediante Recharts 3.10.1, streamdown 2.5.0 y Express 5.2.1; el audit local quedó en 0 vulnerabilidades.
+- [x] Ejecutar `pnpm audit`, typecheck, build, tests y Dependency Review sobre la rama aislada; Advanced Security `31922337925` terminó en verde.
+- [x] Publicar solo los cambios que pasan todos los checks en commit `bddc16a`; las alertas existentes siguen abiertas porque no se ha ocultado ninguna.
+
+## Continuación sin token compartido
+
+- [x] Verificar el estado remoto de PR #3, la rama principal y los workflows usando la autenticación GitHub preconfigurada.
+- [x] Confirmar que PR #3 está `OPEN / CLEAN`, que los workflows recientes están verdes y que la rama corregida no tiene vulnerabilidades conocidas; queda solo una advertencia no bloqueante sobre la ubicación futura de la configuración pnpm.
+- [x] Ejecutar `pnpm audit`, typecheck, Vitest y build en un worktree aislado de PR #3 sin exponer credenciales.
+
+## Configuración compatible con pnpm 11
+
+- [x] Migrar `pnpm.overrides` y `pnpm.patchedDependencies` desde `package.json` a `pnpm-workspace.yaml` en la rama `chore/pnpm11-workspace-config`.
+- [x] Verificar que pnpm 11.21.0 ya no emita la advertencia; audit, typecheck, Vitest y build pasan en validación aislada.
+- [x] Sincronizar el cambio en la PR #8: https://github.com/mechmind-dwv/ForgeMind-Intuition/pull/8.
+
+## Integración inicial con Obsidian en Termux Android
+
+- [x] Definir la carpeta nueva de la bóveda y su estructura Markdown para ForgeMind (`/sdcard/Obsidian/ForgeMind/ForgeMind/Projects/`).
+- [x] Implementar `forgemind.obsidian.export_snapshot` para exportar proyectos, hipótesis, evidencia enlazada y snapshots sin credenciales.
+- [x] Documentar la preparación de almacenamiento compartido y el uso desde Termux en `docs/OBSIDIAN_TERMUX.md`.
+- [x] Validar el exportador con 2 pruebas específicas y la suite Python completa: 94 pruebas correctas, sin credenciales ni datos privados.
+
+## Transferencia a Termux Android
+
+- [ ] Preparar un paquete limpio del repositorio actualizado, excluyendo `.env`, caches y `node_modules`.
+- [ ] Documentar la copia a la carpeta raíz de Termux y la activación correcta de `~/storage` sin responder comandos en el prompt de confirmación.
+- [ ] Corregir la instalación Python de Termux con NumPy y pytest para ejecutar el exportador Obsidian.
+- [ ] Validar desde la raíz del repositorio el exportador y la suite relevante.

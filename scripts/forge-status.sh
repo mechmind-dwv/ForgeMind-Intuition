@@ -5,6 +5,7 @@ RUN_DIR="${FORGEMIND_RUN_DIR:-$ROOT/.forgemind-run}"
 ENGINE_HOST="${FORGEMIND_ENGINE_HOST:-127.0.0.1}"
 ENGINE_PORT="${FORGEMIND_ENGINE_PORT:-8787}"
 WEB_PORT="${FORGEMIND_WEB_PORT:-3000}"
+HEALTH_FILE="$RUN_DIR/engine-health.json"
 
 for name in engine frontend web; do
   pid_file="$RUN_DIR/$name.pid"
@@ -15,8 +16,9 @@ for name in engine frontend web; do
   fi
 done
 
-if command -v curl >/dev/null && curl -fsS "http://$ENGINE_HOST:$ENGINE_PORT/health" >/tmp/forgemind-engine-health.json 2>/dev/null; then
-  printf 'engine health: OK %s\n' "$(cat /tmp/forgemind-engine-health.json)"
+mkdir -p "$RUN_DIR"
+if command -v curl >/dev/null && curl -fsS "http://$ENGINE_HOST:$ENGINE_PORT/health" >"$HEALTH_FILE" 2>/dev/null; then
+  printf 'engine health: OK %s\n' "$(cat "$HEALTH_FILE")"
 else
   printf 'engine health: unavailable at http://%s:%s/health\n' "$ENGINE_HOST" "$ENGINE_PORT"
 fi

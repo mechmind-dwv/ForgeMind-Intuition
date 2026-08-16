@@ -10,6 +10,7 @@ from __future__ import annotations
 import os
 import signal
 import subprocess
+import sys
 import time
 from dataclasses import dataclass
 from typing import Sequence
@@ -50,11 +51,19 @@ class ExecutionResult:
     audit: ExecutionAudit
 
 
+def _running_on_termux() -> bool:
+    return sys.platform == "android" or bool(os.environ.get("TERMUX_VERSION")) or os.path.exists("/data/data/com.termux")
+
+
 def _limit_child(policy: ExecutionPolicy) -> None:
     if resource is None:
         return
     resource.setrlimit(resource.RLIMIT_CPU, (policy.cpu_seconds, policy.cpu_seconds))
-    resource.setrlimit(resource.RLIMIT_AS, (policy.memory_bytes, policy.memory_bytes))
+    # Android/Termux can abort the child interpreter when RLIMIT_AS is applied
+    # to its shared runtime. Timeout and CPU controls remain active, but a
+    # stronger memory boundary requires an isolated worker/container.
+    if not _running_on_termux():
+        resource.setrlimit(resource.RLIMIT_AS, (policy.memory_bytes, policy.memory_bytes))
     resource.setrlimit(resource.RLIMIT_FSIZE, (policy.max_output_bytes, policy.max_output_bytes))
 
 

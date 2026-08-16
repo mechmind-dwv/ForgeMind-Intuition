@@ -24,7 +24,8 @@ include = ["forgemind*"]
 dev = [
     "pytest>=8",
     "build>=1.2",
-    "fastapi>=0.115"
+    "fastapi>=0.115",
+    "uvicorn>=0.30"
 ]
 vectorized = [
     "numpy>=1.26"

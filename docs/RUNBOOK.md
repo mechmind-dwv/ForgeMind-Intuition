@@ -8,6 +8,7 @@ Este runbook reúne los comandos para arrancar y probar el motor Python, la API 
 cd ~/ForgeMind-Intuition
 source .venv/bin/activate 2>/dev/null || true
 python -m pip install -e '.[vectorized,dev]'
+# Incluye FastAPI, Uvicorn, pytest y NumPy.
 cd frontend
 pnpm install --frozen-lockfile
 cd ..
@@ -57,12 +58,14 @@ La batería comprueba la suite Python, arranca una instancia temporal del Engine
 
 ## Diagnóstico rápido
 
-Si aparece `address already in use`, detén los procesos gestionados y vuelve a intentarlo:
+Si aparece `address already in use`, el script ahora se detiene para no arrancar Vite en otro puerto silenciosamente. Detén los procesos gestionados y vuelve a intentarlo:
 
 ```sh
 bash scripts/forge-stop.sh
 bash scripts/forge-start.sh dev
 ```
+
+En Termux, `run_controlled()` conserva el timeout y el límite de CPU, pero omite `RLIMIT_AS` porque Android puede abortar el intérprete al aplicar ese límite. El aislamiento fuerte de memoria requiere un worker o contenedor separado; Termux no debe considerarse un sandbox multiusuario.
 
 Si el frontend no puede conectar con el motor, comprueba:
 

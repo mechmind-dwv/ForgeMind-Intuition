@@ -1,4 +1,5 @@
-import express from "express";
+import express, { type Express } from "express";
+import rateLimit from "express-rate-limit";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -6,11 +7,8 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-async function startServer() {
+export function createApp(): Express {
   const app = express();
-  const server = createServer(app);
-
-  // Serve static files from dist/public in production
   const staticPath =
     process.env.NODE_ENV === "production"
       ? path.resolve(__dirname, "public")
@@ -18,8 +16,23 @@ async function startServer() {
 
   app.use(express.json({ limit: "2mb" }));
 
+  const engineLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 60,
+    standardHeaders: "draft-8",
+    legacyHeaders: false,
+    message: { detail: "Too many engine requests; retry shortly." },
+  });
+  const spaLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 120,
+    standardHeaders: "draft-8",
+    legacyHeaders: false,
+    message: { detail: "Too many page requests; retry shortly." },
+  });
+
   const engineBaseUrl = (process.env.FORGEMIND_ENGINE_URL || "http://127.0.0.1:8787").replace(/\/$/, "");
-  app.use("/api/engine", async (req, res, next) => {
+  app.use("/api/engine", engineLimiter, async (req, res, next) => {
     if (!req.path.startsWith("/health") && !req.path.startsWith("/v1/evaluate")) {
       return next();
     }
@@ -38,11 +51,17 @@ async function startServer() {
 
   app.use(express.static(staticPath));
 
-  // Handle client-side routing - serve index.html for all routes
-  app.get("*", (_req, res) => {
+  // Handle client-side routing - serve index.html for all routes.
+  app.get("*", spaLimiter, (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
   });
 
+  return app;
+}
+
+async function startServer() {
+  const app = createApp();
+  const server = createServer(app);
   const port = process.env.PORT || 3000;
 
   server.listen(port, () => {
@@ -50,4 +69,6 @@ async function startServer() {
   });
 }
 
-startServer().catch(console.error);
+if (process.env.NODE_ENV !== "test" && process.env.VITEST !== "true") {
+  startServer().catch(console.error);
+}

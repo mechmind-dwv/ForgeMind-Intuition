@@ -8,7 +8,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from math import log
-from typing import Iterable, Mapping
+from time import perf_counter
+from typing import Any, Iterable, Mapping
 
 try:
     import numpy as np
@@ -73,6 +74,7 @@ class VectorizedHypothesisStore:
         instance.evidence_ids = set()
         instance.last_update_count = 0
         instance.last_update_families = ()
+        instance.last_update_metrics: dict[str, Any] = {}
         instance._normalize()
         return instance
 
@@ -156,6 +158,8 @@ class VectorizedHypothesisStore:
         evidence bookkeeping and explanation writes touch only the selected family
         positions. This makes repeated updates cheap when evidence is localized.
         """
+        started = perf_counter()
+        ingest_started = started
         if self.ids is None:
             raise ValueError("observe() requires ID-backed construction; use observe_arrays()")
         if evidence_id in self.evidence_ids:
@@ -169,15 +173,29 @@ class VectorizedHypothesisStore:
         ids = [hypothesis_id for hypothesis_id in likelihoods if hypothesis_id in self.index and hypothesis_id in allowed_ids]
         positions = np.asarray([self.index[hypothesis_id] for hypothesis_id in ids], dtype=np.intp)
         values = np.asarray([float(likelihoods[hypothesis_id]) for hypothesis_id in ids], dtype=np.float64)
+        ingest_ms = (perf_counter() - ingest_started) * 1000
         if np.any(values < 0) or np.any(values > 1):
             raise ValueError("likelihoods must be between 0 and 1")
         hard_positions = np.asarray([self.index[hypothesis_id] for hypothesis_id in hard_falsification if hypothesis_id in allowed_ids], dtype=np.intp)
+        numeric_started = perf_counter()
         active_positions = self._apply_numeric_update(positions, values, hard_positions)
+        numeric_ms = (perf_counter() - numeric_started) * 1000
         self.last_update_families = selected_families
+        metadata_started = perf_counter()
         self.evidence_ids.add(evidence_id)
         if reason:
             for position in active_positions.tolist():
                 self.explanations.setdefault(position, []).append(f"{evidence_id}: {reason}")
+        metadata_ms = (perf_counter() - metadata_started) * 1000
+        self.last_update_metrics = {
+            "ingest_ms": ingest_ms,
+            "numeric_update_ms": numeric_ms,
+            "metadata_ms": metadata_ms,
+            "total_ms": (perf_counter() - started) * 1000,
+            "positions_selected": int(positions.size),
+            "positions_updated": int(active_positions.size),
+            "eliminated_count": int(np.count_nonzero(self.states == ELIMINATED)),
+        }
 
     def observe_arrays(
         self,
@@ -198,7 +216,9 @@ class VectorizedHypothesisStore:
         """
         if evidence_id in self.evidence_ids:
             raise ValueError(f"evidence_id already observed: {evidence_id}")
+        started = perf_counter()
         values = np.asarray(likelihoods, dtype=np.float64)
+        ingest_ms = (perf_counter() - started) * 1000
         expected_size = self.priors.size
         if values.ndim != 1 or values.size != expected_size:
             raise ValueError("likelihoods must be a one-dimensional array aligned with hypotheses")
@@ -220,12 +240,25 @@ class VectorizedHypothesisStore:
             raise ValueError("hard_positions must refer to valid hypothesis positions")
         if hard.size and not np.all(np.isin(hard, positions)):
             raise ValueError("hard_positions must belong to the selected families")
+        numeric_started = perf_counter()
         active_positions = self._apply_numeric_update(positions, values[positions], hard)
+        numeric_ms = (perf_counter() - numeric_started) * 1000
         self.last_update_families = selected_families
+        metadata_started = perf_counter()
         self.evidence_ids.add(evidence_id)
         if reason:
             for position in active_positions.tolist():
                 self.explanations.setdefault(int(position), []).append(f"{evidence_id}: {reason}")
+        metadata_ms = (perf_counter() - metadata_started) * 1000
+        self.last_update_metrics = {
+            "ingest_ms": ingest_ms,
+            "numeric_update_ms": numeric_ms,
+            "metadata_ms": metadata_ms,
+            "total_ms": (perf_counter() - started) * 1000,
+            "positions_selected": int(positions.size),
+            "positions_updated": int(active_positions.size),
+            "eliminated_count": int(np.count_nonzero(self.states == ELIMINATED)),
+        }
 
     def update_families(self, likelihoods: Mapping[str, float], evidence_id: str, families: Iterable[str], *, reason: str = "", hard_falsification: Iterable[str] = ()) -> None:
         """Explicit alias for localized updates used by family-aware callers."""
@@ -254,6 +287,10 @@ class VectorizedHypothesisStore:
             return VectorizedBelief(str(position), "", float(self.priors[position]), float(self.posteriors[position]), float(self.log_weights[position]), int(self.states[position]), int(self.evidence_counts[position]))
         hypothesis_id = self.ids[position]
         return VectorizedBelief(hypothesis_id, self.descriptions[hypothesis_id], float(self.priors[position]), float(self.posteriors[position]), float(self.log_weights[position]), int(self.states[position]), int(self.evidence_counts[position]))
+
+    def performance_snapshot(self) -> dict[str, Any]:
+        """Return the latest phase timings without exposing mutable internals."""
+        return dict(self.last_update_metrics)
 
     def posterior_sum(self) -> float:
         return float(self.posteriors.sum())

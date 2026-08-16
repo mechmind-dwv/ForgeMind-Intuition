@@ -104,3 +104,15 @@ def test_array_native_constructor_avoids_id_metadata_and_matches_array_observati
     assert [belief.hypothesis_id for belief in direct.top_k(2)] == ["2", "1"]
     with pytest.raises(ValueError, match="ID-backed"):
         direct.observe({"0": 0.5}, "mapping-probe")
+
+
+def test_performance_snapshot_reports_pipeline_phases_for_array_native_observation():
+    store = VectorizedHypothesisStore.from_arrays(np.asarray([1.0, 2.0, 3.0]))
+    store.observe_arrays(np.asarray([0.9, 0.8, 0.7]), "metrics-probe", reason="timed update")
+    metrics = store.performance_snapshot()
+    assert set(("ingest_ms", "numeric_update_ms", "metadata_ms", "total_ms")).issubset(metrics)
+    assert metrics["total_ms"] >= metrics["numeric_update_ms"]
+    assert metrics["positions_selected"] == 3
+    assert metrics["positions_updated"] == 3
+    assert metrics["eliminated_count"] == 0
+    assert store.posterior_sum() == pytest.approx(1.0)

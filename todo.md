@@ -246,8 +246,8 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Preparar la primera distribución etiquetada del paquete Python con build limpio e instalación desde wheel.
 - [x] Definir herramientas versionadas para agentes: registrar hipótesis, consultar top-k, proponer probes, aportar evidencia, explicar, aparcar, reactivar y restaurar snapshots.
 - [x] Añadir ejecución controlada para programas y oráculos con timeout, límites de recursos y auditoría; queda pendiente un sandbox fuerte multi-tenant.
-- [ ] Completar pruebas E2E multiusuario de autorización, archivos y recuperación de sesión.
-- [ ] Implementar eliminación lógica y metadatos completos de archivos en la superficie full-stack.
+- [x] Completar pruebas E2E multiusuario de autorización, archivos y recuperación de sesión.
+- [x] Implementar eliminación lógica y metadatos completos de archivos en la superficie full-stack.
 
 ### P2 — Escala y observabilidad
 
@@ -276,7 +276,7 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 
 ## Siguiente iteración full-stack
 
-- [ ] Validar persistencia de archivos contra un backend de almacenamiento efímero y conservar metadatos verificables.
+- [ ] Validar persistencia de archivos contra un backend de almacenamiento efímero y conservar metadatos verificables. Se añadió un protocolo S3 real opt-in; falta ejecutarlo con credenciales y cerrar la validación DB+S3.
 - [x] Probar renovación/expiración de sesión y continuidad de operaciones protegidas.
 - [x] Implementar eliminación lógica de archivos y restauración autorizada.
 - [x] Añadir pruebas E2E de archivo eliminado, restaurado y no visible para otro usuario.
@@ -286,3 +286,83 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Añadir vista de archivos activos con metadatos, descarga y eliminación lógica.
 - [x] Añadir papelera con listado de eliminados y restauración autorizada.
 - [x] Cubrir estados de carga, error, vacío, confirmación y responsive en la interfaz.
+
+## Flujo de entrada y nuevos usuarios
+
+- [x] Sustituir el estado vacío bloqueado por una pantalla de bienvenida con acceso claro.
+- [x] Añadir menú de usuario con perfil, proyectos, documentación y cerrar sesión.
+- [x] Añadir creación guiada del primer proyecto desde la interfaz.
+- [x] Conectar el onboarding con persistencia y mostrar el workspace tras crear el proyecto.
+- [x] Validar el flujo en móvil y desktop con pruebas y estados de error.
+
+## Mejora continua de la web
+
+- [x] Añadir selector visible de proyectos para que el usuario pueda cambiar de workspace.
+- [x] Convertir acciones de navegación pendientes en controles con feedback claro.
+- [ ] Mejorar estados vacíos, carga y errores con rutas de recuperación.
+- [ ] Validar accesibilidad básica, responsive y regresiones del workspace.
+
+## Regresión de estado de workspace
+
+- [x] Evitar que una sesión sin proyecto o un proyecto sin contrato termine en una pantalla vacía de hipótesis; mostrar una recuperación accionable.
+
+## Validación responsive completa
+
+- [x] Capturar entrada, onboarding y workspace de recuperación en móvil estrecho, tablet y escritorio; queda pendiente repetir con un proyecto poblado.
+- [ ] Verificar navegación lateral, selector de proyecto, archivos y acciones principales sin desbordamiento.
+- [x] Validar legibilidad, áreas táctiles visibles, estados de recuperación y orientación tablet.
+- [ ] Corregir hallazgos, repetir pruebas visuales y documentar la matriz responsive.
+
+## Navegación móvil colapsable
+
+- [x] Añadir botón hamburguesa accesible para abrir el sidebar en móvil.
+- [x] Añadir overlay, cierre por Escape y cierre al seleccionar navegación.
+- [ ] Validar navegación móvil, tablet y escritorio sin regresiones.
+
+## Animación del menú hamburguesa
+
+- [x] Añadir transición suave de apertura y cierre del panel lateral y overlay.
+- [x] Respetar `prefers-reduced-motion` y validar la interacción sin regresiones.
+
+## Frontend funcional — recuperación del bloqueo
+
+- [x] Eliminar la dependencia del estado residual “No hay una hipótesis seleccionada” como pantalla final.
+- [x] Crear menú principal funcional con acceso a workspace, proyectos, archivos, documentación y cuenta.
+- [x] Garantizar un proyecto inicial navegable con hipótesis visibles o una creación guiada que no deje al usuario bloqueado.
+- [x] Validar el flujo con sesión autenticada, móvil y escritorio antes de cerrar la iteración.
+
+## Continuidad tras revisión documental
+
+- [x] Releer arquitectura, roadmap, contratos full-stack y documentación operativa.
+- [x] Seleccionar la siguiente tarea pendiente de mayor impacto y dependencias.
+- [x] Implementar, validar y documentar la siguiente entrega sin dejar el frontend bloqueado.
+
+## Continuación de tareas pendientes
+
+- [x] Ejecutar la validación opt-in contra S3 real si el entorno contiene credenciales disponibles.
+- [ ] Preparar un protocolo reproducible DB+S3 efímero sin incorporar secretos ni datos persistentes al repositorio. El protocolo S3 real ya está preparado y ejecutado; falta aislar también la base de datos.
+- [ ] Completar la validación responsive y accesible sobre el workspace poblado, incluyendo menú, selector, archivos y acciones. Se validaron móvil/tablet poblados; falta foco/teclado y la superficie completa de archivos.
+
+## Accesibilidad y persistencia aislada
+
+- [x] Añadir y validar foco visible, navegación por teclado y cierre Escape del menú móvil; queda recomendada una prueba manual en navegador móvil real.
+- [x] Verificar que botones de selector, archivos y acciones principales sean alcanzables por teclado en el orden DOM y estados de visibilidad; queda pendiente prueba manual de archivos en sesión real.
+- [ ] Ejecutar la validación DB+S3 aislada si el entorno dispone de servicios efímeros seguros.
+
+## Validación móvil de archivos
+
+- [x] Verificar papelera, metadatos y controles táctiles en móvil con el workspace demo y controles reales de la interfaz.
+- [x] Verificar disponibilidad responsive de descarga y restauración desde papelera en móvil; el ciclo persistente requiere sesión autenticada.
+- [x] Documentar la limitación de la sesión de vista previa sin datos persistidos en `docs/responsive-validation.md`.
+
+## Hallazgo móvil de archivos
+
+- [x] Aumentar a objetivo táctil accesible los controles de descargar, papelera y restaurar en la lista móvil.
+
+## Rendimiento inspirado en pipeline GPU
+
+- [x] Separar y medir tiempo de ingestión, selección de posiciones y cómputo del motor; la transferencia GPU queda fuera porque el motor actual es CPU/NumPy.
+- [x] Añadir métricas de utilización efectiva: posiciones seleccionadas/actualizadas, latencia por fase, latencia total y eliminaciones.
+- [ ] Evaluar batching, prefetch y paralelismo de lotes para evidencia y ranking sin alterar el modo exacto auditable.
+- [ ] Comparar formatos de entrada y almacenamiento secuencial para reducir copias y materialización de objetos Python.
+- [ ] Documentar cuándo el cuello de botella está en I/O, CPU, memoria o inferencia probabilística.

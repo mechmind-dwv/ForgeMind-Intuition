@@ -366,3 +366,11 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [ ] Evaluar batching, prefetch y paralelismo de lotes para evidencia y ranking sin alterar el modo exacto auditable.
 - [ ] Comparar formatos de entrada y almacenamiento secuencial para reducir copias y materialización de objetos Python.
 - [ ] Documentar cuándo el cuello de botella está en I/O, CPU, memoria o inferencia probabilística.
+
+## Dependabot y seguridad automatizada
+
+- [x] Configurar Dependabot para Python, frontend y GitHub Actions con límites seguros de pull requests.
+- [x] Activar análisis de CodeQL para Python, TypeScript/JavaScript y workflows.
+- [x] Añadir escaneo de secretos y dependencias vulnerables sin exponer credenciales.
+- [x] Crear un bot de revisión de seguridad distribuido mediante CodeQL, Dependency Review, pip-audit, Gitleaks y Scorecard, con severidades y respuesta documentadas.
+- [x] Validar workflows, permisos mínimos y documentación operativa en GitHub.

@@ -380,3 +380,8 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Añadir limitación de solicitudes al servidor Express sin afectar el fallback SPA ni las rutas del motor; OAuth, tRPC y S3 no pasan por este servidor legacy.
 - [x] Cubrir la política con prueba HTTP y validar build, typecheck y diff; CodeQL queda para confirmación en GitHub Actions porque no está instalado localmente.
 - [x] Documentar la configuración y sus límites en `.github/SECURITY_AUTOMATION.md`; la alerta `js/missing-rate-limiting` queda lista para reanálisis en GitHub.
+
+## Pull request Dependabot #1
+
+- [x] Resolver el check fallido de Dependency Review habilitando Dependabot security updates y actualizando la rama del pull request.
+- [x] Reejecutar los checks del pull request y confirmar que CI, Dependency Review, CodeQL, pip-audit, Secret scan y GitGuardian pasan; Scorecard queda omitido en pull requests.

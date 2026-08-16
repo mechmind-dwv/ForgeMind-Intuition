@@ -23,7 +23,8 @@ include = ["forgemind*"]
 [project.optional-dependencies]
 dev = [
     "pytest>=8",
-    "build>=1.2"
+    "build>=1.2",
+    "fastapi>=0.115"
 ]
 vectorized = [
     "numpy>=1.26"

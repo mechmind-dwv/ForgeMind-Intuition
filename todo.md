@@ -374,3 +374,9 @@ Este archivo registra el estado del producto y conserva las tareas históricas. 
 - [x] Añadir escaneo de secretos y dependencias vulnerables sin exponer credenciales.
 - [x] Crear un bot de revisión de seguridad distribuido mediante CodeQL, Dependency Review, pip-audit, Gitleaks y Scorecard, con severidades y respuesta documentadas.
 - [x] Validar workflows, permisos mínimos y documentación operativa en GitHub.
+
+## Remediación CodeQL: rate limiting
+
+- [x] Añadir limitación de solicitudes al servidor Express sin afectar el fallback SPA ni las rutas del motor; OAuth, tRPC y S3 no pasan por este servidor legacy.
+- [x] Cubrir la política con prueba HTTP y validar build, typecheck y diff; CodeQL queda para confirmación en GitHub Actions porque no está instalado localmente.
+- [x] Documentar la configuración y sus límites en `.github/SECURITY_AUTOMATION.md`; la alerta `js/missing-rate-limiting` queda lista para reanálisis en GitHub.

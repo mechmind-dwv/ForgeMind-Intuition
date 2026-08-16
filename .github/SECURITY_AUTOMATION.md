@@ -18,3 +18,7 @@ Los workflows usan `GITHUB_TOKEN` con permisos declarados. El workflow de CI sol
 ## Respuesta operativa
 
 Una alerta crítica o alta bloquea la revisión hasta confirmar si afecta a una ruta desplegada. Una alerta media requiere triage y una fecha de resolución. Una alerta baja se registra para la siguiente ventana de mantenimiento. Si Gitleaks encuentra un secreto, debe revocarse inmediatamente y no debe copiarse el valor al issue, al commit ni a los logs.
+
+## Rate limiting del servidor Express
+
+El servidor frontend aplica un límite de **60 solicitudes por minuto** al proxy `/api/engine` y de **120 solicitudes por 15 minutos** al fallback SPA que usa `sendFile()`. Las respuestas incluyen cabeceras estándar de rate limiting y devuelven HTTP 429 al superar el umbral. El límite es por instancia y dirección IP; en un despliegue horizontal debe complementarse con un almacén compartido o un gateway perimetral para obtener una cuota global. La prueba `frontend/server/rate-limit.test.ts` verifica el rechazo del fallback tras 120 solicitudes.
